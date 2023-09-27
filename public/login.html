@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="login.css">
+    <script src="script.js"></script>
 
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@700&display=swap" rel="stylesheet">
     
@@ -13,6 +14,11 @@
     <div class="container">
         <img src="Images/KLDLogo.jpg" alt="KLD Logo">
         <h3 id="loginTitle">KLD Student Portal</h3>
+        <form id="loginForm" action="/login" method="POST">
+            <input type="text" name="stdId" id="stdId" placeholder="KLD ID">
+            <input type="password" name="stdPass" id="stdPass" placeholder="Password">
+            <input type="submit" value="Login">
+        </form>
     </div>
 </body>
 </html>
