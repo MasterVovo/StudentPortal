@@ -1,6 +1,6 @@
 <?php
     session_start();
-    require_once("db_connect.php");
+    require_once("../sqlConn/db_connect.php");
 
     //Server POST request
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -22,7 +22,7 @@
 
             if ($stdPass == $row["pass"]) {
                 //Redirect to dashboard page
-                header("Location: dashboard.html");
+                header("Location: ../dashboard/dashboard.php");
                 exit; //Terminate
             } else {
                 //Set error message
@@ -37,4 +37,3 @@
             exit;
         }
     }
-?>
