@@ -14,7 +14,7 @@ body {
     justify-content: center;
     align-items: center;
     min-height: 80vh;
-    background: url('KLD BG.png') no-repeat;
+    background: url('images/kldBG.png') no-repeat;
     background-size: cover;
     background-attachment: fixed;
 }
