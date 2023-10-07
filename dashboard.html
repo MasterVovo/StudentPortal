@@ -4,8 +4,20 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard</title>
+    <link rel="stylesheet" href="dashboard.css">
 </head>
 <body>
     <h1>Hello</h1>
+    <a id="logoutBtn" href="#">Log out</a>
+
+    <div id="confirmationDialog" class="modal">
+        <div class="modal-content">
+            <p>Are you sure you want to logout?</p>
+            <button id="confirmLogout" href="#">Yes</button>
+            <button id="cancelLogout" href="#">No</button>
+        </div>
+    </div>
+
+    <script src="dashboard.js"></script>
 </body>
 </html>
