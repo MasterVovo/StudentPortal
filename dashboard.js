@@ -20,4 +20,10 @@ cancelLogout.addEventListener('click', (e) => {
         confirmationDialog.classList.remove('show');
         confirmationDialog.classList.remove('hide');
     }, 300);
+});
+
+const toggler = document.querySelector('.btn');
+
+toggler.addEventListener('click', function(){
+    document.querySelector('#sidebar').classList.toggle('collapsed');
 })
