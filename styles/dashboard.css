@@ -116,11 +116,12 @@ b{
 .container{
     display: grid;
     width: 96%;
-    margin: 0 auto;
+    margin: 1rem auto;
     gap: 1.8rem;
-    grid-template-columns: 12rem auto 23rem;
+    grid-template-columns: 12rem auto 30rem;
 }
 
+/* Sidebar styles start */
 aside{
     height: 100vh;
 }
@@ -153,7 +154,7 @@ aside .sidebar{
     background-color: var(--color-white);
     box-shadow: var(--box-shadow);
     border-radius: 15px;
-    height: 88vh;
+    height: 80vh;
     position: relative;
     top: 1.5rem;
     transition: all 0.3s ease;
@@ -170,7 +171,7 @@ aside .sidebar a{
     height: 3.7rem;
     gap: 1rem;
     position: relative;
-    margin-left: 2rem;
+    margin-left: calc(2rem - 4px);
     transition: all 0.3s ease;
 }
 
@@ -202,7 +203,7 @@ aside .sidebar a.active::before{
 
 aside .sidebar a.active span{
     color: var(--color-primary);
-    margin-left: calc(1rem - 3px);
+    margin-left: calc(1rem - 10px);
 }
 
 aside .sidebar a:hover{
@@ -210,8 +211,9 @@ aside .sidebar a:hover{
 }
 
 aside .sidebar a:hover span{
-    margin-left: 0.6rem;
+    margin-left: 0.3rem;
 }
+/* Sidebar styles end */
 
 main{
     margin-top: 1.4rem;
@@ -251,6 +253,10 @@ main .ann-container .ann-list .announcement img{
     max-height: 400px;
     margin-bottom: 0.4rem;
     border-radius: 1rem;
+}
+
+main .ann-container .ann-list .announcement h3{
+    font-size: 1rem;
 }
 
 .right-section{
@@ -306,6 +312,66 @@ main .ann-container .ann-list .announcement img{
     overflow: hidden;
 }
 
+.right-section .user-profile{
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    margin-top: 1rem;
+    background-color: var(--color-white);
+    padding: var(--card-padding);
+    border-radius: var(--card-border-radius);
+    box-shadow: var(--box-shadow);
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.right-section .user-profile:hover{
+    box-shadow: none;
+}
+
+.right-section .user-profile img{
+    width: 11rem;
+    height: auto;
+    margin-bottom: 0.8rem;
+    border-radius: 50%;
+}
+
+.right-section .user-profile h2{
+    margin-bottom: 0.2rem;
+}
+
+/* Schedule section */
+.right-section .add-schedule{
+    background-color: var(--color-white);
+    border: 2px dashed var(--color-primary);
+    border-radius: var(--border-radius-2);
+    color: var(--color-primary);
+    margin-top: 0.7rem;
+    padding: 1.4rem var(--card-padding);
+    box-shadow: var(--box-shadow);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.right-section .add-schedule:hover{
+    background-color: var(--color-primary);
+    color: white;
+    box-shadow: none;
+}
+
+.right-section .add-schedule div{
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+}
+
+
+
+
+
 .modal {
     display: none;
     position: fixed;
@@ -333,10 +399,8 @@ main .ann-container .ann-list .announcement img{
 @keyframes fadeInMoveUp {
     from {
         opacity: 0;
-        transform: translateY(20px);
     } to {
         opacity: 1;
-        transform: translateY(0);
     }
 }
 
@@ -347,15 +411,37 @@ main .ann-container .ann-list .announcement img{
 @keyframes fadeOutMoveDown {
     from {
         opacity: 1;
-        transform: translateY(0);
     } to {
         opacity: 0;
-        transform: translateY(20px);
     }
 }
 
 @media screen and (max-width: 700px) {
     .modal-content {
         width: 80%;
+    }
+}
+
+@media (max-width: 1200px) {
+    .container {
+        width: 95%;
+        grid-template-columns: 5rem auto 30rem;
+    }
+
+    aside .logo h2 {
+        display: none;
+    }
+
+    aside .sidebar h3 {
+        display: none;
+    }
+
+    aside .sidebar a {
+        width: 5.6rem;
+    }
+
+    aside .sidebar a:last-child{
+        position: relative;
+        margin-top: 1.8rem;
     }
 }
