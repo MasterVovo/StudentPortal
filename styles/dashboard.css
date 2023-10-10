@@ -247,10 +247,10 @@ main .ann-container .ann-list .announcement{
 }
 
 main .ann-container .ann-list .announcement img{
-    width: 5rem;
-    height: 5rem;
+    max-width: 500px;
+    max-height: 400px;
     margin-bottom: 0.4rem;
-    border-radius: 50%;
+    border-radius: 1rem;
 }
 
 .right-section{
