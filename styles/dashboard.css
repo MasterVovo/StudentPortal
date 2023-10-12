@@ -1,36 +1,24 @@
 @import url("https://fonts.googleapis.com/css2?family=Noto+Sans+NKo+Unjoined:wght@700&family=Poppins:wght@200;300;400;600;700&display=swap");
 
 :root {
-  --color-primary: #065225;
-  --color-danger: #ff0060;
-  --color-success: #1b9c85;
-  --color-warning: #f7d060;
+  --color-green: #065225;
   --color-white: #fff;
-  --color-info-dark: #7d8da1;
-  --color-dark: #363949;
-  --color-light: rgba(132, 139, 200, 0.18);
-  --color-dark-variant: #677483;
+  --color-light-gray: #7d8da1;
+  --color-black: #121318;
+  --color-dark-gray: rgba(132, 139, 200, 0.18);
   --color-background: #f6f6f9;
 
-  --card-border-radius: 2rem;
-  --border-radius-1: 0.4rem;
-  --border-radius-2: 1.2rem;
-
-  --card-padding: 1.5rem;
-  --padding-1: 1.2rem;
-
-  --box-shadow: 0 2rem 3rem var(--color-light);
+  --box-shadow: 0 2rem 3rem var(--color-dark-gray);
 }
 
 .dark-mode-variables {
   --color-background: #181a1e;
-  --color-primary: #3ab46b;
+  --color-green: #3ab46b;
   --color-white: #202528;
-  --color-dark: #edeffd;
-  --color-dark-variant: #a3bdcc;
-  --color-info-dark: #bac3ce;
-  --color-light: rgba(0, 0, 0, 0.4);
-  --box-shadow: 0 2rem 3rem var(--color-light);
+  --color-black: #e7e7e7;
+  --color-light-gray: #bac3ce;
+  --color-dark-gray: rgba(0, 0, 0, 0.4);
+  --box-shadow: 0 2rem 3rem var(--color-dark-gray);
 }
 
 * {
@@ -41,6 +29,7 @@
   border: 0;
   text-decoration: none;
   box-sizing: border-box;
+  /* outline: 1px limegreen solid !important; */
 }
 
 html {
@@ -54,12 +43,12 @@ body {
   font-size: 0.88rem;
   user-select: none;
   overflow-x: hidden;
-  color: var(--color-dark);
+  color: var(--color-black);
   background-color: var(--color-background);
 }
 
 a {
-  color: var(--color-dark);
+  color: var(--color-black);
 }
 
 img {
@@ -85,34 +74,15 @@ h3 {
 
 small {
   font-size: 0.76rem;
+  color: var(--color-light-gray);
 }
 
 p {
-  color: var(--color-dark-variant);
+  color: var(--color-light-gray);
 }
 
 b {
-  color: var(--color-dark);
-}
-
-.text-muted {
-  color: var(--color-info-dark);
-}
-
-.primary {
-  color: var(--color-primary);
-}
-
-.danger {
-  color: var(--color-danger);
-}
-
-.success {
-  color: var(--color-success);
-}
-
-.warning {
-  color: var(--color-warning);
+  color: var(--color-black);
 }
 
 .container {
@@ -136,6 +106,7 @@ aside .toggle {
 }
 
 aside .toggle .logo {
+  align-items: center;
   display: flex;
   gap: 0.5rem;
 }
@@ -155,7 +126,7 @@ aside .sidebar {
   flex-direction: column;
   background-color: var(--color-white);
   box-shadow: var(--box-shadow);
-  border-radius: 15px;
+  border-radius: 1rem;
   height: 80vh;
   position: relative;
   top: 1.5rem;
@@ -166,19 +137,23 @@ aside .sidebar:hover {
   box-shadow: none;
 }
 
+aside .sidebar .profile-side {
+  display: none;
+}
+
 aside .sidebar a {
   display: flex;
   align-items: center;
-  color: var(--color-info-dark);
+  color: var(--color-light-gray);
   height: 3.7rem;
   gap: 1rem;
   position: relative;
-  margin-left: calc(2rem - 4px);
   transition: all 0.3s ease;
 }
 
 aside .sidebar a span {
   font-size: 1.6rem;
+  padding-left: 2.3rem;
   transition: all 0.3s ease;
 }
 
@@ -190,30 +165,35 @@ aside .sidebar a:last-child {
 
 aside .sidebar a.active {
   width: 100%;
-  color: var(--color-primary);
-  background-color: var(--color-light);
-  border-radius: 15px;
-  margin-left: 0;
+  color: var(--color-green);
+  background-color: var(--color-dark-gray);
+  border-radius: 1rem 1rem 0 0;
+  transition: all 0.3s ease;
+}
+
+aside .sidebar a.active span{
+  padding-left: calc(2rem - 10px);
+  transition: all 0.3s ease;
 }
 
 aside .sidebar a.active::before {
   content: "";
   width: 6px;
   height: 18px;
-  background-color: var(--color-primary);
+  background-color: var(--color-green);
 }
 
 aside .sidebar a.active span {
-  color: var(--color-primary);
+  color: var(--color-green);
   margin-left: calc(1rem - 10px);
 }
 
 aside .sidebar a:hover {
-  color: var(--color-primary);
+  color: var(--color-green);
 }
 
 aside .sidebar a:hover span {
-  margin-left: 0.3rem;
+  margin-left: 0.5rem;
 }
 
 /* Sidebar styles end */
@@ -222,15 +202,15 @@ aside .sidebar a:hover span {
     margin-top: 1.4rem;
 } */
 
-main .ann-container {
-  margin-top: 1.3rem;
+main .ann-header h1{
+  margin-top: 1.4rem;
 }
 
-main .ann-container .ann-list {
+main .ann-container {
   background-color: var(--color-white);
-  padding: var(--card-padding);
-  border-radius: var(--card-border-radius);
-  margin-top: 1rem;
+  padding: 1.5rem;
+  border-radius: 1.5rem;
+  margin-top: 0rem;
   box-shadow: var(--box-shadow);
   display: flex;
   justify-content: space-around;
@@ -240,25 +220,25 @@ main .ann-container .ann-list {
   transition: all 0.3s ease;
 }
 
-main .ann-container .ann-list:hover {
+main .ann-container:hover {
   box-shadow: none;
 }
 
-main .ann-container .ann-list .announcement {
+main .ann-container .announcement {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
 }
 
-main .ann-container .ann-list .announcement img {
+main .ann-container .announcement img {
   max-width: 500px;
   max-height: 400px;
   margin-bottom: 0.4rem;
   border-radius: 1rem;
 }
 
-main .ann-container .ann-list .announcement h3 {
+main .ann-container .announcement h3 {
   font-size: 1rem;
   display: -webkit-box;
   -webkit-box-orient: vertical;
@@ -266,7 +246,7 @@ main .ann-container .ann-list .announcement h3 {
   overflow: hidden;
 }
 
-main .ann-container .ann-list .announcement small{
+main .ann-container .announcement small {
   text-decoration: underline;
   cursor: auto;
 }
@@ -286,14 +266,14 @@ main .ann-container .ann-list .announcement small{
 }
 
 .right-section .dark-mode {
-  background-color: var(--color-light);
+  background-color: var(--color-dark-gray);
   display: flex;
   justify-content: space-between;
   align-items: center;
   height: 1.6rem;
   width: 4.2rem;
   cursor: pointer;
-  border-radius: var(--border-radius-1);
+  border-radius: 0.4rem;
 }
 
 .right-section .dark-mode span {
@@ -306,9 +286,9 @@ main .ann-container .ann-list .announcement small{
 }
 
 .right-section .dark-mode span.active {
-  background-color: var(--color-primary);
+  background-color: var(--color-green);
   color: white;
-  border-radius: var(--border-radius-1);
+  border-radius: 0.5rem;
 }
 
 .right-section .nav .profile {
@@ -403,7 +383,7 @@ main .ann-container .ann-list .announcement small{
 .right-section .grades .grades-header span {
   padding: 10px;
   box-shadow: var(--box-shadow);
-  background-color: var(--color-primary);
+  background-color: var(--color-green);
   color: var(--color-white);
   border-radius: 50%;
 }
@@ -415,8 +395,8 @@ main .ann-container .ann-list .announcement small{
   align-items: center;
   gap: 1rem;
   margin-bottom: 0.7rem;
-  padding: 1rem var(--card-padding);
-  border-radius: var(--border-radius-2);
+  padding: 1rem;
+  border-radius: 1.2rem;
   box-shadow: var(--box-shadow);
   cursor: pointer;
   transition: all 0.3s ease;
@@ -448,11 +428,15 @@ main .ann-container .ann-list .announcement small{
   -webkit-line-clamp: 2;
 }
 
+.right-section .grades .grades-list .subject-title .info h2 {
+  margin-left: 0.5rem;
+}
+
 .right-section .schedule .schedule-list .icon,
 .right-section .grades .grades-list .icon {
   padding: 0.6rem;
   color: var(--color-white);
-  background-color: var(--color-success);
+  background-color: #1b9c85;
   border-radius: 20%;
   display: flex;
 }
@@ -485,6 +469,10 @@ main .ann-container .ann-list .announcement small{
     grid-template-columns: 5rem 1.7fr 1fr;
   }
 
+  aside {
+    border-radius: 0 1rem 0 0;
+  }
+
   aside .logo h2 {
     display: none;
   }
@@ -497,6 +485,14 @@ main .ann-container .ann-list .announcement small{
     width: 5.6rem;
   }
 
+  aside .sidebar a span{
+    padding-left: 1.5rem;
+  }
+
+  aside .sidebar a.active span{
+    padding-left: 0;
+  }
+
   aside .sidebar a:last-child {
     position: relative;
     margin-top: 1.8rem;
@@ -504,15 +500,21 @@ main .ann-container .ann-list .announcement small{
 }
 
 @media (max-width: 1130px) {
+
   .right-section .schedule .schedule-header h2,
-  .right-section .grades .grades-header h2, 
+  .right-section .grades .grades-header h2,
   .right-section .grades .grades-list .subject-title .info h2 {
     font-weight: 600;
     font-size: 1.23rem;
   }
 
-  .right-section .schedule .schedule-header small{
+  .right-section .schedule .schedule-header small {
     font-size: 0.7rem;
+  }
+
+  .right-section .schedule .schedule-list .icon,
+  .right-section .grades .grades-list .icon {
+    padding: 0.45rem;
   }
 }
 
@@ -520,23 +522,34 @@ main .ann-container .ann-list .announcement small{
   .container {
     width: 100%;
     grid-template-columns: 1fr;
-    padding: 0 var(--padding-1);
+    padding: 0 1.2rem;
   }
 
   aside {
     position: fixed;
     background-color: var(--color-white);
+    margin-top: 0;
     width: 15rem;
     z-index: 3;
-    box-shadow: 1rem 3rem 4rem var(--color-light);
-    height: 100vh;
+    box-shadow: 1rem 0 4rem var(--color-dark-gray);
+    height: 50vh;
     left: -100%;
-    display: none;
-    animation: showMenu 0.4s ease forwards;
   }
 
   @keyframes showMenu {
+    from {
+      left: -100%;
+    }
     to {
+      left: 0;
+    }
+  }
+
+  @keyframes hideMenu {
+    to {
+      left: -100%;
+    }
+    from {
       left: 0;
     }
   }
@@ -549,6 +562,10 @@ main .ann-container .ann-list .announcement small{
     display: inline;
   }
 
+  aside .sidebar .profile-side{
+    display: flex;
+  }
+
   aside .sidebar h3 {
     display: inline;
   }
@@ -556,6 +573,18 @@ main .ann-container .ann-list .announcement small{
   aside .sidebar a {
     width: 100%;
     height: 3.4rem;
+  }
+
+  aside .sidebar a.active{
+    border-radius: 0;
+  }
+  
+  aside .sidebar a span{
+    padding-left: 2.3rem;
+  }
+
+  aside .sidebar a.active span{
+    padding-left: calc(2rem - 20px);
   }
 
   aside .sidebar a:last-child {
@@ -569,33 +598,35 @@ main .ann-container .ann-list .announcement small{
   }
 
   main {
-    margin-top: 3.5rem;
+    margin-top: 3.7rem;
     padding: 0 0.5rem;
   }
 
-  main .ann-container h1 {
+  main .ann-header h1 {
     text-align: center;
     line-height: 1.9rem;
+    margin-bottom: 0.8rem;
   }
 
-  main .ann-container .ann-list {
+  main .ann-container {
     padding: 1rem;
   }
 
-  main .ann-container .ann-list {
+  main .ann-container {
     padding: 1rem;
   }
 
-  main .ann-container .ann-list .announcement p{
+  main .ann-container .announcement p {
     font-size: 0.8rem;
     padding-bottom: 0.2rem;
   }
 
-  main .ann-container .ann-list .announcement h3{
+  main .ann-container .announcement h3 {
     font-size: 0.9rem;
+    padding: 0.2rem 0.5rem;
   }
 
-  main .ann-container .ann-list .announcement small{
+  main .ann-container .announcement small {
     padding-top: 0.2rem;
     font-size: 0.6rem;
   }
@@ -610,13 +641,13 @@ main .ann-container .ann-list .announcement small{
     top: 0;
     left: 0;
     align-items: center;
-    justify-content: center;
+    justify-content: spa;
     background-color: var(--color-white);
-    padding: 0 var(--padding-1);
+    padding: 0 1rem;
     height: 4.6rem;
     width: 100%;
     z-index: 2;
-    box-shadow: 0 1rem 1rem var(--color-light);
+    box-shadow: 0 1rem 1rem var(--color-dark-gray);
     margin: 0;
   }
 
@@ -626,7 +657,8 @@ main .ann-container .ann-list .announcement small{
     right: 2em;
   }
 
-  .right-section .profile .info {
+  .right-section .profile .info,
+  .right-section .profile .profile-photo {
     display: none;
   }
 
@@ -634,7 +666,7 @@ main .ann-container .ann-list .announcement small{
     display: inline-block;
     background-color: transparent;
     cursor: pointer;
-    color: var(--color-dark);
+    color: var(--color-black);
     position: absolute;
     left: 1rem;
   }
@@ -643,7 +675,7 @@ main .ann-container .ann-list .announcement small{
     font-size: 2rem;
   }
 
-  .right-section .schedule, 
+  .right-section .schedule,
   .right-section .grades {
     margin-top: 1rem;
   }
