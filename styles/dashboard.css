@@ -41,7 +41,6 @@
   border: 0;
   text-decoration: none;
   box-sizing: border-box;
-  outline: 1px limegreen solid !important;
 }
 
 html {
@@ -132,7 +131,7 @@ aside {
 aside .toggle {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center;
   margin-top: 1.4rem;
 }
 
@@ -147,7 +146,7 @@ aside .toggle .logo img {
 }
 
 aside .toggle .close {
-  padding-right: 1rem;
+  padding-right: 0.7rem;
   display: none;
 }
 
@@ -216,6 +215,7 @@ aside .sidebar a:hover {
 aside .sidebar a:hover span {
   margin-left: 0.3rem;
 }
+
 /* Sidebar styles end */
 
 /* main{
@@ -264,6 +264,11 @@ main .ann-container .ann-list .announcement h3 {
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 9;
   overflow: hidden;
+}
+
+main .ann-container .ann-list .announcement small{
+  text-decoration: underline;
+  cursor: auto;
 }
 
 .right-section {
@@ -439,6 +444,10 @@ main .ann-container .ann-list .announcement h3 {
   overflow: hidden;
 }
 
+.right-section .grades .grades-list .subject-title .info h3 {
+  -webkit-line-clamp: 2;
+}
+
 .right-section .schedule .schedule-list .icon,
 .right-section .grades .grades-list .icon {
   padding: 0.6rem;
@@ -472,7 +481,8 @@ main .ann-container .ann-list .announcement h3 {
 @media (max-width: 1230px) {
   .container {
     width: 95%;
-    grid-template-columns: 5rem 2fr 1fr;
+    gap: 1rem;
+    grid-template-columns: 5rem 1.7fr 1fr;
   }
 
   aside .logo h2 {
@@ -493,10 +503,20 @@ main .ann-container .ann-list .announcement h3 {
   }
 }
 
-/* @media (max-width: 1140px) {
-} */
+@media (max-width: 1130px) {
+  .right-section .schedule .schedule-header h2,
+  .right-section .grades .grades-header h2, 
+  .right-section .grades .grades-list .subject-title .info h2 {
+    font-weight: 600;
+    font-size: 1.23rem;
+  }
 
-@media (max-width: 768px) {
+  .right-section .schedule .schedule-header small{
+    font-size: 0.7rem;
+  }
+}
+
+@media (max-width: 771px) {
   .container {
     width: 100%;
     grid-template-columns: 1fr;
@@ -549,8 +569,35 @@ main .ann-container .ann-list .announcement h3 {
   }
 
   main {
-    margin-top: 4rem;
-    padding: 0 1rem;
+    margin-top: 3.5rem;
+    padding: 0 0.5rem;
+  }
+
+  main .ann-container h1 {
+    text-align: center;
+    line-height: 1.9rem;
+  }
+
+  main .ann-container .ann-list {
+    padding: 1rem;
+  }
+
+  main .ann-container .ann-list {
+    padding: 1rem;
+  }
+
+  main .ann-container .ann-list .announcement p{
+    font-size: 0.8rem;
+    padding-bottom: 0.2rem;
+  }
+
+  main .ann-container .ann-list .announcement h3{
+    font-size: 0.9rem;
+  }
+
+  main .ann-container .ann-list .announcement small{
+    padding-top: 0.2rem;
+    font-size: 0.6rem;
   }
 
   .right-section {
@@ -563,6 +610,7 @@ main .ann-container .ann-list .announcement h3 {
     top: 0;
     left: 0;
     align-items: center;
+    justify-content: center;
     background-color: var(--color-white);
     padding: 0 var(--padding-1);
     height: 4.6rem;
@@ -575,7 +623,7 @@ main .ann-container .ann-list .announcement h3 {
   .right-section .nav .dark-mode {
     width: 4.4rem;
     position: absolute;
-    left: 66%;
+    right: 2em;
   }
 
   .right-section .profile .info {
@@ -593,5 +641,10 @@ main .ann-container .ann-list .announcement h3 {
 
   .right-section .nav button span {
     font-size: 2rem;
+  }
+
+  .right-section .schedule, 
+  .right-section .grades {
+    margin-top: 1rem;
   }
 }
