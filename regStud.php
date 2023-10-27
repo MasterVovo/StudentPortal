@@ -4,16 +4,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles/stdReg.css">
     <title>Register Student</title>
 </head>
 
 <body>
+    <div id="loaderContainer" class="loaderContainer">
+        <div id="loader" class="loader"></div>
+    </div>
+
     <form action="#" method="POST" enctype="multipart/form-data">
         <input type="file" name="excelFile" id="excelFile" accept=".xls,.xlsx">
         <button type="submit" name="uploadBtn" id="uploadBtn">Upload File</button>
     </form>
 
     <?php
+    echo "<script>document.getElementById('loaderContainer').style.display = 'flex';</script>";
+
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $uploadedFile = $_FILES["excelFile"];
 
@@ -32,6 +39,12 @@
         }
     }
     ?>
+
+    <script>
+        window.onload = function() {
+            document.getElementById('loaderContainer').style.display = 'none';
+        };
+    </script>
 </body>
 
 </html>

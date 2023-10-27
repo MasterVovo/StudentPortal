@@ -3,59 +3,50 @@ require 'vendor/autoload.php';
 
 use PhpOffice\PhpSpreadsheet\IOFactory;
 
-$headers = ["First Name: ", "Middle Name: ", "Last Name: ", "Course: ", "Email: "];
+$filePath = $_FILES['excelFile']['tmp_name']; // get uploaded file
+$spreadsheet = IOFactory::load($filePath); // load file
 
-$filePath = $_FILES['excelFile']['tmp_name'];
-// Load the Excel file
-$spreadsheet = IOFactory::load($filePath);
+$worksheet = $spreadsheet->getActiveSheet(); // Select the first worksheet in the Excel file
 
-// Select the first worksheet in the Excel file
-$worksheet = $spreadsheet->getActiveSheet();
 
-// Loop through rows and columns to output cell values
-echo "<table>
-        <tr>
-            <!--<td>Student ID</td>-->
-            <td>First Name</td>
-            <td>Middle Name</td>
-            <td>Last Name</td>
-            <td>Course</td>
-            <td>Email</td>
-        </tr>";
+echo "<div class='tblContainer'>
+        <p>Student List</p>
+        <form action='includes/uploadStdToDB.inc.php' method='POST'>
+            <button type='submit' name='uploadToDB' id='uploadToDB'>Save</button>
+        </form>
+        <div class='stdTable'>
+            <table>
+                <tr>
+                    <th>Student ID</th>
+                    <th>First Name</th>
+                    <th>Middle Name</th>
+                    <th>Last Name</th>
+                    <th>Course</th>
+                    <th>Email</th>
+                </tr>";
 
 $counter = 1;
+
+// Loop through rows and columns to output cell values
 foreach ($worksheet->getRowIterator() as $row) {
-    echo "<tr>";
-    $cellIterator = $row->getCellIterator();
+    $cellIterator = $row->getCellIterator(); // Get cell iterator
     $cellIterator->setIterateOnlyExistingCells(FALSE); // Loop through all cells, even empty ones
     $firstCell = TRUE;
 
-    // echo "<td>KLD-22-" . $counter . "</td>";
+    if ($firstCell && empty($cellIterator->current()->getValue())) { // Skip empty cells
+        continue;
+    }
+
+    $firstCell = FALSE;
+
+    echo "<tr>";
+    echo "<td>KLD-22-" . $counter . "</td>";
     $counter++;
 
-    foreach ($cellIterator as $cell) {
-        if ($firstCell && empty($cell->getValue())) {
-            break;
-        }
-        // Output cell value
-        echo "<td>" . $cell->getValue() . "</td>";
-        $firstCell = FALSE;
+    foreach ($cellIterator as $cell) { // Get value of each cell
+        echo "<td>" . $cell->getValue() . "</td>"; // Output cell value
     }
     echo "</tr>";
 }
-echo "</table>";
+echo "</table></div></div>";
 ?>
-
-<style>
-    table {
-        margin-top: 1rem;
-    }
-
-    table,
-    th,
-    td {
-        border: 1px solid black;
-        border-collapse: collapse;
-        text-align: center;
-    }
-</style>
