@@ -1,0 +1,115 @@
+
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap");
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+}
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background: url('../images/KLD BG.png') no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
+}
+
+/* CONTAINER PAGE */
+.container {
+  position: relative;
+  max-width: 30rem;
+  background: #fff;
+  padding: 25px;
+  border-radius: 1.5rem;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+}
+
+.container h2 {
+    font-size: 1.5rem;
+    color: #333;
+    font-weight: 800;
+    text-align: left;
+  }
+
+
+    /* FORM INPUT BOX */
+.container .form {
+    margin-top: 30px;
+  }
+  .form .input-box {
+    width: 100%;
+    margin-top: 20px;
+  }
+  .input-box label {
+    color: #333;
+  }
+
+.form :where(.input-box input, .select-box) {
+    position: relative;
+    height: 50px;
+    width: 100%;
+    outline: none;
+    font-size: 1rem;
+    color: #707070;
+    margin-top: 8px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    padding: 0 15px;
+  }
+
+  .input-box input:focus {
+    box-shadow: 3px 3px 0 rgba(3, 102, 3, 0.862);
+  }
+
+  .form .column {
+    display: flex;
+    column-gap: 15px;
+  }
+
+
+  /* SUBMIT BUTTON */
+.form button {
+    height: 55px;
+    width: 100%;
+    color: #fff;
+    font-size: 1rem;
+    font-weight: 400;
+    margin-top: 30px;
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    background: rgb(50,205,50);
+    border-radius: 30px;
+  }
+  .form button:hover {
+    background: rgb(24, 135, 27);
+  }
+
+  /*Responsive*/
+@media screen and (max-width: 400px) {
+    .form .column  {
+      flex-wrap: wrap;
+    }
+}
+
+@media screen and (max-width: 350px ) {
+  .container {
+    margin: 0rem;
+    margin-bottom: 0rem;
+    border-radius: 0px;
+  }
+}
+
+@media screen and (max-width: 300px ) {
+  .container h2 {
+    margin: 0rem;
+    margin-bottom: 0rem;
+    border-radius: 0px;
+    text-align: center;
+  }
+}
+
+
+
