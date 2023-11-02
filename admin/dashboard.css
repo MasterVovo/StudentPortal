@@ -1,0 +1,108 @@
+/* * {
+    border: 1px solid gray;
+} */
+.ann-container {
+    margin-bottom: 24px;
+}
+.announcement {
+    width: 100%;
+}
+/* .canvas-container {
+    border: 1px solid gray;
+} */
+.chart-group {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+.age-container {
+    flex-grow: 3;
+}
+main {
+    width: 880px;
+}
+.count-box {
+    background: orange;
+    border-radius: 6px;
+    width: 200px;
+    height: 100px;
+    padding: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.counts-container {
+    display: flex;
+    gap: 12px;
+    flex-direction: row !important;
+}
+.count-box .label {
+    font-size: 0.75rem;
+    color: white;
+    display: block;
+}
+.count-box .count {
+    font-size: 1.75rem;
+    color: white;
+    font-weight: 600px;
+}
+.count-box .icon {
+    font-size: 4rem;
+    color: white;
+}
+.small-box {
+    flex-grow: 1;
+}
+.small-box p {
+    color: white;
+}
+
+.flex {
+    display: flex;
+}
+.wrap {
+    flex-wrap: wrap;
+}
+.flex > * {
+    flex-grow: 1;
+}
+.p10 {
+    padding: 10px;
+}
+.box-card {
+    padding: 24px 10px;
+    border-radius: 8px;
+}
+.text-center {
+    text-align: center;
+}
+
+.grade-container {
+    justify-content: space-around; 
+    gap: 10px; 
+    width: 200px;
+}
+
+.grade {
+    display: block; 
+    font-size: 2.5rem; 
+    font: Poppins; 
+    font-weight: 700
+}
+
+
+.gap {
+    gap: 1rem;
+}
+
+/* .flex * {
+    border: 1px solid black;
+} */
+
+.select-container {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
