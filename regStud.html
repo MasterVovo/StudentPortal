@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="styles/stdReg.css" />
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <title>Register Student</title>
+  </head>
+
+  <body>
+    <div id="loaderContainer" class="loaderContainer">
+      <div id="loader" class="loader"></div>
+    </div>
+
+    <form id="uploadForm" method="POST" enctype="multipart/form-data">
+      <input type="file" name="excelFile" id="excelFile" accept=".xls,.xlsx" />
+      <button type="button" id="uploadBtn">Upload File</button>
+    </form>
+    <div id="tableContainer"></div>
+
+    <script>
+      $(document).ready(function () {
+        $("#uploadBtn").click(function (e) {
+          e.preventDefault();
+
+          // Show the loader
+          document.getElementById("loaderContainer").style.display = "flex";
+
+          var formData = new FormData();
+          formData.append("excelFile", $("#excelFile")[0].files[0]);
+
+          $.ajax({
+            url: "includes/stdreg.inc.php",
+            type: "POST",
+            data: formData,
+            processData: false, // tell jQuery not to process the data
+            contentType: false, // tell jQuery not to set contentType
+            success: function (data) {
+              // Hide the loader
+              document.getElementById("loaderContainer").style.display = "none";
+
+              // Display the data in the table container
+              $("#tableContainer").html(data);
+            },
+          });
+        });
+      });
+    </script>
+  </body>
+</html>

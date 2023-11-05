@@ -1,5 +1,12 @@
 <?php
-require 'vendor/autoload.php';
+require '../vendor/autoload.php';
+require_once("../sqlConnection/db_connect.php");
+
+$sql = "SELECT COUNT(*) as row_count FROM stdinfo";
+$result = $conn->query($sql);
+
+// Close the database connection
+$conn->close();
 
 use PhpOffice\PhpSpreadsheet\IOFactory;
 
@@ -8,12 +15,9 @@ $spreadsheet = IOFactory::load($filePath); // load file
 
 $worksheet = $spreadsheet->getActiveSheet(); // Select the first worksheet in the Excel file
 
-
 echo "<div class='tblContainer'>
         <p>Student List</p>
-        <form action='includes/uploadStdToDB.inc.php' method='POST'>
-            <button type='submit' name='uploadToDB' id='uploadToDB'>Save</button>
-        </form>
+        <button id='uploadToDB'>Save</button>
         <div class='stdTable'>
             <table>
                 <tr>
@@ -25,7 +29,7 @@ echo "<div class='tblContainer'>
                     <th>Email</th>
                 </tr>";
 
-$counter = 1;
+$counter = $result->num_rows;
 
 // Loop through rows and columns to output cell values
 foreach ($worksheet->getRowIterator() as $row) {
@@ -40,7 +44,9 @@ foreach ($worksheet->getRowIterator() as $row) {
     $firstCell = FALSE;
 
     echo "<tr>";
-    echo "<td>KLD-22-" . $counter . "</td>";
+
+
+    echo "<td>KLD-". date("y") . "-". str_pad($counter, 6, '0', STR_PAD_LEFT) . "</td>";
     $counter++;
 
     foreach ($cellIterator as $cell) { // Get value of each cell
@@ -49,4 +55,41 @@ foreach ($worksheet->getRowIterator() as $row) {
     echo "</tr>";
 }
 echo "</table></div></div>";
+
+$output = ob_get_clean();
+
+// if(isset($_POST['uploadToDB'])) {
+//     require_once("uploadStdToDB.inc.php");
+// }
+
+echo $output;
+
+echo "<script>
+        $(document).ready(function() {
+            $('#uploadToDB').click(function(e) {
+                e.preventDefault();
+
+                // Show the loader
+                document.getElementById('loaderContainer').style.display = 'flex';
+
+                var formData = new FormData();
+                formData.append('excelFile', $('#excelFile')[0].files[0]);
+
+                $.ajax({
+                    url: 'includes/uploadStdToDB.inc.php',
+                    type: 'POST',
+                    data: formData,
+                    processData: false,  // tell jQuery not to process the data
+                    contentType: false,  // tell jQuery not to set contentType
+                    success: function(data) {
+                        // Hide the loader
+                        document.getElementById('loaderContainer').style.display = 'none';
+
+                        // Show a success message
+                        alert('Data inserted successfully!');
+                    }
+                });
+            });
+        });
+    </script>";
 ?>

@@ -2,7 +2,8 @@
     $host = "localhost";
     $username = "root";
     $password = "";
-    $database = "student_portal";
+    $database = "sample_portal"; //For testing only
+    // $database = "student_portal";
 
     $conn = new mysqli($host, $username, $password, $database);
 
