@@ -58,10 +58,6 @@ echo "</table></div></div>";
 
 $output = ob_get_clean();
 
-// if(isset($_POST['uploadToDB'])) {
-//     require_once("uploadStdToDB.inc.php");
-// }
-
 echo $output;
 
 echo "<script>

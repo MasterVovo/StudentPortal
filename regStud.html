@@ -24,11 +24,11 @@
         $("#uploadBtn").click(function (e) {
           e.preventDefault();
 
-          // Show the loader
-          document.getElementById("loaderContainer").style.display = "flex";
-
           var formData = new FormData();
           formData.append("excelFile", $("#excelFile")[0].files[0]);
+
+          // Show the loader
+          document.getElementById("loaderContainer").style.display = "flex";
 
           $.ajax({
             url: "includes/stdreg.inc.php",

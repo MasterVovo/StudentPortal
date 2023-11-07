@@ -1,40 +1,50 @@
 <?php
+require '../vendor/autoload.php';
 require_once("../sqlConnection/db_connect.php");
 
-$sql = "SELECT COUNT(*) as row_count FROM stdinfo";
+$sql = "SELECT COUNT(stdID) as row_count FROM stdinfo";
 $result = $conn->query($sql);
+$result->num_rows;
 
-// if ($result->num_rows > 0) {
-//     // Fetch the result as an associative array
-//     $row = $result->fetch_assoc();
+// Fetch the result as an associative array
+$row = $result->fetch_assoc();
 
-//     // Get the row count
-//     $rowCount = $row["row_count"];
+// Get the row count
+$numOfRows = $row["row_count"] + 1;
 
-//     // Format the row count as a 6-digit string
-//     $rowCountString = str_pad($rowCount, 6, '0', STR_PAD_LEFT);
+if (isset($_FILES['excelFile'])) {
+    $filePath = $_FILES['excelFile']['tmp_name']; // get uploaded file
+    $spreadsheet = \PhpOffice\PhpSpreadsheet\IOFactory::load($filePath); // load file
 
-//     // Get the current year
-//     $currentYear = date("y");
+    $worksheet = $spreadsheet->getActiveSheet(); // Select the first worksheet in the Excel file
 
-//     // Generate the unique ID
-//     $uniqueID = "KLD-" . $currentYear . "-" . $rowCountString;
+    foreach ($worksheet->getRowIterator() as $row) {
+        $cellIterator = $row->getCellIterator(); // Get cell iterator
+        $cellIterator->setIterateOnlyExistingCells(FALSE); // Loop through all cells, even empty ones
 
-//     echo "Unique ID: " . $uniqueID;
-// } else {
-//     echo "No results found.";
-// }
+        $stdID = "KLD-" . date("y") . "-" . str_pad($numOfRows, 6, '0', STR_PAD_LEFT);
 
-$numOfRows = $result->num_rows;
-$stdID = "KLD-" . date("y") . "-" . str_pad($numOfRows, 6, '0', STR_PAD_LEFT);
+        $data = [];
+        foreach ($cellIterator as $cell) { // Get value of each cell
+            $data[] = $cell->getValue(); // Add cell value to data array
+        }
 
-// Close the database connection
-// $conn->close();
+        // Prepare an SQL statement
+        $stmt = $conn->prepare("INSERT INTO stdinfo (stdID, stdFName, stdMName, stdLName, stdCourse, stdEmail) VALUES (?, ?, ?, ?, ?, ?)");
 
+        // Bind parameters
+        $stmt->bind_param("ssssss", $stdID, $data[0], $data[1], $data[2], $data[3], $data[4]);
 
-// $sql = "INSERT INTO `stdinfo`(`stdID`, `stdFName`, `stdMName`, `stdLName`, `stdCourse`, `stdEmail`) 
-// VALUES (?,?,?,?,?,?)";
-// $stmt = $conn->prepare($sql);
+        // Execute the statement
+        $stmt->execute();
 
+        $numOfRows++;
+    }
 
-?>
+    // Close the database connection
+    $conn->close();
+
+    echo "Data inserted successfully!";
+} else {
+    echo "No file uploaded!";
+}
