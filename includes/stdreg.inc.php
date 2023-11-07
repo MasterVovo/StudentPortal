@@ -1,6 +1,6 @@
 <?php
 require '../vendor/autoload.php';
-require_once("../sqlConnection/db_connect.php");
+require '../sqlConnection/db_connect.php';
 
 $sql = "SELECT COUNT(*) as row_count FROM stdinfo";
 $result = $conn->query($sql);
