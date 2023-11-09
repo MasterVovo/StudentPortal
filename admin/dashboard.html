@@ -7,17 +7,17 @@
     <title>KLD Student Portal</title>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Sharp" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/admin-lte@3.1/dist/css/adminlte.min.css">
-    <link rel="stylesheet" href="/styles/dashboard.css" />
+    <link rel="stylesheet" href="../styles/dashboard.css" />
     <link rel="stylesheet" href="dashboard.css" />
   </head>
 
   <body>
-    <div class="container">
+    <div class="orig-container">
       <!-- Sidebar -->
       <aside>
         <div class="toggle">
           <div class="logo">
-            <img src="/images/KLD LOGO.png" />
+            <img src="../images/KLD LOGO.png" />
             <h2>KLD Student Portal</h2>
           </div>
           <div class="close" id="close-btn">
@@ -45,7 +45,7 @@
             <span class="material-icons-sharp"> schedule </span>
             <h3>Schedule</h3>
           </a>
-          <a href="/logout.html">
+          <a href="../logout.html">
             <span class="material-icons-sharp"> logout </span>
             <h3>Logout</h3>
           </a>
@@ -59,114 +59,115 @@
           <h1>Dashboard</h1>
           <span class="material-icons-sharp"> filter_alt </span>
         </div>
+
         <!-- Gender and Age Chart -->
-        <div class="flex gap">
-          <div class="ann-container">
+        <div class="flex gap gender-age-container">
+          <div class="ann-container align-items-center">
+            <span>Student Gender Distribution</span>
             <div class="canvas-container gender-container"><canvas id="gender"></canvas></div>
           </div>
-          <div class="ann-container" style="align-items: flex-end">
+          <div class="ann-container align-items-center" style="align-items: flex-end">
+            <span>Student Age Distribution</span>
             <div class="canvas-container age-container"><canvas id="age"></canvas></div>
           </div>
         </div>
         
-
         <!-- Faculty and Student Count -->
         <div class="ann-container">
-          <div class="small-box bg-success">
-            <div class="inner">
-              <h3>150</h3>
-              <p>Teachers</p>
+          <div class="faculty-student-container flex gap">
+            <div class="small-box bg-success">
+              <div class="inner">
+                <h3>150</h3>
+                <p>Teachers</p>
+              </div>
+              <div class="icon">
+                <i class="material-icons-sharp"> person </i>
+              </div>
             </div>
-            <div class="icon">
-              <i class="material-icons-sharp"> person </i>
+            <div class="small-box bg-success">
+              <div class="inner">
+                <h3>150</h3>
+                <p>Students</p>
+              </div>
+              <div class="icon">
+                <i class="material-icons-sharp"> group </i>
+              </div>
+            </div>
+            <div class="small-box bg-success">
+              <div class="inner">
+                <h3>1 | 50</h3>
+                <p>Teacher to Student <br>Ratio</p>
+              </div>
+              <div class="icon">
+                <i class="material-icons-sharp"> pie_chart </i>
+              </div>
             </div>
           </div>
-          <div class="small-box bg-success">
-            <div class="inner">
-              <h3>150</h3>
-              <p>Students</p>
-            </div>
-            <div class="icon">
-              <i class="material-icons-sharp"> group </i>
-            </div>
-          </div>
-          <div class="small-box bg-success">
-            <div class="inner">
-              <h3>1 | 50</h3>
-              <p>Teacher to Student <br>Ratio</p>
-            </div>
-            <div class="icon">
-              <i class="material-icons-sharp"> pie_chart </i>
-            </div>
-          </div>
-
-          <!-- <div class="announcement counts-container">
-              <div class="count-box">
-                <div>
-                  <span class="label">Students</span>
-                  <span class="count">10,340</span>
-                </div>
-                <span class="material-icons-sharp icon"> groups </span>
-              </div>
-              <div class="count-box">
-                <div>
-                  <span class="label">Faculty</span>
-                  <span class="count">59</span>
-                </div>
-                <span class="material-icons-sharp icon"> person </span>
-              </div>
-              <div class="count-box">
-                <span>Faculty To Student Ratio</span>
-                <span> 1 | 40</span>
-              </div>
-          </div> -->
         </div>
 
+         <!-- Student Enrollment -->
         <div class="ann-container">
-          <div class="flex gap">
-            <div class="info-box bg-success">
-              <span class="info-box-icon"><i class="material-icons-sharp">thumb_up</i></span>
-              <div class="info-box-content">
-                <span class="info-box-text">Students Enrollment</span>
-                <span class="info-box-number">5,000</span>
-                <div class="progress">
-                  <div class="progress-bar" style="width: 50%"></div>
-                </div>
-                <span class="progress-description">
-                50% Increase From Last Year
-                </span>
-              </div>
-            </div>
-            <div class="info-box bg-success">
-              <span class="info-box-icon"><i class="material-icons-sharp">thumb_up</i></span>
-              <div class="info-box-content">
-                <span class="info-box-text">Student Retention</span>
-                <span class="info-box-number">90%</span>
-                <div class="progress">
-                  <div class="progress-bar" style="width: 80%"></div>
-                </div>
-                <span class="progress-description">
-                80% Increase From Last Year
-                </span>
-              </div>
-            </div>
-            <div class="info-box bg-success">
-              <span class="info-box-icon"><i class="material-icons-sharp">thumb_up</i></span>
-              <div class="info-box-content">
-                <span class="info-box-text">Graduation Rate</span>
-                <span class="info-box-number">80%</span>
-                <div class="progress">
-                  <div class="progress-bar" style="width: 80%"></div>
-                </div>
-                <span class="progress-description">
-                80% Increase From Last Year
-                </span>
-              </div>
-            </div>
-          </div>
           
+          
+
+          <div class="row">
+            <div class="col-md-4 col-sm-6 col-12">
+              <div class="info-box bg-info">
+                <span class="info-box-icon"><i class="material-icons-sharp">group_add</i></span>
+                <div class="info-box-content">
+                  <span class="info-box-text">Student Enrollment</span>
+                  <span class="info-box-number">5,000</span>
+                  <div class="progress">
+                    <div class="progress-bar" style="width: 50%"></div>
+                  </div>
+                  <span class="progress-description">
+                  50% Increase From Last Year
+                  </span>
+                </div>
+              
+              </div>
+            
+            </div>
+            
+            <div class="col-md-4 col-sm-6 col-12">
+              <div class="info-box bg-success">
+                <span class="info-box-icon"><i class="material-icons-sharp">loop</i></span>
+                <div class="info-box-content">
+                  <span class="info-box-text">Student Retention</span>
+                  <span class="info-box-number">4,500</span>
+                  <div class="progress">
+                    <div class="progress-bar" style="width: 80%"></div>
+                  </div>
+                  <span class="progress-description">
+                  80% Increase From Last Year
+                  </span>
+                </div>
+              
+              </div>
+            
+            </div>
+            
+            <div class="col-md-4 col-sm-6 col-12">
+              <div class="info-box bg-info">
+                <span class="info-box-icon"><i class="material-icons-sharp">school</i></span>
+                <div class="info-box-content">
+                  <span class="info-box-text">Graduated</span>
+                  <span class="info-box-number">4,350</span>
+                  <div class="progress">
+                    <div class="progress-bar" style="width: 10%"></div>
+                  </div>
+                  <span class="progress-description">
+                  10% Increase From Last Year
+                  </span>
+                </div>
+              
+              </div>
+            
+            </div>
+            
+            </div>
         </div>
-        
+
         <!-- Average Grades -->
         <div class="ann-container">
           <div class="select-container">
@@ -271,9 +272,6 @@
           
           </div>
         </div>
-
-          
-        
             
           
 
@@ -299,7 +297,7 @@
               <small class="text-muted">Student - BSIS201</small>
             </div>
             <div class="profile-photo">
-              <img src="/images/KLD LOGO.png" />
+              <img src="../images/KLD LOGO.png" />
             </div>
           </div>
         </div>
@@ -399,12 +397,12 @@
       </div>
       <!-- End of right section -->
     </div>
-      <script src="/scripts/dashboard.js"></script>
+      <script src="../scripts/dashboard.js"></script>
       <!-- Chart.js for charts -->
       <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
       <!-- AdminLTE for table widget card -->
       <script src="https://cdn.jsdelivr.net/npm/admin-lte@3.1/dist/js/adminlte.min.js"></script>
-      <script src="/admin/dashboard.js"></script>
+      <script src="dashboard.js"></script>
   </body>
 
 </html>

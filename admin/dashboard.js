@@ -5,13 +5,24 @@ const age = document.getElementById('age').getContext('2d');
 const genderChart = new Chart(gender, {
     type: 'doughnut',
     data: {
-        labels: ['Male', 'Female', 'Bakla', 'Tomboy', 'Bidirectional'],
+        labels: ['Male', 'Female'],
         datasets: [
             {
-                data: [60, 40, 100, 10, 50]
+                data: [60, 40]
             }
         ]
+    },
+    options: {
+        responsive: true,
+        maintainAspectRatio: false
+        // plugins: {
+        //     title: {
+        //         display: true,
+        //         text: 'Gender Distribution'
+        //     }
+        // }
     }
+    
 });
 
 const ageChart = new Chart(age, {
@@ -28,7 +39,20 @@ const ageChart = new Chart(age, {
                 data: [90, 150, 100, 80, 70, 200, 250, 300]
             }
         ]
+    },
+    options: {
+        responsive: true,
+        maintainAspectRatio: false
     }
+    // ,
+    // options: {
+    //     plugins: {
+    //         title: {
+    //             display: true,
+    //             text: 'Age Distribution'
+    //         }
+    //     }
+    // }
 });
 
 
