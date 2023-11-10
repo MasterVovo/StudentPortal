@@ -1,6 +1,6 @@
 <?php
-require '../vendor/autoload.php';
-require '../sqlConnection/db_connect.php';
+require "../vendor/autoload.php";
+require "../sqlConnection/db_connect.php";
 
 $sql = "SELECT COUNT(*) as row_count FROM stdinfo";
 $result = $conn->query($sql);
@@ -10,7 +10,7 @@ $conn->close();
 
 use PhpOffice\PhpSpreadsheet\IOFactory;
 
-$filePath = $_FILES['excelFile']['tmp_name']; // get uploaded file
+$filePath = $_FILES["excelFile"]["tmp_name"]; // get uploaded file
 $spreadsheet = IOFactory::load($filePath); // load file
 
 $worksheet = $spreadsheet->getActiveSheet(); // Select the first worksheet in the Excel file
@@ -34,22 +34,27 @@ $counter = $result->num_rows;
 // Loop through rows and columns to output cell values
 foreach ($worksheet->getRowIterator() as $row) {
     $cellIterator = $row->getCellIterator(); // Get cell iterator
-    $cellIterator->setIterateOnlyExistingCells(FALSE); // Loop through all cells, even empty ones
-    $firstCell = TRUE;
+    $cellIterator->setIterateOnlyExistingCells(false); // Loop through all cells, even empty ones
+    $firstCell = true;
 
-    if ($firstCell && empty($cellIterator->current()->getValue())) { // Skip empty cells
+    if ($firstCell && empty($cellIterator->current()->getValue())) {
+        // Skip empty cells
         continue;
     }
 
-    $firstCell = FALSE;
+    $firstCell = false;
 
     echo "<tr>";
 
-
-    echo "<td>KLD-". date("y") . "-". str_pad($counter, 6, '0', STR_PAD_LEFT) . "</td>";
+    echo "<td>KLD-" .
+        date("y") .
+        "-" .
+        str_pad($counter, 6, "0", STR_PAD_LEFT) .
+        "</td>";
     $counter++;
 
-    foreach ($cellIterator as $cell) { // Get value of each cell
+    foreach ($cellIterator as $cell) {
+        // Get value of each cell
         echo "<td>" . $cell->getValue() . "</td>"; // Output cell value
     }
     echo "</tr>";
@@ -88,4 +93,3 @@ echo "<script>
             });
         });
     </script>";
-?>
