@@ -4,6 +4,8 @@ require "../sqlConnection/db_connect.php";
 
 $sql = "SELECT COUNT(*) as row_count FROM stdinfo";
 $result = $conn->query($sql);
+$result->num_rows;
+$row = $result->fetch_assoc();
 
 // Close the database connection
 $conn->close();
@@ -29,7 +31,7 @@ echo "<div class='tblContainer'>
                     <th>Email</th>
                 </tr>";
 
-$counter = $result->num_rows;
+$counter = $row["row_count"] + 1;
 
 // Loop through rows and columns to output cell values
 foreach ($worksheet->getRowIterator() as $row) {
