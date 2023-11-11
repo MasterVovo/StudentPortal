@@ -1,3 +1,8 @@
+<?php
+require "sqlConnection/db_connect.php";
+// Connect to the database
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -58,18 +63,52 @@
         </div>
         <div class="ann-container">
           <div class="announcement">
-            <img src="images/ImageAnnounce.JPG" />
-            <h2>KLD Foundation Week</h2>
-            <p>54 Min Ago</p>
-            <h3>Lorem ipsum dolor sit amet consectetur adipisicing elit. Possimus, sapiente nam ex minus doloribus est
-              magni corporis commodi consequuntur numquam eum aperiam error inventore expedita veniam veritatis vel
-              mollitia nesciunt?
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Laudantium totam architecto molestias facilis
-              tempore. Enim, reiciendis consequatur. Omnis, labore, aspernatur reiciendis nostrum ex sunt alias porro,
-              unde a laboriosam reprehenderit.
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Rerum sequi in, itaque accusamus sit dolores
-              similique ullam molestiae expedita voluptatum asperiores...
-            </h3><small>Read More</small>
+            <?php
+            date_default_timezone_set('Asia/Manila');
+
+            $sql =
+                "SELECT * FROM `tblannouncements` ORDER BY `announcementTime` DESC LIMIT 1"; // Get the latest announcement
+            $result = mysqli_query($conn, $sql); // Execute the query
+
+            $row = mysqli_fetch_assoc($result);
+                // Loop through the results
+            $title = $row["announcementTitle"]; // Get the title
+            $content = $row["announcementText"]; // Get the content
+            $imageData = $row["announcementImage"]; // Get the image data
+            $uploadTime = strtotime($row["announcementTime"]); // Get the upload time
+
+            $image = base64_encode($imageData); // Encode the image
+
+            $currentTime = time();
+            $timeDifference = abs($currentTime - $uploadTime);
+
+            $elapsedTime = formatTimeElapsed($timeDifference);
+
+            echo "<img src='data:image/jpeg;base64,$image'/>
+            <h2>$title</h2>
+            <p>$elapsedTime ago</p>
+            <h3>$content</h3><small>Read More</small>";
+            
+            mysqli_close($conn);
+
+            function formatTimeElapsed($time)
+            {
+                $seconds = $time;
+                $minutes = floor($seconds / 60);
+                $hours = floor($seconds / 3600);
+                $days = floor($seconds / 86400);
+
+                if ($seconds < 60) {
+                    return $seconds . " sec" . ($seconds == 1 ? "" : "s");
+                } elseif ($minutes < 60) {
+                    return $minutes . " min" . ($minutes == 1 ? "" : "s");
+                } elseif ($hours < 24) {
+                    return $hours . " hour" . ($hours == 1 ? "" : "s");
+                } else {
+                    return $days . " day" . ($days == 1 ? "" : "s");
+                }
+            }
+            ?>
           </div>
         </div>
       </main>
