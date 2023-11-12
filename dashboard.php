@@ -36,7 +36,7 @@ require "sqlConnection/db_connect.php";
             <span class="material-icons-sharp"> home </span>
             <h3>Home</h3>
           </a>
-          <a href="#">
+          <a href="news.php">
             <span class="material-icons-sharp"> feed </span>
             <h3>News</h3>
           </a>

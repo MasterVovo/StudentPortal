@@ -1,5 +1,5 @@
 <?php
-session_start();
+session_start(); // Start the session
 ?>
 
 <!DOCTYPE html>
@@ -61,16 +61,16 @@ session_start();
 
   <div id="toast" class="toast">
     <?php
-    if ($_SESSION['errorMessage']) {
+    if ($_SESSION['errorMessage']) { // Check if there is an error message
       echo '<script>
             var toast = document.getElementById("toast");
             toast.classList.add("show");
-            toast.innerHTML = "' . $_SESSION['errorMessage'] . '";
+            toast.innerHTML = "' . $_SESSION['errorMessage'] . '"; 
       
             setTimeout(function() {
               toast.classList.remove("show");
             }, 3000); // 3 seconds
-          </script>';
+          </script>'; // Display the error message
     }
     ?>
   </div>
@@ -79,4 +79,4 @@ session_start();
 
 </html>
 
-<?php unset($_SESSION['errorMessage']); ?>
+<?php unset($_SESSION['errorMessage']); // Clear the error message ?>
