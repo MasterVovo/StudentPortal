@@ -11,25 +11,6 @@ session_start(); // Start the session
   <title>KLD Student Portal Login</title>
   <link rel="stylesheet" href="styles/Loginpage.css">
   <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
-
-  <script type="text/javascript">
-    // window.onload = function() {
-    // //   var errorMessage = "<?php echo $_SESSION['errorMessage'] ?>";
-    //   if (errorMessage) {
-    //     alert(errorMessage);
-    //   }
-    // }
-
-    // function showToast() {
-    //   var toast = document.getElementById('toast');
-    //   toast.classList.add('show');
-
-    //   setTimeout(function() {
-    //     toast.classList.remove('show');
-    //   }, 3000); // 3 seconds
-    // }
-  </script>
-
 </head>
 
 <body>
@@ -56,8 +37,9 @@ session_start(); // Start the session
       </div>
       <button type="submit" class="btn" onclick="showToast()">Login</button>
       <br />
+    </form>
   </div>
-  </form>
+  
 
   <div id="toast" class="toast">
     <?php
@@ -73,7 +55,6 @@ session_start(); // Start the session
           </script>'; // Display the error message
     }
     ?>
-  </div>
   </div>
 </body>
 

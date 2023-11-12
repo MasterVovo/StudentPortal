@@ -8,6 +8,12 @@
         $stdID = $_POST["stdId"];
         $stdPass = $_POST["stdPass"];
 
+        if (!preg_match("/^KLD-\d{2}-\d{6}(T|A)?$/", $stdID)){
+            $_SESSION['errorMessage'] = "Invalid ID Format";
+            header("Location: ../loginPage.php");
+            exit;
+        }
+
         $sql = "SELECT * FROM userinfo WHERE schoolID = ?"; //SQL query
         $stmt = $conn->prepare($sql); //Prepares the query
         $stmt->bind_param("s", $stdID); //Binds parameters
