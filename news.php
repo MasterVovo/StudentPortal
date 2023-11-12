@@ -62,57 +62,59 @@ require "sqlConnection/db_connect.php";
         <div class="ann-header">
           <h1>Latest Announcement</h1>
         </div>
-            <?php
-            date_default_timezone_set("Asia/Manila"); // Set the timezone
+        <div class="ann-grid">
+          <?php
+          date_default_timezone_set("Asia/Manila"); // Set the timezone
 
-            $sql =
-                "SELECT * FROM `tblannouncements` ORDER BY `announcementTime` DESC LIMIT 4"; // Get the latest announcement
-            $result = mysqli_query($conn, $sql); // Execute the query
+          $sql =
+            "SELECT * FROM `tblannouncements` ORDER BY `announcementTime` DESC LIMIT 4"; // Get the latest announcement
+          $result = mysqli_query($conn, $sql); // Execute the query
 
-            while($row = mysqli_fetch_assoc($result)) {
-                // Loop through the results
-                $title = $row["announcementTitle"]; // Get the title
-                $content = $row["announcementText"]; // Get the content
-                $imageData = $row["announcementImage"]; // Get the image data
-                $uploadTime = strtotime($row["announcementTime"]); // Get the upload time
+          while($row = mysqli_fetch_assoc($result)) {
+            // Loop through the results
+            $title = $row["announcementTitle"]; // Get the title
+            $content = $row["announcementText"]; // Get the content
+            $imageData = $row["announcementImage"]; // Get the image data
+            $uploadTime = strtotime($row["announcementTime"]); // Get the upload time
 
-                $image = base64_encode($imageData); // Encode the image
+            $image = base64_encode($imageData); // Encode the image
 
-                $currentTime = time(); // Get the current time
-                $timeDifference = abs($currentTime - $uploadTime); // Calculate the time difference
+            $currentTime = time(); // Get the current time
+            $timeDifference = abs($currentTime - $uploadTime); // Calculate the time difference
 
-                $elapsedTime = formatTimeElapsed($timeDifference); // Format the time
+            $elapsedTime = formatTimeElapsed($timeDifference); // Format the time
 
-                echo "<div class='ann-container'>
-                <div class='announcement'>
-                <img src='data:image/jpeg;base64,$image'/>
-                <h2>$title</h2>
-                <p>$elapsedTime ago</p>
-                <h3>$content</h3><small>Read More</small>
-                </div>
-                </div>";
+            echo "<div class='ann-container'>
+            <div class='announcement'>
+            <img src='data:image/jpeg;base64,$image'/>
+            <h2>$title</h2>
+            <p>$elapsedTime ago</p>
+            <h3>$content</h3><small>Read More</small>
+            </div>
+            </div>";
+          }
+
+          mysqli_close($conn);
+
+          function formatTimeElapsed($time) //Formats the given time elapsed into a human-readable format.
+          {
+            $seconds = $time;
+            $minutes = floor($seconds / 60);
+            $hours = floor($seconds / 3600);
+            $days = floor($seconds / 86400);
+
+            if ($seconds < 60) { // If the time elapsed is less than a minute
+              return $seconds . " sec" . ($seconds == 1 ? "" : "s");
+            } elseif ($minutes < 60) { // If the time elapsed is less than an hour
+              return $minutes . " min" . ($minutes == 1 ? "" : "s");
+            } elseif ($hours < 24) { // If the time elapsed is less than a day
+              return $hours . " hour" . ($hours == 1 ? "" : "s");
+            } else { // If the time elapsed is more than a day
+              return $days . " day" . ($days == 1 ? "" : "s");
             }
-
-            mysqli_close($conn);
-
-            function formatTimeElapsed($time) //Formats the given time elapsed into a human-readable format.
-            {
-                $seconds = $time;
-                $minutes = floor($seconds / 60);
-                $hours = floor($seconds / 3600);
-                $days = floor($seconds / 86400);
-
-                if ($seconds < 60) { // If the time elapsed is less than a minute
-                    return $seconds . " sec" . ($seconds == 1 ? "" : "s");
-                } elseif ($minutes < 60) { // If the time elapsed is less than an hour
-                    return $minutes . " min" . ($minutes == 1 ? "" : "s");
-                } elseif ($hours < 24) { // If the time elapsed is less than a day
-                    return $hours . " hour" . ($hours == 1 ? "" : "s");
-                } else { // If the time elapsed is more than a day
-                    return $days . " day" . ($days == 1 ? "" : "s");
-                }
-            }
-            ?>
+          }
+          ?>
+        </div>
       </main>
       <!-- End of main content -->
 
