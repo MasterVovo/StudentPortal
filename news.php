@@ -1,15 +1,11 @@
-<?php
-require "sqlConnection/db_connect.php";
-// Connect to the database
-?>
-
+<?php require "sqlConnection/db_connect.php"; // Connect to the database ?>
 <!DOCTYPE html>
 <html lang="en">
-
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>KLD Student Portal</title>
+    <link rel="shortcut icon" href="images/KLD LOGO.png" type="image/x-icon">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Sharp" rel="stylesheet" />
     <link rel="stylesheet" href="styles/dashboard.css" />
     <link rel="stylesheet" href="styles/news.css">

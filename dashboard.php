@@ -1,15 +1,21 @@
 <?php
-require "sqlConnection/db_connect.php";
 // Connect to the database
+require "sqlConnection/db_connect.php"; 
+// Set time zone
+date_default_timezone_set("Asia/Manila"); 
+// Start the session
+session_start(); 
+// Get the user ID from the session
+$userId = $_SESSION['stdID']; 
 ?>
 
 <!DOCTYPE html>
 <html lang="en">
-
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>KLD Student Portal</title>
+    <link rel="shortcut icon" href="images/KLD LOGO.png" type="image/x-icon">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Sharp" rel="stylesheet" />
     <link rel="stylesheet" href="styles/dashboard.css" />
   </head>
@@ -64,50 +70,45 @@ require "sqlConnection/db_connect.php";
         <div class="ann-container">
           <div class="announcement">
             <?php
-            date_default_timezone_set('Asia/Manila');
+              $sql = "SELECT * FROM `tblannouncements` ORDER BY `announcementTime` DESC LIMIT 1"; // Get the latest announcement
+              $result = mysqli_query($conn, $sql); // Execute the query
 
-            $sql =
-                "SELECT * FROM `tblannouncements` ORDER BY `announcementTime` DESC LIMIT 1"; // Get the latest announcement
-            $result = mysqli_query($conn, $sql); // Execute the query
+              $row = mysqli_fetch_assoc($result); // Get the row
+              $title = $row["announcementTitle"]; // Get the title
+              $content = $row["announcementText"]; // Get the content
 
-            $row = mysqli_fetch_assoc($result);
-                // Loop through the results
-            $title = $row["announcementTitle"]; // Get the title
-            $content = $row["announcementText"]; // Get the content
-            $imageData = $row["announcementImage"]; // Get the image data
-            $uploadTime = strtotime($row["announcementTime"]); // Get the upload time
+              $imageData = $row["announcementImage"]; // Get the image data
+              $image = base64_encode($imageData); // Encode the image
 
-            $image = base64_encode($imageData); // Encode the image
+              $uploadTime = strtotime($row["announcementTime"]); // Get the upload time
+              $currentTime = time(); // Get the current time
+              $timeDifference = abs($currentTime - $uploadTime); // Calculate the time difference
+              $elapsedTime = formatTimeElapsed($timeDifference); // Format the time
 
-            $currentTime = time();
-            $timeDifference = abs($currentTime - $uploadTime);
+              echo "<img src='data:image/jpeg;base64,$image'/>
+              <h2>$title</h2>
+              <p>$elapsedTime ago</p>
+              <h3>$content</h3><small>Read More</small>"; // Display the announcement
 
-            $elapsedTime = formatTimeElapsed($timeDifference);
+              mysqli_close($conn); // Close the connection
 
-            echo "<img src='data:image/jpeg;base64,$image'/>
-            <h2>$title</h2>
-            <p>$elapsedTime ago</p>
-            <h3>$content</h3><small>Read More</small>";
-            
-            mysqli_close($conn);
-
-            function formatTimeElapsed($time)
-            {
+              function formatTimeElapsed($time) // Function to format time
+              {
                 $seconds = $time;
                 $minutes = floor($seconds / 60);
                 $hours = floor($seconds / 3600);
                 $days = floor($seconds / 86400);
 
                 if ($seconds < 60) {
-                    return $seconds . " sec" . ($seconds == 1 ? "" : "s");
+                  return $seconds . " sec" . ($seconds == 1 ? "" : "s");
                 } elseif ($minutes < 60) {
-                    return $minutes . " min" . ($minutes == 1 ? "" : "s");
+                  return $minutes . " min" . ($minutes == 1 ? "" : "s");
                 } elseif ($hours < 24) {
-                    return $hours . " hour" . ($hours == 1 ? "" : "s");
+                  return $hours . " hour" . ($hours == 1 ? "" : "s");
                 } else {
-                    return $days . " day" . ($days == 1 ? "" : "s");
+                  return $days . " day" . ($days == 1 ? "" : "s");
                 }
-            }
+              }
             ?>
           </div>
         </div>
@@ -128,7 +129,11 @@ require "sqlConnection/db_connect.php";
 
           <div class="profile">
             <div class="info">
-              <p>Good day <b>Kolehiyan</b></p>
+              <?php // TODO: Return user's First Name
+                echo "<p>Good day 
+                  <b>$userId</b>
+                </p>";
+              ?>
               <small class="text-muted">Student - BSIS201</small>
             </div>
             <div class="profile-photo">

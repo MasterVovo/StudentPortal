@@ -4,6 +4,7 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="shortcut icon" href="images/KLD LOGO.png" type="image/x-icon">
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
       rel="stylesheet"
@@ -45,7 +46,7 @@
         </div>
         <div class="row align-items-center justify-content-center">
           <div class="col-md-6 mb-3">
-            <button class="btn btn-lg btn-success w-70 fs-6" onclick="location.href='PageNotFound.html'">
+            <button class="btn btn-lg btn-success w-70 fs-6" onclick="location.href='includes/userLogout.inc.php'">
               Go back to Login
             </button>
           </div>
