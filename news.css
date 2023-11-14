@@ -1,6 +1,6 @@
-/* * {
-  outline: 1px solid lime !important;
-} */
+* /*{
+  outline: 1px limegreen solid !important;
+}*/
 
 .container {
   grid-template-columns: 12rem 1fr;
@@ -18,20 +18,30 @@ aside {
 
 main {
   grid-area: content;
+
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: auto 1fr;
+  grid-template-areas:
+    "header header"
+    "announcements announcements";
+}
+
+main .ann-header {
+  grid-area: header;
 }
 
 main .ann-header h1 {
-  margin: 0 0 0.2rem 0;
+  margin: 0;
   text-align: center;
-  translate: 0 -1rem;
 }
 
 main .ann-container {
-  /* margin: auto; */
-  height: fit-content;
+    height: fit-content;
 }
 
 main .ann-grid {
+  grid-area: announcements;
   display: grid;
   grid-template-columns: 1fr 1fr;
   grid-template-rows: 1fr;
