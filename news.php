@@ -83,7 +83,7 @@
             echo "<div class='ann-container'>
             <div class='announcement'>
             <img src='data:image/jpeg;base64,$image'/>
-            <h2>$title</h2>
+            <center><h2>$title</h2></center>
             <p>$elapsedTime ago</p>
             <h3>$content</h3><small>Read More</small>
             </div>

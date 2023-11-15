@@ -6,7 +6,7 @@ date_default_timezone_set("Asia/Manila");
 // Start the session
 session_start();
 // Get the user ID from the session
-$userId = $_SESSION['stdID'];
+$userId = $_SESSION["stdID"];
 ?>
 
 <!DOCTYPE html>
@@ -73,7 +73,8 @@ $userId = $_SESSION['stdID'];
       <div class="ann-container">
         <div class="announcement">
           <?php
-          $sql = "SELECT * FROM `tblannouncements` ORDER BY `announcementTime` DESC LIMIT 1"; // Get the latest announcement
+          $sql =
+              "SELECT * FROM `tblannouncements` ORDER BY `announcementTime` DESC LIMIT 1"; // Get the latest announcement
           $result = mysqli_query($conn, $sql); // Execute the query
 
           $row = mysqli_fetch_assoc($result); // Get the row
@@ -89,28 +90,29 @@ $userId = $_SESSION['stdID'];
           $elapsedTime = formatTimeElapsed($timeDifference); // Format the time
 
           echo "<img src='data:image/jpeg;base64,$image'/>
-              <h2>$title</h2>
+              <center><h2>$title</h2></center>
               <p>$elapsedTime ago</p>
               <h3>$content</h3><small>Read More</small>"; // Display the announcement
 
           mysqli_close($conn); // Close the connection
 
-          function formatTimeElapsed($time) // Function to format time
+          function formatTimeElapsed($time)
           {
-            $seconds = $time;
-            $minutes = floor($seconds / 60);
-            $hours = floor($seconds / 3600);
-            $days = floor($seconds / 86400);
+              // Function to format time
+              $seconds = $time;
+              $minutes = floor($seconds / 60);
+              $hours = floor($seconds / 3600);
+              $days = floor($seconds / 86400);
 
-            if ($seconds < 60) {
-              return $seconds . " sec" . ($seconds == 1 ? "" : "s");
-            } elseif ($minutes < 60) {
-              return $minutes . " min" . ($minutes == 1 ? "" : "s");
-            } elseif ($hours < 24) {
-              return $hours . " hour" . ($hours == 1 ? "" : "s");
-            } else {
-              return $days . " day" . ($days == 1 ? "" : "s");
-            }
+              if ($seconds < 60) {
+                  return $seconds . " sec" . ($seconds == 1 ? "" : "s");
+              } elseif ($minutes < 60) {
+                  return $minutes . " min" . ($minutes == 1 ? "" : "s");
+              } elseif ($hours < 24) {
+                  return $hours . " hour" . ($hours == 1 ? "" : "s");
+              } else {
+                  return $days . " day" . ($days == 1 ? "" : "s");
+              }
           }
           ?>
         </div>
@@ -133,10 +135,9 @@ $userId = $_SESSION['stdID'];
         <div class="profile">
           <div class="info">
             <?php // TODO: Return user's First Name
-            echo "<p>Good day 
+                echo "<p>Good day 
                   <b>$userId</b>
-                </p>";
-            ?>
+                </p>"; ?>
             <small class="text-muted">Student - BSIS201</small>
           </div>
           <div class="profile-photo">
@@ -148,12 +149,12 @@ $userId = $_SESSION['stdID'];
 
       <!-- Schedule list -->
       <div class="schedule">
-          <div class="schedule-header">
-            <h2>Schedule for Today</h2><small class="text-muted" id="currentDate"></small>
-            <a href="schedule.php">
+        <div class="schedule-header">
+          <h2>Schedule for Today</h2><small class="text-muted" id="currentDate"></small>
+          <a href="schedule.php">
             <span class="material-icons-sharp"> add </span>
           </a>
-          </div>
+        </div>
 
         <div class="schedule-list">
           <div class="icon">
@@ -194,13 +195,13 @@ $userId = $_SESSION['stdID'];
       <!-- End of schedule list -->
 
       <!-- Grades list -->
- <!-- Grades list -->
- <div class="grades">
-          <div class="grades-header">
-            <h2>Latest Grades</h2>
-            <a href="grades.php">
-            <h4 style="text-decoration: underline; cursor: pointer; color: #0E6106;">View all</h4> 
-          </div>
+      <div class="grades">
+        <div class="grades-header">
+          <h2>Latest Grades</h2>
+          <a href="grades.php">
+            <h4>View all</h4>
+          </a>
+        </div>
 
         <div class="grades-list">
           <div class="icon">
