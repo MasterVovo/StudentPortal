@@ -7,6 +7,16 @@ date_default_timezone_set("Asia/Manila");
 session_start();
 // Get the user ID from the session
 $userId = $_SESSION["stdID"];
+
+// Get the name of user in the database and store it in a variable
+$sql = "SELECT * FROM stdinfo WHERE stdId = ?";
+$stmt = $conn->prepare($sql);
+$stmt->bind_param("s", $userId);
+$stmt->execute();
+
+$result = $stmt->get_result();
+$row = $result->fetch_assoc();
+$name = $row["stdFName"];
 ?>
 
 <!DOCTYPE html>
@@ -135,9 +145,9 @@ $userId = $_SESSION["stdID"];
 
         <div class="profile">
           <div class="info">
-            <?php // TODO: Return user's First Name
+            <?php
                 echo "<p>Good day 
-                  <b>$userId</b>
+                  <b>$name</b>
                 </p>"; ?>
             <small class="text-muted">Student - BSIS201</small>
           </div>

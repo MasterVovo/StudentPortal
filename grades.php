@@ -12,7 +12,7 @@ require "sqlConnection/db_connect.php";
     <title>KLD Student Portal</title>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Sharp" rel="stylesheet" />
     <link rel="stylesheet" href="styles/dashboard.css" />
-    <link rel="stylesheet" href="grades.css" />
+    <link rel="stylesheet" href="styles/grades.css" />
   </head>
 
   <body>

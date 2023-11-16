@@ -35,8 +35,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
             unset($_SESSION["errorMessage"]); //Clear error message
 
-            header("Location: ../dashboard.php"); //Redirects to dashboard
-
             if (isset($_POST["rememberUser"])) {
                 //Check if checkbox is checked
                 //Generate tokens
@@ -65,6 +63,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 setcookie("rememberUser", $session, time() + 86400 * 3, "/");
             }
 
+            $sql = "SELECT * FROM stdinfo WHERE stdID = ?"; //SQL query
+            $stmt = $conn->prepare($sql); //Prepares the query
+            $stmt->bind_param("s", $stdID); //Binds parameters
+            $stmt->execute(); //Executes the query
+
+            $result = $stmt->get_result(); //Gets the result
+            $row = $result->fetch_assoc(); //Fetches the row
+
+            if ($row["stdGender"] == ""){
+                header("Location: ../registrationForm.php");
+                exit;
+            }
+            
+            header("Location: ../dashboard.php"); //Redirects to dashboard
             exit();
         } else {
             //Set error message
