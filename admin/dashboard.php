@@ -8,7 +8,7 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Sharp" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/admin-lte@3.1/dist/css/adminlte.min.css">
     <link rel="stylesheet" href="../styles/dashboard.css" />
-    <link rel="stylesheet" href="dashboard.css" />
+    <link rel="stylesheet" href="styles/dashboard.css" />
   </head>
 
   <body>
@@ -29,21 +29,21 @@
             <span class="material-icons-sharp"> account_circle </span>
             <h3>Account</h3>
           </a>
-          <a href="#">
+          <a href="../dashboard.html">
             <span class="material-icons-sharp"> home </span>
             <h3>Home</h3>
           </a>
-          <a href="#" class="active">
+          <a href="dashboard.php" class="active">
             <span class="material-icons-sharp"> space_dashboard </span>
             <h3>Dashboard</h3>
           </a>
-          <a href="database.html">
+          <a href="database.php">
             <span class="material-icons-sharp"> storage </span>
             <h3>Database</h3>
           </a>
-          <a href="#">
-            <span class="material-icons-sharp"> schedule </span>
-            <h3>Schedule</h3>
+          <a href="database.php">
+            <span class="material-icons-sharp"> auto_delete </span>
+            <h3>Archive</h3>
           </a>
           <a href="../logout.html">
             <span class="material-icons-sharp"> logout </span>
@@ -93,7 +93,7 @@
                 <i class="material-icons-sharp"> group </i>
               </div>
             </div>
-            <div class="small-box bg-success">
+            <div class="small-box bg-orange">
               <div class="inner">
                 <h3>1 | 50</h3>
                 <p>Teacher to Student <br>Ratio</p>
@@ -108,11 +108,9 @@
          <!-- Student Enrollment -->
         <div class="ann-container">
           
-          
-
           <div class="row">
             <div class="col-md-4 col-sm-6 col-12">
-              <div class="info-box bg-info">
+              <div class="info-box bg-lime">
                 <span class="info-box-icon"><i class="material-icons-sharp">group_add</i></span>
                 <div class="info-box-content">
                   <span class="info-box-text">Student Enrollment</span>
@@ -124,13 +122,11 @@
                   50% Increase From Last Year
                   </span>
                 </div>
-              
               </div>
-            
             </div>
             
             <div class="col-md-4 col-sm-6 col-12">
-              <div class="info-box bg-success">
+              <div class="info-box bg-teal">
                 <span class="info-box-icon"><i class="material-icons-sharp">loop</i></span>
                 <div class="info-box-content">
                   <span class="info-box-text">Student Retention</span>
@@ -148,7 +144,7 @@
             </div>
             
             <div class="col-md-4 col-sm-6 col-12">
-              <div class="info-box bg-info">
+              <div class="info-box bg-olive">
                 <span class="info-box-icon"><i class="material-icons-sharp">school</i></span>
                 <div class="info-box-content">
                   <span class="info-box-text">Graduated</span>
@@ -269,13 +265,8 @@
                 </tbody>
               </table>
             </div>
-          
           </div>
         </div>
-            
-          
-
-        
       </main>
       <!-- End of main content -->
       
@@ -303,96 +294,25 @@
         </div>
         <!-- End of navbar -->
 
-
-
-
-
-
-
-
-
-
-
-        
         <!-- Schedule list -->
         <div class="schedule">
           <div class="schedule-header">
-            <h2>Schedule for Today</h2><small class="text-muted">Friday: Oct 13</small>
-            <span class="material-icons-sharp"> add </span>
+            <h2>Status</h2>
           </div>
 
           <div class="schedule-list">
-            <div class="icon">
-              <span class="material-icons-sharp"> code </span>
-            </div>
+            <div class="right-chart-container"><canvas id="chart-visitors"></div>
             <div class="sched-title">
               <div class="info">
-                <h3>GEC1000 - Web Development</h3>
-                <small class="text_muted"> 08:00 AM - 12:00 PM </small>
+                <h3>No. of Visitors</h3>
+                <small class="text_muted"> 34 </small>
               </div>
             </div>
           </div>
-
-          <div class="schedule-list">
-            <div class="icon">
-              <span class="material-icons-sharp"> edit </span>
-            </div>
-            <div class="sched-title">
-              <div class="info">
-                <h3>GEC1000 - IT Infrastructure</h3>
-                <small class="text_muted"> 08:00 AM - 12:00 PM </small>
-              </div>
-            </div>
-          </div>
-
-          <div class="schedule-list">
-            <div class="icon">
-              <span class="material-icons-sharp"> edit </span>
-            </div>
-            <div class="sched-title">
-              <div class="info">
-                <h3>GEC1000 - Data Structure and Algorithm</h3>
-                <small class="text_muted"> 08:00 AM - 12:00 PM </small>
-              </div>
-            </div>
-          </div>
-        </div>
         <!-- End of schedule list -->
 
         <!-- Grades list -->
-        <div class="grades">
-          <div class="grades-header">
-            <h2>Midterm Grades</h2>
-          </div>
-
-          <div class="grades-list">
-            <div class="icon">
-              <span class="material-icons-sharp"> code </span>
-            </div>
-            <div class="subject-title">
-              <div class="info">
-                <h3>GEC1000 - Web Development</h3>
-              </div>
-              <div class="info">
-                <h2>1.25</h2>
-              </div>
-            </div>
-          </div>
-
-          <div class="grades-list">
-            <div class="icon">
-              <span class="material-icons-sharp"> edit </span>
-            </div>
-            <div class="subject-title">
-              <div class="info">
-                <h3>GEC1000 - IT Infrastructure</h3>
-              </div>
-              <div class="info">
-                <h2>1.25</h2>
-              </div>
-            </div>
-          </div>
-        </div>
+        
         <!-- End of grades list -->
       </div>
       <!-- End of right section -->
@@ -402,7 +322,6 @@
       <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
       <!-- AdminLTE for table widget card -->
       <script src="https://cdn.jsdelivr.net/npm/admin-lte@3.1/dist/js/adminlte.min.js"></script>
-      <script src="dashboard.js"></script>
+      <script src="scripts/dashboard-chart.js"></script>
   </body>
-
 </html>
