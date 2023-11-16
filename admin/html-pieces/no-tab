@@ -1,0 +1,10 @@
+<!-- Nav -->
+<div class="db-nav">
+    <a href="database.php?tab=stdAdd">Add Student</a>
+    <a href="database.php?tab=stdList">Student List</a>
+    <a href="database.php?tab=fctList">Faculty List</a>
+</div>
+
+<center style="display: flex; flex-direction: column;">
+<span style="font-size: 2rem; font-weight: 700; margin-top: 3rem; color: lightgray;">Select A Table</span>
+<div class="material-icons-sharp" style="font-size: 30rem; color: lightgray">storage</div></center>
