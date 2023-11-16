@@ -1,5 +1,5 @@
 <?php
-require "../sqlConnection/db_connect.php";
+require "../../sqlConnection/db_connect.php";
 
 $stdID = $_POST['stdID'];
 

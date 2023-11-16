@@ -1,5 +1,5 @@
 <?php
-require "../sqlConnection/db_connect.php";
+require "../../sqlConnection/db_connect.php";
 
 $sql = "SELECT * FROM archived_stdinfo;";
 $result = mysqli_query($conn, $sql);
