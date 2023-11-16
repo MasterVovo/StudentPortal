@@ -10,9 +10,7 @@ body{
 
 
 .box-area{
-    width: 28rem;
-    height: 13rem;
-    margin-bottom: 12rem;
+    
 }
 
 
@@ -20,7 +18,7 @@ body{
 
 /*------------ For small screens------------*/
 
-@media only screen and (max-width: 728px){
+/* @media only screen and (max-width: 728px){
 
 }
 
@@ -47,4 +45,4 @@ body{
         justify-content: absolute;
     }
     
-    }
+    } */
