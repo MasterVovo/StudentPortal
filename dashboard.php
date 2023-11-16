@@ -19,8 +19,6 @@ $userId = $_SESSION["stdID"];
   <link rel="shortcut icon" href="images/KLD LOGO.png" type="image/x-icon">
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Sharp" rel="stylesheet" />
   <link rel="stylesheet" href="styles/dashboard.css" />
-  <!-- <link rel="stylesheet" href="dashboardstyle.css" /> -->
-
 </head>
 
 <body>
@@ -73,26 +71,29 @@ $userId = $_SESSION["stdID"];
       <div class="ann-container">
         <div class="announcement">
           <?php
-          $sql =
-              "SELECT * FROM `tblannouncements` ORDER BY `announcementTime` DESC LIMIT 1"; // Get the latest announcement
+          $sql = "SELECT * FROM `tblannouncements` ORDER BY `announcementTime` DESC LIMIT 1"; // Get the latest announcement
           $result = mysqli_query($conn, $sql); // Execute the query
 
-          $row = mysqli_fetch_assoc($result); // Get the row
-          $title = $row["announcementTitle"]; // Get the title
-          $content = $row["announcementText"]; // Get the content
+          if($result->num_rows === 0){ // Check if there is no announcement
+              echo "<h2>No announcement yet</h2>";
+          } else {
+            $row = mysqli_fetch_assoc($result); // Get the row
+            $title = $row["announcementTitle"]; // Get the title
+            $content = $row["announcementText"]; // Get the content
 
-          $imageData = $row["announcementImage"]; // Get the image data
-          $image = base64_encode($imageData); // Encode the image
+            $imageData = $row["announcementImage"]; // Get the image data
+            $image = base64_encode($imageData); // Encode the image
 
-          $uploadTime = strtotime($row["announcementTime"]); // Get the upload time
-          $currentTime = time(); // Get the current time
-          $timeDifference = abs($currentTime - $uploadTime); // Calculate the time difference
-          $elapsedTime = formatTimeElapsed($timeDifference); // Format the time
+            $uploadTime = strtotime($row["announcementTime"]); // Get the upload time
+            $currentTime = time(); // Get the current time
+            $timeDifference = abs($currentTime - $uploadTime); // Calculate the time difference
+            $elapsedTime = formatTimeElapsed($timeDifference); // Format the time
 
-          echo "<img src='data:image/jpeg;base64,$image'/>
-              <center><h2>$title</h2></center>
-              <p>$elapsedTime ago</p>
-              <h3>$content</h3><small>Read More</small>"; // Display the announcement
+            echo "<img src='data:image/jpeg;base64,$image'/>
+                <center><h2>$title</h2></center>
+                <p>$elapsedTime ago</p>
+                <h3>$content</h3><small>Read More</small>"; // Display the announcement
+          }
 
           mysqli_close($conn); // Close the connection
 
