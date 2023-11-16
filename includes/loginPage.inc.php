@@ -31,6 +31,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if ($stdPass == $row["userPass"]) { //Checks if password is correct
             //Sets the session variables
             $_SESSION["stdID"] = $row["schoolID"]; 
+            $_SESSION["userType"] = $row["userType"]; 
             $_SESSION["errorMessage"] = "Login Success";
 
             unset($_SESSION["errorMessage"]); //Clear error message

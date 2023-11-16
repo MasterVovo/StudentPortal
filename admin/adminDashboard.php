@@ -5,6 +5,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>KLD Student Portal</title>
+    <link rel="shortcut icon" href="../images/KLD LOGO.png" type="image/x-icon">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Sharp" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/admin-lte@3.1/dist/css/adminlte.min.css">
     <link rel="stylesheet" href="../styles/dashboard.css" />
@@ -29,11 +30,11 @@
             <span class="material-icons-sharp"> account_circle </span>
             <h3>Account</h3>
           </a>
-          <a href="../dashboard.html">
+          <a href="../dashboard.php">
             <span class="material-icons-sharp"> home </span>
             <h3>Home</h3>
           </a>
-          <a href="dashboard.php" class="active">
+          <a href="adminDashboard.php" class="active">
             <span class="material-icons-sharp"> space_dashboard </span>
             <h3>Dashboard</h3>
           </a>
@@ -41,7 +42,7 @@
             <span class="material-icons-sharp"> storage </span>
             <h3>Database</h3>
           </a>
-          <a href="database.php">
+          <a href="archive.php">
             <span class="material-icons-sharp"> auto_delete </span>
             <h3>Archive</h3>
           </a>

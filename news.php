@@ -1,4 +1,12 @@
-<?php require "sqlConnection/db_connect.php"; // Connect to the database ?>
+<?php require "sqlConnection/db_connect.php"; // Connect to the database 
+session_start();
+// Get the user ID from the session
+$userId = $_SESSION["stdID"];
+// Get the user type from the session
+$userType = $_SESSION["userType"];
+// Get the name of user
+$name = $_SESSION["stdFName"];
+?>
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -45,6 +53,15 @@
             <span class="material-icons-sharp"> schedule </span>
             <h3>Schedule</h3>
           </a>
+          <?php
+            if ($userType == "admin") {
+              echo 
+              "<a href='admin/adminDashboard.php'>
+                <span class='material-icons-sharp'> admin_panel_settings </span>
+                <h3>Admin</h3>
+              </a>";
+            }
+          ?>
           <a href="logout.html">
             <span class="material-icons-sharp"> logout </span>
             <h3>Logout</h3>
@@ -128,7 +145,10 @@
 
           <div class="profile">
             <div class="info">
-              <p>Good day <b>Kolehiyan</b></p>
+              <?php
+                echo "<p>Good day 
+                  <b>$name</b>
+                </p>"; ?>
               <small class="text-muted">Student - BSIS201</small>
             </div>
             <div class="profile-photo">

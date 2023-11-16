@@ -7,6 +7,8 @@ date_default_timezone_set("Asia/Manila");
 session_start();
 // Get the user ID from the session
 $userId = $_SESSION["stdID"];
+// Get the user type from the session
+$userType = $_SESSION["userType"];
 
 // Get the name of user in the database and store it in a variable
 $sql = "SELECT * FROM stdinfo WHERE stdId = ?";
@@ -16,7 +18,7 @@ $stmt->execute();
 
 $result = $stmt->get_result();
 $row = $result->fetch_assoc();
-$name = $row["stdFName"];
+$_SESSION["stdFName"] = $name = $row["stdFName"];
 ?>
 
 <!DOCTYPE html>
@@ -65,6 +67,15 @@ $name = $row["stdFName"];
           <span class="material-icons-sharp"> schedule </span>
           <h3>Schedule</h3>
         </a>
+        <?php
+          if ($userType == "admin") {
+            echo 
+            "<a href='admin/adminDashboard.php'>
+              <span class='material-icons-sharp'> admin_panel_settings </span>
+              <h3>Admin</h3>
+            </a>";
+          }
+        ?>
         <a href="logout.html">
           <span class="material-icons-sharp"> logout </span>
           <h3>Logout</h3>

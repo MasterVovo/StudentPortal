@@ -11,6 +11,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>KLD Student Portal</title>
+    <link rel="shortcut icon" href="../images/KLD LOGO.png" type="image/x-icon">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Sharp" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jsgrid/1.5.3/jsgrid-theme.min.css" integrity="sha512-jx8R09cplZpW0xiMuNFEyJYiGXJM85GUL+ax5G3NlZT3w6qE7QgxR4/KE1YXhKxijdVTDNcQ7y6AJCtSpRnpGg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jsgrid/1.5.3/jsgrid.min.css" integrity="sha512-3Epqkjaaaxqq/lt5RLJsTzP6cCIFyipVRcY4BcPfjOiGM1ZyFCv4HHeWS7eCPVaAigY3Ha3rhRgOsWaWIClqQQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -38,11 +39,11 @@
             <span class="material-icons-sharp"> account_circle </span>
             <h3>Account</h3>
           </a>
-          <a href="../dashboard.html">
+          <a href="../dashboard.php">
             <span class="material-icons-sharp"> home </span>
             <h3>Home</h3>
           </a>
-          <a href="dashboard.php">
+          <a href="adminDashboard.php">
             <span class="material-icons-sharp"> space_dashboard </span>
             <h3>Dashboard</h3>
           </a>
