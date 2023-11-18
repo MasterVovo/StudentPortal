@@ -103,9 +103,6 @@ let grid = $('#grid-table').jsGrid({
             title: "Email",
             type: "text",
             validate: "required"
-        },
-        {
-            type: "control"
         }
     ]
 }).data("JSGrid");

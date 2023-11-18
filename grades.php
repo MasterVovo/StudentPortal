@@ -75,41 +75,7 @@ $name = $_SESSION["stdFName"];
       <!-- End of sidebar -->
 
     <!-- NAV BAR -->
-   <header>
-        <div class="nav-header">
-        </div>
-        <div class="nav-container">
-          <div class="announcement">
-          <h2>Grade Table</h2>
-
-<table>
-    <thead>
-        <tr>
-            <th>Subject</th>
-            <th>Midterm Grade</th>
-            <th>Final Grade</th>
-            <th>Overall Grade</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td>Mathematics</td>
-            <td>90</td>
-            <td>85</td>
-            <td>88.5</td>
-        </tr>
-        <tr>
-            <td>English</td>
-            <td>85</td>
-            <td>88</td>
-            <td>86.5</td>
-        </tr>
-        <!-- Add more rows for other subjects -->
-    </tbody>
-</table>
-          </div>
-        </div>
-   </header>
+   
     
 <!-- Main content -->
       <main>
@@ -146,7 +112,47 @@ $name = $_SESSION["stdFName"];
 </table>
           </div>
         </div>
+
+        <header>
+        <div class="nav-header">
+        </div>
+        <div class="nav-container">
+          <div class="announcement">
+          <h2>Grade Table</h2>
+
+<table>
+    <thead>
+        <tr>
+            <th>Subject</th>
+            <th>Midterm Grade</th>
+            <th>Final Grade</th>
+            <th>Overall Grade</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>Mathematics</td>
+            <td>90</td>
+            <td>85</td>
+            <td>88.5</td>
+        </tr>
+        <tr>
+            <td>English</td>
+            <td>85</td>
+            <td>88</td>
+            <td>86.5</td>
+        </tr>
+        <!-- Add more rows for other subjects -->
+    </tbody>
+</table>
+          </div>
+        </div>
+   </header>
       </main>
+
+      
+
+      
       <!-- End of main content -->
 
       <!-- Right section -->
