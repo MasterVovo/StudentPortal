@@ -25,25 +25,26 @@ foreach ($dataArray as $item) {
 
     // Check if the operation was successful
     if ($stmt->affected_rows > 0) {
-        // Echo a success message
-        echo json_encode(['success' => true, 'message' => 'Data inserted successfully']);
+        $stmt = $conn->prepare("INSERT INTO userinfo (schoolID, userPass, userType) VALUES (?, ?, ?)");
+        $stmt->bind_param("sss", $stdID, $userPass, $userType);
+        $stmt->execute();
+        
+        // Check if the operation was successful
+        if ($stmt->affected_rows > 0) {
+            // Echo a success message
+            http_response_code(200);
+            echo json_encode(['success' => true, 'message' => 'Data inserted successfully']);
+        } else {
+            // Echo an error message
+            http_response_code(400);
+            echo json_encode(['success' => false, 'message' => 'Error inserting to userinfo']);
+        }
     } else {
         // Echo an error message
+        http_response_code(400);
         echo json_encode(['success' => false, 'message' => 'Error inserting to stdinfo']);
     }
 
-    $stmt = $conn->prepare("INSERT INTO userinfo (schoolID, userPass, userType) VALUES (?, ?, ?)");
-    $stmt->bind_param("sss", $stdID, $userPass, $userType);
-    $stmt->execute();
     
-    // Check if the operation was successful
-    if ($stmt->affected_rows > 0) {
-        // Echo a success message
-        echo json_encode(['success' => true, 'message' => 'Data inserted successfully']);
-    } else {
-        // Echo an error message
-        echo json_encode(['success' => false, 'message' => 'Error inserting to userinfo']);
-    }
 }
 
-?>
