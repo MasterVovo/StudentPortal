@@ -29,10 +29,10 @@ foreach ($dataArray as $item) {
         echo json_encode(['success' => true, 'message' => 'Data inserted successfully']);
     } else {
         // Echo an error message
-        echo json_encode(['success' => false, 'message' => 'Error inserting data']);
+        echo json_encode(['success' => false, 'message' => 'Error inserting to stdinfo']);
     }
 
-    $stmt = $conn->prepare("INSERT INTO userinfo (schoodID, userPass, userType) VALUES (?, ?, ?)");
+    $stmt = $conn->prepare("INSERT INTO userinfo (schoolID, userPass, userType) VALUES (?, ?, ?)");
     $stmt->bind_param("sss", $stdID, $userPass, $userType);
     $stmt->execute();
     
@@ -42,7 +42,7 @@ foreach ($dataArray as $item) {
         echo json_encode(['success' => true, 'message' => 'Data inserted successfully']);
     } else {
         // Echo an error message
-        echo json_encode(['success' => false, 'message' => 'Error inserting data']);
+        echo json_encode(['success' => false, 'message' => 'Error inserting to userinfo']);
     }
 }
 
