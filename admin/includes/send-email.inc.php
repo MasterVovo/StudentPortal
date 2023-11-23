@@ -29,8 +29,6 @@ function sendEmail($email, $id, $password, $name) {
     
     We encourage you to explore the various features of the Student Portal, including:
     
-    Access to course materials
-    Examination schedules
     Personalized academic information
     Important announcements
     Thank you for being part of our academic community. We look forward to supporting you on your educational journey.
@@ -63,11 +61,5 @@ function sendEmail($email, $id, $password, $name) {
 
     $mail->send();
 
-    echo 
-    "
-        <script>
-            alert('Sent Successfully');
-            document.location.href = 'index.php';
-        </script>
-    ";
+    echo "Sent Successfully";
 }
