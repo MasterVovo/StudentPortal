@@ -61,6 +61,4 @@ function sendEmail($email, $id, $password, $name) {
     $mail->Body = $emailText;
 
     $mail->send();
-
-    echo "Sent Successfully";
 }
