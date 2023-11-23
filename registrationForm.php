@@ -4,10 +4,14 @@ $stdId = $_SESSION['stdID'] ?? '';
 
 include "sqlConnection/db_connect.php";
 
-$sql = "SELECT stdEmail FROM stdinfo WHERE id ='" . $_SESSION['stdID'] . "'";
+$sql = "SELECT stdFName, stdMName, stdLName, stdEmail FROM stdinfo WHERE stdId = '" . $stdId . "'";
 $result = mysqli_query($conn, $sql);
 $row = mysqli_fetch_assoc($result);
-$email = $row['emailadd'];
+
+$fname = $row['stdFName'];
+$mname = $row['stdMName'];
+$lname = $row['stdLName'];
+$email = $row['stdEmail'];
 
 if (isset($_POST["btnSubmit"])) {
     if (
@@ -113,24 +117,24 @@ if (isset($_POST["btnSubmit"])) {
 
       <div class="input-box">
         <span class="details">ID Number</span>
-        <input type="text" name="stdId" id="stdId" placeholder="KLD-00-000000" value="<?php echo $stdId; ?>" readonly>
+        <input type="text" name="stdId" id="stdId" placeholder="KLD-##-######" value="<?php echo $stdId; ?>" readonly>
         <script>console.log(document.getElementById("stdID").value);</script>
       </div>
 
       <div class="column">
         <div class="input-box">
           <label>First Name<span class = "required">*</span></label>
-          <input type="text" id=firstname name=Firstname placeholder="Enter first name" required/>
+          <input type="text" id=firstname name=Firstname placeholder="Enter first name" value="<?php echo $fname; ?>" required/>
         </div>
 
        <div class="input-box">
           <label>Middle Name</label>
-          <input type="text" name=Middlename placeholder="Enter middle name"  />
+          <input type="text" name=Middlename placeholder="Enter middle name" value="<?php echo $mname; ?>" />
         </div>
 
         <div class="input-box">
           <label>Last Name<span class = "required">*</span></label>
-          <input type="text" name=Lastname placeholder="Enter last name" required/>
+          <input type="text" name=Lastname placeholder="Enter last name" value="<?php echo $lname; ?>" required/>
         </div>
       </div>
 

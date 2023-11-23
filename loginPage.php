@@ -1,6 +1,4 @@
 <?php 
-$_SESSION['stdID'] = $stdId;
-echo $_SESSION['stdID'];
 require_once "includes/autoLogin.inc.php"; //Checks for session for auto login ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -35,36 +33,11 @@ require_once "includes/autoLogin.inc.php"; //Checks for session for auto login ?
           <input type="text" name="stdId" id="stdId" placeholder="KLD-##-######" required />
           <i class="bx bxs-user"></i>
         </div>
-  <body>
-    <!-- LOGIN PAGE-->
-    <div class="wrapper">
-      <form action="includes\loginPage.inc.php" method="POST">
-        <center>
-          <img src="images/KLD LOGO.png" alt="KLD LOGO" />
-        </center>
-        <h1>KLD STUDENT PORTAL</h1>
-        <div class="input-box">
-          <input type="text" name="stdId" id="stdId" placeholder="KLD-##-######" required />
-          <i class="bx bxs-user"></i>
-        </div>
-
         <div class="input-box">
           <input type="password" name="stdPass" id="stdPass" placeholder="Password" required />
           <i class="bx bxs-lock-alt"></i>
         </div>
-        <div class="input-box">
-          <input type="password" name="stdPass" id="stdPass" placeholder="Password" required />
-          <i class="bx bxs-lock-alt"></i>
-        </div>
-
-        <div class="remember-forgot">
-          <label><input type="checkbox" name="rememberUser" id="remeberUser" /> Remember me</label>
-          <a href="resetPass.html">Forgot password?</a>
-        </div>
-        <button type="submit" class="btn" onclick="showToast()">Login</button>
-        <br />
-      </form>
-    </div>
+        
         <div class="remember-forgot">
           <label><input type="checkbox" name="rememberUser" id="remeberUser" /> Remember me</label>
           <a href="resetPass.html">Forgot password?</a>
