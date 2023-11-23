@@ -25,6 +25,10 @@ $(document).ready(function () {
         data: { jsonData: jsonData, },
         dataType: "json",
         success: function (response) {
+            Toast.fire({
+                icon: 'success',
+                title: 'Student Data Uploaded.'
+            });
             console.log("Data inserted successfully:", response);
         },
         error: function (error) {
