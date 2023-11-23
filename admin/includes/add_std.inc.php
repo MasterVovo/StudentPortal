@@ -1,5 +1,6 @@
 <?php
 require "../../sqlConnection/db_connect.php";
+require "generate-pass.inc.php";
 
 $jsonData = $_POST['jsonData'];
 
@@ -14,9 +15,25 @@ foreach ($dataArray as $item) {
     $stdLName = $item['stdLName'];
     $stdCourse = $item['stdCourse'];
     $stdEmail = $item['stdEmail'];
+
+    $userPass = generatePass();
+    $userType = 'student';
     
     $stmt = $conn->prepare("INSERT INTO stdinfo (stdID, stdFName, stdMName, stdLName, stdCourse, stdEmail) VALUES (?, ?, ?, ?, ?, ?)");
     $stmt->bind_param("ssssss", $stdID, $stdFName, $stdMName, $stdLName, $stdCourse, $stdEmail);
+    $stmt->execute();
+
+    // Check if the operation was successful
+    if ($stmt->affected_rows > 0) {
+        // Echo a success message
+        echo json_encode(['success' => true, 'message' => 'Data inserted successfully']);
+    } else {
+        // Echo an error message
+        echo json_encode(['success' => false, 'message' => 'Error inserting data']);
+    }
+
+    $stmt = $conn->prepare("INSERT INTO userinfo (schoodID, userPass, userType) VALUES (?, ?, ?)");
+    $stmt->bind_param("sss", $stdID, $userPass, $userType);
     $stmt->execute();
     
     // Check if the operation was successful
