@@ -1,4 +1,11 @@
 $(document).ready(function () {
+    var Toast = Swal.mixin({
+        toast: true,
+        position: 'top-end',
+        showConfirmButton: false,
+        timer: 3000
+    });
+    
     // This will run if the upload button is clicked
     $("#uploadBtn").click(function (e) {
       e.preventDefault();
@@ -21,6 +28,10 @@ $(document).ready(function () {
             console.log("Data inserted successfully:", response);
         },
         error: function (error) {
+            Toast.fire({
+                icon: 'error',
+                title: "An error occured."
+            });
             console.error("Error inserting data:", error);
         }
         });
