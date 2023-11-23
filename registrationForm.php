@@ -1,72 +1,95 @@
 <?php
-include("db_connect.php");
+session_start();
+$stdId = $_SESSION['stdID'] ?? '';
 
-$notif = "";
+include "sqlConnection/db_connect.php";
 
-if(isset($_POST["btnSubmit"])){
-    $notif= "";
-    if(!empty($_POST["stdId"]) AND!empty($_POST["Firstname"]) 
-    AND !empty($_POST["Lastname"]) AND !empty($_POST["gender"]) 
-    AND !empty($_POST["Occupation"]) AND !empty($_POST["emailadd"]) 
-    AND !empty($_POST["phonenum"]) AND !empty($_POST["birthdate"]) 
-    AND !empty($_POST[ "address"]) AND !empty($_POST["city"])
-    AND !empty($_POST["region"]) AND !empty($_POST["barangay"]) 
-    AND !empty($_POST["father_name"]) AND !empty($_POST["mother_name"]) 
-    AND !empty($_POST["Emergencynum"]) AND !empty($_POST["Emergencynum"])
-    AND !empty($_POST["Occupation"]) AND !empty($_POST["Occupation"]) 
-    AND !empty($_POST["Parents_num"]) AND !empty($_POST["Fullname"]) 
-    AND !empty($_POST["Emergencynum"]) )
-    
-    {
-        if(!preg_match("/[\'^$&{}<>;=!]/", $_POST["Firstname"]))
+$sql = "SELECT stdEmail FROM stdinfo WHERE id ='" . $_SESSION['stdID'] . "'";
+$result = mysqli_query($conn, $sql);
+$row = mysqli_fetch_assoc($result);
+$email = $row['emailadd'];
 
-        $inputId = $_POST["stdId"];
-        $inputFirstname = $_POST["Firstname"];
-        $inputMiddlename = $_POST["Middlename"];
-        $inputLastname = $_POST["Lastname"];
-        $inputGender = $_POST["gender"];
-        $inputEmail = $_POST["emailadd"];
-        $inputPhonenumber = $_POST["phonenum"];
-        $inputBirthdate = $_POST["birthdate"];
-        $inputAddress = $_POST["address"];
-        $inputCity = $_POST["city"];
-        $inputRegion = $_POST["region"];
-        $inputBarangay = $_POST["barangay"];
-        $inputFathername = $_POST["father_name"];
-        $inputMothername = $_POST["mother_name"];
-        $inputFathernumber = $_POST["Emergencynum"];
-        $inputMothernumber = $_POST["Emergencynum"];
-        $inputFatherJob = $_POST["Occupation"];
-        $inputMotherJob = $_POST["Occupation"];
-        $inputParentsnumber = $_POST["Parents_num"];
-        $inputFullname = $_POST["Fullname"];
-        $inputEmergencynumber = $_POST["Emergencynum"];
+if (isset($_POST["btnSubmit"])) {
+    if (
+        !empty($_POST["stdId"]) &&
+        !empty($_POST["Firstname"]) &&
+        !empty($_POST["Lastname"]) &&
+        !empty($_POST["gender"]) &&
+        !empty($_POST["emailadd"]) &&
+        !empty($_POST["phonenum"]) &&
+        !empty($_POST["birthdate"]) &&
+        !empty($_POST["address"]) &&
+        !empty($_POST["city"]) &&
+        !empty($_POST["region"]) &&
+        !empty($_POST["barangay"]) &&
+        !empty($_POST["father_name"]) &&
+        !empty($_POST["mother_name"]) &&
+        !empty($_POST["fatherNum"]) &&
+        !empty($_POST["motherNum"]) &&
+        !empty($_POST["fatherJob"]) &&
+        !empty($_POST["motherJob"]) &&
+        !empty($_POST["parentAdd"]) &&
+        !empty($_POST["EmerName"]) &&
+        !empty($_POST["EmerRel"]) &&
+        !empty($_POST["EmergencyNum"])
+        )
+     {
+      if (preg_match("/^\d{11}$/", $_POST["phonenum"]) &&
+      preg_match("/^\d{11}$/", $_POST["fatherNum"]) &&
+      preg_match("/^\d{11}$/", $_POST["motherNum"]) &&
+      preg_match("/^\d{11}$/", $_POST["EmergencyNum"]))
 
-        $inputId = mysqli_real_escape_string($conn, $_POST["stdId"]);
-        $checkId = mysqli_query($conn, "SELECT stdID FROM stdinfo WHERE stdID = '$inputId'");
-        $numberOfUser = mysqli_num_rows($checkId);
+            $inputId = mysqli_real_escape_string($conn, $_POST["stdId"]);
+            $checkId = mysqli_query(
+                $conn,
+                "SELECT stdID FROM stdinfo WHERE stdID = '$inputId'"
+            );
+            $numberOfUser = mysqli_num_rows($checkId);
 
-        $saveRecord = $conn->prepare("INSERT INTO stdinfo (stdID, stdFName, stdMName, stdLName, 
+            $saveRecord = $conn->prepare("INSERT INTO stdinfo (stdID, stdFName, stdMName, stdLName, 
         stdBirth, stdGender, stdImage, stdEmail, stdPhoneNum, stdStreet, stdCity, stdProvince, stdBrgy,
         stdFatherName, stdFatherPhone, stdFatherJob, stdMotherName, stdMotherPhone, stdMotherJob, 
         stdParentAddr, stdEmerName, stdEmerRel, stdEmerPhone, stdEmerBlood) 
         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
 
-            $saveRecord->bind_param("sssssbssssssssssssssssss", $inputId, $inputFirstname, $inputMiddlename, 
-            $inputLastname, $inputBirthdate, $inputGender, $inputImage, $inputEmail, $inputPhonenumber, 
-            $inputAddress, $inputCity, $inputRegion, $inputBarangay, $inputFathername, $inputFathernumber, 
-            $inputFatherJob,$inputMothername, $inputMothernumber,  $inputMotherJob, $inputParentsnumber,
-            $inputFullname, $inputRelationship, $inputEmergencynumber, $inputBloodType);
+            $saveRecord->bind_param(
+                "ssssssssssssssssssssssss",
+                $inputId,
+                $inputFirstname,
+                $inputMiddlename,
+                $inputLastname,
+                $inputBirthdate,
+                $inputGender,
+                $inputImage,
+                $inputEmail,
+                $inputPhonenumber,
+                $inputAddress,
+                $inputCity,
+                $inputRegion,
+                $inputBarangay,
+                $inputFathername,
+                $inputFathernumber,
+                $inputFatherJob,
+                $inputMothername,
+                $inputMothernumber,
+                $inputMotherJob,
+                $inputParentsnumber,
+                $inputFullname,
+                $inputRelationship,
+                $inputEmergencynumber,
+                $inputBloodType
+            );
 
             $saveRecord->execute();
             $saveRecord->close();
             $conn->close();
-    }
 
+            header("Location: dashboard.php");
+        }
+        else {
+          $notif = "Please make sure that phone numbers are exactly 11 digits long.";
+      }
     }
-else{
-    $notif = "";
-}
 ?>
 
 <!DOCTYPE html>
@@ -78,26 +101,20 @@ else{
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Registration Form</title>
   <link rel="stylesheet" href="styles/registrationForm.css">
-
-
 </head>
 
 <body>
-<div>
-    <?php
-    
-    ?>
-</div>
   <!-- REGISTRATION PAGE  -->
   <div class="container">
-    <form action="registrationForm.php"  class= "form" method = "POST"> 
+    <form action="registrationForm.php" class = "form" method = "POST"> 
       <header>REGISTRATION FORM</header>
-      <span class = "primary"><?php echo $notif;?></span>
+      <span class = "primary"></span>
       <h2>Personal Information</h2>
 
       <div class="input-box">
         <span class="details">ID Number</span>
-        <input type="text" name="stdId" id="stdId" placeholder="KLD-00-000000" >
+        <input type="text" name="stdId" id="stdId" placeholder="KLD-00-000000" value="<?php echo $stdId; ?>" readonly>
+        <script>console.log(document.getElementById("stdID").value);</script>
       </div>
 
       <div class="column">
@@ -122,15 +139,15 @@ else{
         <h3>Gender<span class = "required">*</span></h3>
         <div class="gender-option">
           <div class="gender">
-            <input type="radio" id="check-male" name="gender" required/>
+            <input type="radio" id="check-male" name="gender" value="Male" required/>
             <label for="check-male">Male</label>
           </div>
           <div class="gender">
-            <input type="radio" id="check-female" name="gender" required/>
+            <input type="radio" id="check-female" name="gender" value="Female" required/>
             <label for="check-female">Female</label>
           </div>
           <div class="gender">
-            <input type="radio" id="check-other" name="gender" required/>
+            <input type="radio" id="check-other" name="gender" value="PNS" required/>
             <label for="check-other">Prefer not to say</label>
           </div>
         </div>
@@ -153,7 +170,7 @@ else{
       <h2>Contact Information</h2>
       <div class="input-box">
         <label>Email Address<span class = "required">*</span></label>
-        <input type="text" name=emailadd placeholder="Enter email address"  required/>
+        <input type="text" name=emailadd placeholder="Enter email address" value="<?php echo $email; ?>"  required/>
       </div>
 
       <div class="column">
@@ -197,30 +214,30 @@ else{
         <div class="column">
           <div class="input-box">
             <label>Contact Number<span class = "required">*</span></label>
-            <input type="text" name=Emergencynum placeholder="Emergency contact" required/>
+            <input type="text" name=fatherNum placeholder="Emergency contact" required/>
           </div>
 
           <div class="input-box">
             <label>Contact Number<span class = "required">*</span></label>
-            <input type="text" name=Emergencynum placeholder="Emergency contact"  required/>
+            <input type="text" name=motherNum placeholder="Emergency contact"  required/>
           </div>
         </div>
 
         <div class="column">
           <div class="input-box">
             <label>Occupation<span class = "required">*</span></label>
-            <input type="text" name=Occupation placeholder="Occupation"  required/>
+            <input type="text" name=fatherJob placeholder="Occupation"  required/>
           </div>
 
           <div class="input-box">
             <label>Occupation<span class = "required">*</span></label>
-            <input type="text" name=Occupation placeholder="Occupation" required/>
+            <input type="text" name=motherJob placeholder="Occupation" required/>
           </div>
         </div>
 
         <div class="input-box">
           <label>Parents Home Address<span class = "required">*</span></label>
-          <input type="text" name=Parents_num placeholder="Enter Address"  required/>
+          <input type="text" name=parentAdd placeholder="Enter Address"  required/>
         </div>
         <br>
 
@@ -230,12 +247,12 @@ else{
         <div class="column">
           <div class="input-box">
             <label>Name<span class = "required">*</span></label>
-            <input type="text" name=Fullname placeholder="Full name" required/>
+            <input type="text" name="EmerName" placeholder="Full name" required/>
           </div>
           <div class="input-box">
-            <label>Relationship<span class = "required">*</span></label>
+            <label>Relationship<span class ="required">*</span></label>
             <div class="select-box" required>
-              <select name = Relationship>
+              <select name ="EmerRel">
                 <option hidden>Relationship</option>
                 <option>Parent</option>
                 <option>Spouse</option>
@@ -249,21 +266,21 @@ else{
         </div>
         <div class="input-box">
           <label>Contact Number<span class = "required">*</span></label>
-          <input type="text" name=Emergencynum placeholder="Emergency contact"  required/>
+          <input type="text" name="EmergencyNum" placeholder="Emergency contact"  required/>
         </div>
         <div class="input-box">
           <label>Blood Type</label>
           <div class="select-box">
-            <select name =Bloodtype>
+            <select name="Bloodtype">
               <option hidden>Blood Type</option>
-              <option>A Positive (A+)</option>
-              <option>A Negative (A-)</option>
-              <option>B Positive (B+)</option>
-              <option>B Negative (B-)</option>
-              <option>AB Positive (AB+)</option>
-              <option>AB Negative (AB-)</option>
-              <option>O Positive (O+)</option>
-              <option>O Negative (O-)</option>
+              <option value="A+">A Positive (A+)</option>
+              <option value="A-">A Negative (A-)</option>
+              <option value="B+">B Positive (B+)</option>
+              <option value="B-">B Negative (B-)</option>
+              <option value="AB+">AB Positive (AB+)</option>
+              <option value="AB-">AB Negative (AB-)</option>
+              <option value="O+">O Positive (O+)</option>
+              <option value="O-">O Negative (O-)</option>
             </select>
           </div>
         </div>
