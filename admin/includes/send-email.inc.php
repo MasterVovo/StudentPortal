@@ -24,7 +24,8 @@ function sendEmail($email, $id, $password, $name) {
     
     Login URL: %s
     Use your provided Student ID and the temporary password to log in.
-    You will be prompted to change your password upon your first login. Choose a strong and secure password.
+    You will be prompted to complete your information upon your first login. 
+    You should change your password after logging in. Choose a strong and secure password.
     If you have any issues or questions regarding your login credentials, please contact our support team at %s.
     
     We encourage you to explore the various features of the Student Portal, including:

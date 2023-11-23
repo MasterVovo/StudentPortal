@@ -18,6 +18,7 @@ foreach ($dataArray as $item) {
     $stdEmail = $item['stdEmail'];
 
     $userPass = generatePass();
+    $hashedPass = password_hash($userPass, PASSWORD_DEFAULT);
     $userType = 'student';
     
     $stmt = $conn->prepare("INSERT INTO stdinfo (stdID, stdFName, stdMName, stdLName, stdCourse, stdEmail) VALUES (?, ?, ?, ?, ?, ?)");
@@ -27,7 +28,7 @@ foreach ($dataArray as $item) {
     // Check if the operation was successful
     if ($stmt->affected_rows > 0) {
         $stmt = $conn->prepare("INSERT INTO userinfo (schoolID, userPass, userType) VALUES (?, ?, ?)");
-        $stmt->bind_param("sss", $stdID, $userPass, $userType);
+        $stmt->bind_param("sss", $stdID, $hashedPass, $userType);
         $stmt->execute();
         
         // Check if the operation was successful
