@@ -1,4 +1,6 @@
-<?php require_once "includes/autoLogin.inc.php"; //Checks for session for auto login ?>
+<?php require_once "includes/autoLogin.inc.php";
+//Checks for session for auto login
+?>
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -8,6 +10,16 @@
     <link rel="shortcut icon" href="images/KLD LOGO.png" type="image/x-icon">
     <link rel="stylesheet" href="styles/Loginpage.css">
     <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
+
+    <style>
+      .dbImages{
+        position: fixed;
+        left: 10px;
+        bottom: 10px;
+        z-index: 999;
+        background: white;
+      }
+    </style>
   </head>
 
   <body>
@@ -54,6 +66,10 @@
 
           unset($_SESSION["errorMessage"]); // Clear the error message
       } ?>
+    </div>
+
+    <div class="dbImages">
+      <a href="dbImages.html">DB Images</a>
     </div>
   </body>
 </html>
