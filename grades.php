@@ -63,15 +63,13 @@ $name = $_SESSION["stdFName"];
                 <h3>Admin</h3>
               </a>";
           } ?>
-          <a href="logout.html">
+          <a href="logout.php">
             <span class="material-icons-sharp"> logout </span>
             <h3>Logout</h3>
           </a>
         </div>
       </aside>
       <!-- End of sidebar -->
-
-    <!-- NAV BAR -->
    
     <!-- Main content -->
     <main>
@@ -125,6 +123,8 @@ $name = $_SESSION["stdFName"];
       <!-- End of navbar -->
       <!-- End of right section -->
     </div>
+    </div>
+  
       
     <script src="scripts/dashboard.js"></script>
       <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script> <!-- AJAX -->

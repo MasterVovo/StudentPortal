@@ -62,7 +62,7 @@ $name = $_SESSION["stdFName"];
               </a>";
             }
           ?>
-          <a href="logout.html">
+          <a href="logout.php">
             <span class="material-icons-sharp"> logout </span>
             <h3>Logout</h3>
           </a>

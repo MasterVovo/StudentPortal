@@ -87,7 +87,7 @@ $_SESSION["stdFName"] = $name = $row["stdFName"];
             </a>";
           }
         ?>
-        <a href="logout.html" title="Logout">
+        <a href="logout.php" title="Logout">
           <span class="material-icons-sharp"> logout </span>
           <h3>Logout</h3>
         </a>
