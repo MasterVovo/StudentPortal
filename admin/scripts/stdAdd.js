@@ -5,6 +5,14 @@ $(document).ready(function () {
         showConfirmButton: false,
         timer: 3000
     });
+
+    $("#excelFile").change(function() {
+        if (this.files.length > 0) {
+            $("#uploadBtn").removeAttr("disabled");
+        } else {
+            $("#uploadBtn").attr("disabled", "disabled");
+        }
+    });
     
     // This will run if the upload button is clicked
     $("#uploadBtn").click(function (e) {
@@ -69,6 +77,7 @@ let grid = $('#grid-table').jsGrid({
                 processData: false, // tell jQuery not to process the data
                 contentType: false, // tell jQuery not to set contentType
                 success: function (data) {
+                    $("#uploadToDB").removeAttr("disabled");
                     return data;
                 },
             });
