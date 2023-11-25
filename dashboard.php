@@ -7,6 +7,17 @@ date_default_timezone_set("Asia/Manila");
 session_start();
 // Get the user ID from the session
 $userId = $_SESSION["stdID"];
+// Check if the user type is not set (For auto login)
+if (!isset($_SESSION["userType"])) { 
+  $sql = "SELECT * FROM userinfo WHERE schoolID = ?";
+  $stmt = $conn->prepare($sql);
+  $stmt->bind_param("s", $userId);
+  $stmt->execute();
+  $result = $stmt->get_result();
+
+  $row = $result->fetch_assoc();
+  $_SESSION["userType"] = $row["userType"]; // Set the user type in the session
+}
 // Get the user type from the session
 $userType = $_SESSION["userType"];
 

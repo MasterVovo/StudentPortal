@@ -57,15 +57,12 @@ $name = $_SESSION["stdFName"];
             <span class="material-icons-sharp"> schedule </span>
             <h3>Schedule</h3>
           </a>
-          <?php
-            if ($userType == "admin") {
-              echo 
-              "<a href='admin/adminDashboard.php'>
+          <?php if ($userType == "admin") {
+              echo "<a href='admin/adminDashboard.php'>
                 <span class='material-icons-sharp'> admin_panel_settings </span>
                 <h3>Admin</h3>
               </a>";
-            }
-          ?>
+          } ?>
           <a href="logout.html">
             <span class="material-icons-sharp"> logout </span>
             <h3>Logout</h3>
@@ -84,8 +81,30 @@ $name = $_SESSION["stdFName"];
         <div class="ann-container">
           <div class="announcement">
           <h2>Grade Table</h2>
+      
+      <form id="semesterForm"> <!-- Dropdown for selecting semester -->
+        <select name="semester" id="semesterSelect">
+          <?php
+            $sql = "SELECT semesterId, semesterPeriod FROM tblsemester";
+            $result = mysqli_query($conn, $sql);
+            while ($row = mysqli_fetch_assoc($result)) {
+              echo "<option value=\"" . $row["semesterId"] . "\">" . $row["semesterPeriod"] . "</option>";
+            }
+          ?>
+        </select>
+      </form>
+      
+      <table id="gradesTable">
+      </table>
 
 <table>
+  <?php 
+  $sql = "SELECT subjectName, grade FROM tblgrades JOIN tblsubjects ON tblgrades.subjectCode = tblsubjects.subjectCode WHERE studentId = ? AND term = 'prelims'";
+  $stmt = $conn->prepare($sql);
+  $stmt->bind_param("s", $userId);
+  $stmt->execute();
+  $result = $stmt->get_result();
+  ?>
     <thead>
         <tr>
             <th>Subject</th>
@@ -96,8 +115,8 @@ $name = $_SESSION["stdFName"];
     </thead>
     <tbody>
         <tr>
-            <td>Mathematics</td>
-            <td>90</td>
+            <td><?php echo $subjectName=""; ?></td>
+            <td><?php echo $grade=""; ?></td>
             <td>85</td>
             <td>88.5</td>
         </tr>
@@ -169,8 +188,7 @@ $name = $_SESSION["stdFName"];
 
           <div class="profile">
             <div class="info">
-              <?php
-                echo "<p>Good day 
+              <?php echo "<p>Good day 
                   <b>$name</b>
                 </p>"; ?>
               <small class="text-muted">Student - BSIS201</small>
@@ -267,6 +285,22 @@ $name = $_SESSION["stdFName"];
       <!-- End of right section -->
     </div>
       <script src="scripts/dashboard.js"></script>
+      <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script> <!-- AJAX -->
+      <script>
+        $(document).ready(function(){
+          $("#semesterSelect").change(function(){
+            $.ajax({
+              url: 'includes/getGrades.php',
+              type: 'post',
+              data: $('#semesterForm').serialize(),
+              success: function(data){
+                // Replace the grades table with the response
+                $('#gradesTable').html(data);
+              }
+            });
+          });
+        });
+      </script>
   </body>
 
 </html>

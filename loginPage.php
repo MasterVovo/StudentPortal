@@ -1,66 +1,75 @@
-<?php
-session_start();
-?>
-
+<?php 
+require_once "includes/autoLogin.inc.php"; //Checks for session for auto login ?>
+<!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Login Page</title>
-  <link rel="stylesheet" href="styles/Loginpage.css" />
-  <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KLD Student Portal Login</title>
+    <link rel="shortcut icon" href="images/KLD LOGO.png" type="image/x-icon">
+    <link rel="stylesheet" href="styles/Loginpage.css">
+    <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
 
-  <script type="text/javascript">
-    window.onload = function() {
-      var errorMessage = "<?php echo $_SESSION['errorMessage'] ?>";
-      if (errorMessage) {
-        alert(errorMessage);
+    <style>
+      .dbImages{
+        position: fixed;
+        left: 10px;
+        bottom: 10px;
+        z-index: 999;
+        background: white;
       }
-    }
-  </script>
+    </style>
+  </head>
 
-</head>
-
-<body>
-  <!-- LOGIN PAGE-->
-  <div class="wrapper">
-    <form action="loginValidation.php" method="POST">
-      <center>
-        <img src="KLD LOGO.png" alt="KLD LOGO" height="300px" width="300px" />
-      </center>
-      <h1>Kolehiyo ng Lungsod ng Dasmarinas Student Information System</h1>
-      <div class="input-box">
-        <input type="text" name="stdId" id="stdId" placeholder="ID Number" required />
-        <i class="bx bxs-user"></i>
-      </div>
-
-      <div class="input-box">
-        <input type="password" name="stdPass" id="stdPass" placeholder="Password" required />
-        <i class="bx bxs-lock-alt"></i>
-      </div>
-
-      <div class="remember-forgot">
-        <label><input type="checkbox" /> Remember me</label>
-        <a href="#">Forgot password?</a>
-      </div>
-      <button type="submit" class="btn">Login</button>
-      <br />
-      <br />
-      <h4>OR</h4>
-      <br />
-
-      <div class="scan-code">
-        <hr />
+  <body>
+    <!-- LOGIN PAGE-->
+    <div class="wrapper">
+      <form action="includes\loginPage.inc.php" method="POST">
+        <center>
+          <img src="images/KLD LOGO.png" alt="KLD LOGO" />
+        </center>
+        <h1>KLD STUDENT PORTAL</h1>
+        <div class="input-box">
+          <input type="text" name="stdId" id="stdId" placeholder="KLD-##-######" required />
+          <i class="bx bxs-user"></i>
+        </div>
+        <div class="input-box">
+          <input type="password" name="stdPass" id="stdPass" placeholder="Password" required />
+          <i class="bx bxs-lock-alt"></i>
+        </div>
+        
+        <div class="remember-forgot">
+          <label><input type="checkbox" name="rememberUser" id="remeberUser" /> Remember me</label>
+          <a href="resetPass.html">Forgot password?</a>
+        </div>
+        <button type="submit" class="btn" onclick="showToast()">Login</button>
         <br />
         <i class="bx bx-qr-scan"></i><br />
         <label>Scan Me!</label>
       </div>
     </form>
   </div>
-</body>
+    <div id="toast" class="toast">
+      <?php if ($_SESSION["errorMessage"]) {
+          // Check if there is an error message
+          echo '<script>
+              var toast = document.getElementById("toast");
+              toast.classList.add("show");
+              toast.innerHTML = "' .
+              $_SESSION["errorMessage"] .
+              '"; 
+        
+              setTimeout(function() {
+                toast.classList.remove("show");
+              }, 3000); // 3 seconds
+            </script>'; // Display the error message
 
+          unset($_SESSION["errorMessage"]); // Clear the error message
+      } ?>
+    </div>
+
+    <div class="dbImages">
+      <a href="dbImages.html">DB Images</a>
+    </div>
+  </body>
 </html>
-
-
-<?php unset($_SESSION['errorMessage']); ?>

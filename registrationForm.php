@@ -1,12 +1,19 @@
 <?php
 session_start();
+$stdId = $_SESSION['stdID'] ?? '';
 
 include "sqlConnection/db_connect.php";
 
-$notif = "";
+$sql = "SELECT stdFName, stdMName, stdLName, stdEmail FROM stdinfo WHERE stdId = '" . $stdId . "'";
+$result = mysqli_query($conn, $sql);
+$row = mysqli_fetch_assoc($result);
+
+$fname = $row['stdFName'];
+$mname = $row['stdMName'];
+$lname = $row['stdLName'];
+$email = $row['stdEmail'];
 
 if (isset($_POST["btnSubmit"])) {
-    $notif = "";
     if (
         !empty($_POST["stdId"]) &&
         !empty($_POST["Firstname"]) &&
@@ -28,35 +35,13 @@ if (isset($_POST["btnSubmit"])) {
         !empty($_POST["parentAdd"]) &&
         !empty($_POST["EmerName"]) &&
         !empty($_POST["EmerRel"]) &&
-        !empty($_POST["EmergencyNum"] &&
-        !empty($_POST["Bloodtype"]))
-    ) {
-        if (!preg_match("/[\'^$&{}<>;=!]/", $_POST["Firstname"])) {
-            $inputId = $_POST["stdId"];
-            $inputFirstname = $_POST["Firstname"];
-            $inputMiddlename = $_POST["Middlename"];
-            $inputLastname = $_POST["Lastname"];
-            $inputGender = $_POST["gender"];
-            $inputEmail = $_POST["emailadd"];
-            $inputPhonenumber = $_POST["phonenum"];
-            $inputBirthdate = $_POST["birthdate"];
-            $inputAddress = $_POST["address"];
-            $inputCity = $_POST["city"];
-            $inputRegion = $_POST["region"];
-            $inputBarangay = $_POST["barangay"];
-
-            $inputFathername = $_POST["father_name"];
-            $inputMothername = $_POST["mother_name"];
-            $inputFathernumber = $_POST["fatherNum"];
-            $inputMothernumber = $_POST["motherNum"];
-            $inputFatherJob = $_POST["fatherJob"];
-            $inputMotherJob = $_POST["motherJob"];
-            $inputParentsnumber = $_POST["parentAdd"];
-
-            $inputFullname = $_POST["EmerName"];
-            $inputEmergencynumber = $_POST["EmergencyNum"];
-            $inputRelationship = $_POST["EmerRel"];
-            $inputBloodType = $_POST["Bloodtype"];
+        !empty($_POST["EmergencyNum"])
+        )
+     {
+      if (preg_match("/^\d{11}$/", $_POST["phonenum"]) &&
+      preg_match("/^\d{11}$/", $_POST["fatherNum"]) &&
+      preg_match("/^\d{11}$/", $_POST["motherNum"]) &&
+      preg_match("/^\d{11}$/", $_POST["EmergencyNum"]))
 
             $inputId = mysqli_real_escape_string($conn, $_POST["stdId"]);
             $checkId = mysqli_query(
@@ -105,10 +90,10 @@ if (isset($_POST["btnSubmit"])) {
 
             header("Location: dashboard.php");
         }
+        else {
+          $notif = "Please make sure that phone numbers are exactly 11 digits long.";
+      }
     }
-} else {
-    $notif = "";
-}
 ?>
 
 <!DOCTYPE html>
@@ -125,30 +110,31 @@ if (isset($_POST["btnSubmit"])) {
 <body>
   <!-- REGISTRATION PAGE  -->
   <div class="container">
-    <form action="registrationForm.php"  class= "form" method = "POST"> 
+    <form action="registrationForm.php" class = "form" method = "POST"> 
       <header>REGISTRATION FORM</header>
-      <span class = "primary"><?php echo $notif; ?></span>
+      <span class = "primary"></span>
       <h2>Personal Information</h2>
 
       <div class="input-box">
         <span class="details">ID Number</span>
-        <input type="text" name="stdId" id="stdId" placeholder="KLD-00-000000" >
+        <input type="text" name="stdId" id="stdId" placeholder="KLD-##-######" value="<?php echo $stdId; ?>" readonly>
+        <script>console.log(document.getElementById("stdID").value);</script>
       </div>
 
       <div class="column">
         <div class="input-box">
           <label>First Name<span class = "required">*</span></label>
-          <input type="text" id=firstname name=Firstname placeholder="Enter first name" required/>
+          <input type="text" id=firstname name=Firstname placeholder="Enter first name" value="<?php echo $fname; ?>" required/>
         </div>
 
        <div class="input-box">
           <label>Middle Name</label>
-          <input type="text" name=Middlename placeholder="Enter middle name"  />
+          <input type="text" name=Middlename placeholder="Enter middle name" value="<?php echo $mname; ?>" />
         </div>
 
         <div class="input-box">
           <label>Last Name<span class = "required">*</span></label>
-          <input type="text" name=Lastname placeholder="Enter last name" required/>
+          <input type="text" name=Lastname placeholder="Enter last name" value="<?php echo $lname; ?>" required/>
         </div>
       </div>
 
@@ -188,7 +174,7 @@ if (isset($_POST["btnSubmit"])) {
       <h2>Contact Information</h2>
       <div class="input-box">
         <label>Email Address<span class = "required">*</span></label>
-        <input type="text" name=emailadd placeholder="Enter email address"  required/>
+        <input type="text" name=emailadd placeholder="Enter email address" value="<?php echo $email; ?>"  required/>
       </div>
 
       <div class="column">
