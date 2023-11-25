@@ -73,218 +73,60 @@ $name = $_SESSION["stdFName"];
 
     <!-- NAV BAR -->
    
-    
-<!-- Main content -->
-      <main>
-        <div class="ann-header">
-        </div>
-        <div class="ann-container">
-          <div class="announcement">
-          <h2>Grade Table</h2>
-      
-      <form id="semesterForm"> <!-- Dropdown for selecting semester -->
-        <select name="semester" id="semesterSelect">
-          <?php
-            $sql = "SELECT semesterId, semesterPeriod FROM tblsemester";
-            $result = mysqli_query($conn, $sql);
-            while ($row = mysqli_fetch_assoc($result)) {
-              echo "<option value=\"" . $row["semesterId"] . "\">" . $row["semesterPeriod"] . "</option>";
-            }
-          ?>
-        </select>
-      </form>
-      
-      <table id="gradesTable">
-      </table>
-
-<table>
-  <?php 
-  $sql = "SELECT subjectName, grade FROM tblgrades JOIN tblsubjects ON tblgrades.subjectCode = tblsubjects.subjectCode WHERE studentId = ? AND term = 'prelims'";
-  $stmt = $conn->prepare($sql);
-  $stmt->bind_param("s", $userId);
-  $stmt->execute();
-  $result = $stmt->get_result();
-  ?>
-    <thead>
-        <tr>
-            <th>Subject</th>
-            <th>Midterm Grade</th>
-            <th>Final Grade</th>
-            <th>Overall Grade</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td><?php echo $subjectName=""; ?></td>
-            <td><?php echo $grade=""; ?></td>
-            <td>85</td>
-            <td>88.5</td>
-        </tr>
-        <tr>
-            <td>English</td>
-            <td>85</td>
-            <td>88</td>
-            <td>86.5</td>
-        </tr>
-        <!-- Add more rows for other subjects -->
-    </tbody>
-</table>
-          </div>
-        </div>
-
-        <header>
-        <div class="nav-header">
-        </div>
-        <div class="nav-container">
-          <div class="announcement">
+    <!-- Main content -->
+    <main>
+      <div class="ann-container">
+        <div class="announcement">
           <h2>Grade Table</h2>
 
-<table>
-    <thead>
-        <tr>
-            <th>Subject</th>
-            <th>Midterm Grade</th>
-            <th>Final Grade</th>
-            <th>Overall Grade</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td>Mathematics</td>
-            <td>90</td>
-            <td>85</td>
-            <td>88.5</td>
-        </tr>
-        <tr>
-            <td>English</td>
-            <td>85</td>
-            <td>88</td>
-            <td>86.5</td>
-        </tr>
-        <!-- Add more rows for other subjects -->
-    </tbody>
-</table>
-          </div>
+          <form id="semesterForm"> <!-- Dropdown for selecting semester -->
+            <select name="semester" id="semesterSelect">
+              <option value="0" selected disabled>Pick Period</option>
+              <?php
+                $sql = "SELECT semesterId, semesterPeriod FROM tblsemester";
+                $result = mysqli_query($conn, $sql);
+                while ($row = mysqli_fetch_assoc($result)) {
+                  echo "<option value=\"" . $row["semesterId"] . "\">" . $row["semesterPeriod"] . "</option>";
+                }
+              ?>
+            </select>
+          </form>
+
+          <table id="gradesTable">
+          </table>
         </div>
-   </header>
-      </main>
-
-      
-
-      
-      <!-- End of main content -->
+      </div>
+    </main><!-- End of main content -->
 
       <!-- Right section -->
-      <div class="right-section">
-        <!-- Navbar -->
-        <div class="nav">
-          <button id="menu-btn">
-            <span class="material-icons-sharp"> menu </span>
-          </button>
-          <div class="dark-mode">
-            <span class="material-icons-sharp active"> light_mode </span>
-            <span class="material-icons-sharp"> dark_mode </span>
-          </div>
+    <div class="right-section">
+      <!-- Navbar -->
+      <div class="nav">
+        <button id="menu-btn">
+          <span class="material-icons-sharp"> menu </span>
+        </button>
+        <div class="dark-mode">
+          <span class="material-icons-sharp active"> light_mode </span>
+          <span class="material-icons-sharp"> dark_mode </span>
+        </div>
 
-          <div class="profile">
-            <div class="info">
-              <?php echo "<p>Good day 
-                  <b>$name</b>
-                </p>"; ?>
-              <small class="text-muted">Student - BSIS201</small>
-            </div>
-            <div class="profile-photo">
-              <img src="images/KLD LOGO.png" />
-            </div>
+        <div class="profile">
+          <div class="info">
+            <?php echo "<p>Good day 
+                <b>$name</b>
+              </p>"; ?>
+            <small class="text-muted">Student - BSIS201</small>
+          </div>
+          <div class="profile-photo">
+            <img src="images/KLD LOGO.png" />
           </div>
         </div>
-        <!-- End of navbar -->
-
-        <!-- Schedule list -->
-        <!-- <div class="schedule">
-          <div class="schedule-header">
-            <h2>Schedule for Today</h2><small class="text-muted">Friday: Oct 13</small>
-            <span class="material-icons-sharp"> add </span>
-          </div>
-
-          <div class="schedule-list">
-            <div class="icon">
-              <span class="material-icons-sharp"> code </span>
-            </div>
-            <div class="sched-title">
-              <div class="info">
-                <h3>GEC1000 - Web Development</h3>
-                <small class="text_muted"> 08:00 AM - 12:00 PM </small>
-              </div>
-            </div>
-          </div>
-
-          <div class="schedule-list">
-            <div class="icon">
-              <span class="material-icons-sharp"> edit </span>
-            </div>
-            <div class="sched-title">
-              <div class="info">
-                <h3>GEC1000 - IT Infrastructure</h3>
-                <small class="text_muted"> 08:00 AM - 12:00 PM </small>
-              </div>
-            </div>
-          </div>
-
-          <div class="schedule-list">
-            <div class="icon">
-              <span class="material-icons-sharp"> edit </span>
-            </div>
-            <div class="sched-title">
-              <div class="info">
-                <h3>GEC1000 - Data Structure and Algorithm</h3>
-                <small class="text_muted"> 08:00 AM - 12:00 PM </small>
-              </div>
-            </div>
-          </div>
-        </div> -->
-        <!-- End of schedule list -->
-        
-        <!-- Grades list -->
-        <!-- 
-        <div class="grades">
-          <div class="grades-header">
-            <h2>Midterm Grades</h2>
-          </div>
-
-          <div class="grades-list">
-            <div class="icon">
-              <span class="material-icons-sharp"> code </span>
-            </div>
-            <div class="subject-title">
-              <div class="info">
-                <h3>GEC1000 - Web Development</h3>
-              </div>
-              <div class="info">
-                <h2>1.25</h2>
-              </div>
-            </div>
-          </div>
-
-          <div class="grades-list">
-            <div class="icon">
-              <span class="material-icons-sharp"> edit </span>
-            </div>
-            <div class="subject-title">
-              <div class="info">
-                <h3>GEC1000 - IT Infrastructure</h3>
-              </div>
-              <div class="info">
-                <h2>1.25</h2>
-              </div>
-            </div>
-          </div>
-        </div> -->
-        <!-- End of grades list -->
       </div>
+      <!-- End of navbar -->
       <!-- End of right section -->
     </div>
-      <script src="scripts/dashboard.js"></script>
+      
+    <script src="scripts/dashboard.js"></script>
       <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script> <!-- AJAX -->
       <script>
         $(document).ready(function(){

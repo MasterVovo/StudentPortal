@@ -43,9 +43,7 @@ require_once "includes/autoLogin.inc.php"; //Checks for session for auto login ?
           <a href="resetPass.html">Forgot password?</a>
         </div>
         <button type="submit" class="btn" onclick="showToast()">Login</button>
-        <br />
-        <i class="bx bx-qr-scan"></i><br />
-        <label>Scan Me!</label>
+        
       </div>
     </form>
   </div>

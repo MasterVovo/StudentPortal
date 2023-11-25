@@ -58,36 +58,36 @@ $_SESSION["stdFName"] = $name = $row["stdFName"];
         </div>
       </div>
       <div class="sidebar">
-        <a href="#" class="profile-side">
+        <a href="#" class="profile-side" title="Account">
           <span class="material-icons-sharp"> account_circle </span>
           <h3>Account</h3>
         </a>
-        <a href="#" class="active">
+        <a href="#" class="active" title="Home">
           <span class="material-icons-sharp"> home </span>
           <h3>Home</h3>
         </a>
-        <a href="news.php">
+        <a href="news.php" title="News">
           <span class="material-icons-sharp"> feed </span>
           <h3>News</h3>
         </a>
-        <a href="grades.php">
+        <a href="grades.php" title="Grades">
           <span class="material-icons-sharp"> grade </span>
           <h3>Grades</h3>
         </a>
-        <a href="schedule.php">
+        <a href="schedule.php" title="Schedules">
           <span class="material-icons-sharp"> schedule </span>
           <h3>Schedule</h3>
         </a>
         <?php
           if ($userType == "admin") {
             echo 
-            "<a href='admin/adminDashboard.php'>
+            "<a href='admin/adminDashboard.php' title='Admin'>
               <span class='material-icons-sharp'> admin_panel_settings </span>
               <h3>Admin</h3>
             </a>";
           }
         ?>
-        <a href="logout.html">
+        <a href="logout.html" title="Logout">
           <span class="material-icons-sharp"> logout </span>
           <h3>Logout</h3>
         </a>
