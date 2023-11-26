@@ -2,23 +2,38 @@ const gender = document.getElementById('gender').getContext('2d');
 const age = document.getElementById('age').getContext('2d');
 const visitors = document.getElementById('chart-visitors').getContext('2d');
 
+function createGenderChart(genderData) {
+    const genderChart = new Chart(gender, {
+        type: 'doughnut',
+        data: {
+            labels: ['Male', 'Female'],
+            datasets: [
+                {
+                    data: genderData
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false
+        }
+        
+    });
+}
 
-const genderChart = new Chart(gender, {
-    type: 'doughnut',
-    data: {
-        labels: ['Male', 'Female'],
-        datasets: [
-            {
-                data: [60, 40]
-            }
-        ]
+// Fetches the gender data and call the method to create a gender chart
+$.ajax({
+    url: 'includes/fetch-gender-data.inc.php',
+    type: 'GET',
+    success: function(data) {
+        const genderData = JSON.parse(data);
+        createGenderChart(genderData);
+        
     },
-    options: {
-        responsive: true,
-        maintainAspectRatio: false
+    error: function(data) {
+        console.log('Gender data couldn\'t be retrieved');
     }
-    
-});
+})
 
 const ageChart = new Chart(age, {
     type: 'bar',
