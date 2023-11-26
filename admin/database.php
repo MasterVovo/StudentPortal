@@ -79,6 +79,9 @@
               case 'stdList':
                 echo file_get_contents('html-pieces/stdList');
                 break;
+              case 'fctList':
+                echo file_get_contents('html-pieces/fctList');
+                break;
             }
           } else {
             echo file_get_contents('html-pieces/no-tab');
