@@ -69,6 +69,7 @@
           <h1>Database</h1>
         </div>
 
+        <!-- Show the content depending on the tab opened -->
         <?php
           if(isset($_GET['tab'])) {
             switch($tab) {
@@ -81,16 +82,6 @@
             }
           } else {
             echo file_get_contents('html-pieces/no-tab');
-          }
-        ?>
-
-        <?php
-          if(isset($_GET['tab'])) {
-            switch($tab) {
-              case 'stdAdd':
-                echo file_get_contents('html-pieces/stdAdd-right-nav');
-                break;
-            }
           }
         ?>
         
