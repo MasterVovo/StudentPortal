@@ -10,9 +10,9 @@ if ($resultCheck > 0) {
     $femaleCount = 0;
 
     while ($gender = mysqli_fetch_assoc($result)) {
-        if ($gender == 'Male') {
+        if ($gender['stdGender'] == 'Male') {
             $maleCount++;
-        } else if ($gender == 'Female') {
+        } else if ($gender['stdGender'] == 'Female') {
             $femaleCount++;
         }
     }
