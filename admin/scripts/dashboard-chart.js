@@ -23,9 +23,11 @@ function createGenderChart(genderData) {
 
 // Fetches the gender data and call the method to create a gender chart
 $.ajax({
-    url: 'includes/fetch-gender-data.inc.php',
+    url: 'includes/fetch-chart-data.inc.php',
     type: 'GET',
+    data: {functionName: 'getGenderData'},
     success: function(data) {
+        console.log(data);
         const genderData = JSON.parse(data);
         createGenderChart(genderData);
         
