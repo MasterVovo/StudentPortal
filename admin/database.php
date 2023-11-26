@@ -137,6 +137,8 @@
               case 'stdList':
                 echo '<script src="scripts/stdList.js"></script>';
                 break;
+              case 'fctList':
+                echo '<script src="scripts/fctList.js"></script>';
             }
           }
          
