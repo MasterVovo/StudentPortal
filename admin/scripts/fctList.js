@@ -7,7 +7,7 @@ let grid = $('#grid-table').jsGrid({
     editing: false,
     sorting: true,
     paging: true,
-    autoload: false,
+    autoload: true,
     pageSize: 15,
     pageButtonCount: 5,
     // deleteConfirm: "Do you really want to delete data?",
@@ -16,18 +16,19 @@ let grid = $('#grid-table').jsGrid({
         loadData: function(filter) {
             return $.ajax({
                 type: "POST",
-                url: "includes/fetch-stdList.inc.php",
+                url: "includes/fetch-fctList.inc.php",
                 data: filter,
                 dataType: "json"
             });
-        },
-        deleteItem: function(item) {
-            return $.ajax({
-                type: "POST",
-                url: "includes/delete-stdList.inc.php",
-                data: item
-            })
         }
+        // ,
+        // deleteItem: function(item) {
+        //     return $.ajax({
+        //         type: "POST",
+        //         url: "includes/delete-stdList.inc.php",
+        //         data: item
+        //     })
+        // }
     },
 
     fields: [
@@ -56,7 +57,7 @@ let grid = $('#grid-table').jsGrid({
         },
         {
             name: "thrDept",
-            title: "Birthday",
+            title: "Department",
             type: "text",
             validate: "required"
         },
