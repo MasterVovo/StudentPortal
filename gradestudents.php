@@ -8,6 +8,8 @@ $userId = $_SESSION["stdID"];
 $userType = $_SESSION["userType"];
 // Get the name of user
 $name = $_SESSION["stdFName"];
+// Get the profile picture
+$pfp = $_SESSION["pfp"];
 ?>
 
 <!DOCTYPE html>
@@ -122,7 +124,7 @@ $name = $_SESSION["stdFName"];
             </small>
           </div>
           <div class="profile-photo">
-            <img src="images/KLD LOGO.png" />
+            <img src=<?php echo "data:image/jpeg;base64,$pfp";?> />
           </div>
         </div>
       </div>

@@ -36,7 +36,9 @@ $stmt->execute();
 
 $result = $stmt->get_result();
 $row = $result->fetch_assoc();
-$_SESSION["stdFName"] = $name = $row[$fname];
+$_SESSION["stdFName"] = $name = $row[$fname]; // Set the name in the session
+
+$_SESSION["pfp"] = $pfp = base64_encode($row["stdImage"]); // Set the profile picture in the session
 ?>
 
 <!DOCTYPE html>
@@ -188,7 +190,7 @@ $_SESSION["stdFName"] = $name = $row[$fname];
             </small>
           </div>
           <div class="profile-photo">
-            <img src="images/KLD LOGO.png" />
+            <img src=<?php echo "data:image/jpeg;base64,$pfp";?> />
           </div>
         </div>
       </div>

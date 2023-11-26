@@ -1,3 +1,15 @@
+<?php require "../sqlConnection/db_connect.php"; // Connect to the database 
+session_start();
+// Get the user ID from the session
+$userId = $_SESSION["stdID"];
+// Get the user type from the session
+$userType = $_SESSION["userType"];
+// Get the name of user
+$name = $_SESSION["stdFName"];
+// Get the profile picture
+$pfp = $_SESSION["pfp"];
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -285,11 +297,18 @@
 
           <div class="profile">
             <div class="info">
-              <p>Good day <b>Kolehiyan</b></p>
-              <small class="text-muted">Student - BSIS201</small>
+              <?php
+                echo "<p>Good day 
+                  <b>$name</b>
+                </p>"; ?>
+              <small class="text-muted">
+                <?php
+                  echo ucfirst($userType);
+                ?>
+              </small>
             </div>
             <div class="profile-photo">
-              <img src="../images/KLD LOGO.png" />
+              <img src=<?php echo "data:image/jpeg;base64,$pfp";?> />
             </div>
           </div>
         </div>
