@@ -13,31 +13,31 @@ function sendEmail($email, $id, $password, $name) {
     $contactInfo = "09123456789";
     
     $emailText = sprintf("
-    Dear %s,
+    Dear %s,<br><br>
     
-    We are delighted to welcome you to KLD's Student Portal, your central hub for academic resources, announcements, and personalized information. Your login credentials are provided below:
+    We are delighted to welcome you to KLD's Student Portal, your central hub for academic resources, announcements, and personalized information. Your login credentials are provided below:<br><br>
     
-    Student ID: %s
-    Password: %s
+    Student ID: %s<br>
+    Password: %s<br><br>
     
-    Please follow the steps below to get started:
+    Please follow the steps below to get started:<br><br>
     
-    Login URL: %s
-    Use your provided Student ID and the temporary password to log in.
-    You will be prompted to complete your information upon your first login. 
-    You should change your password after logging in. Choose a strong and secure password.
-    If you have any issues or questions regarding your login credentials, please contact our support team at %s.
+    Login URL: %s<br>
+    Use your provided Student ID and the temporary password to log in.<br>
+    You will be prompted to complete your information upon your first login.<br>
+    You should change your password after logging in. Choose a strong and secure password.<br>
+    If you have any issues or questions regarding your login credentials, please contact our support team at %s.<br><br>
     
-    We encourage you to explore the various features of the Student Portal, including:
+    We encourage you to explore the various features of the Student Portal, including:<br><br>
     
-    Personalized academic information
-    Important announcements
-    Thank you for being part of our academic community. We look forward to supporting you on your educational journey.
+    Personalized academic information<br>
+    Important announcements<br>
+    Thank you for being part of our academic community. We look forward to supporting you on your educational journey.<br><br>
     
-    Best regards,
+    Best regards, <br><br>
     
-    Kolehiyo ng Lungsod ng Dasmariñas
-    Brngy. Burol Main
+    Kolehiyo ng Lungsod ng Dasmariñas<br>
+    Brgy. Burol Main<br>
     ", $name, $id, $password, $URL, $supportEmail);
 
 

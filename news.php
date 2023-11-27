@@ -6,6 +6,8 @@ $userId = $_SESSION["stdID"];
 $userType = $_SESSION["userType"];
 // Get the name of user
 $name = $_SESSION["stdFName"];
+// Get the profile picture
+$pfp = $_SESSION["pfp"];
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -45,7 +47,10 @@ $name = $_SESSION["stdFName"];
             <span class="material-icons-sharp"> feed </span>
             <h3>News</h3>
           </a>
-          <a href="grades.php">
+          <?php
+          $gradePath = ($userType == "student") ? "grades.php" : "gradestudents.php";
+          ?>
+          <a href=<?php echo $gradePath;?> title="Grades">
             <span class="material-icons-sharp"> grade </span>
             <h3>Grades</h3>
           </a>
@@ -62,7 +67,7 @@ $name = $_SESSION["stdFName"];
               </a>";
             }
           ?>
-          <a href="logout.html">
+          <a href="logout.php">
             <span class="material-icons-sharp"> logout </span>
             <h3>Logout</h3>
           </a>
@@ -149,10 +154,14 @@ $name = $_SESSION["stdFName"];
                 echo "<p>Good day 
                   <b>$name</b>
                 </p>"; ?>
-              <small class="text-muted">Student - BSIS201</small>
+              <small class="text-muted">
+                <?php
+                  echo ucfirst($userType);
+                ?>
+              </small>
             </div>
             <div class="profile-photo">
-              <img src="images/KLD LOGO.png" />
+              <img src=<?php echo "data:image/jpeg;base64,$pfp";?> />
             </div>
           </div>
         </div>

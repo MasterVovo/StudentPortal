@@ -23,13 +23,22 @@ $userType = $_SESSION["userType"];
 
 // Get the name of user in the database and store it in a variable
 $sql = "SELECT * FROM stdinfo WHERE stdId = ?";
+$fname = "stdFName";
+
+if($userType != "student" && $userType != "admin") {
+  $sql = "SELECT * FROM thrinfo WHERE thrId = ?";
+  $fname = "thrFName";
+}
+
 $stmt = $conn->prepare($sql);
 $stmt->bind_param("s", $userId);
 $stmt->execute();
 
 $result = $stmt->get_result();
 $row = $result->fetch_assoc();
-$_SESSION["stdFName"] = $name = $row["stdFName"];
+$_SESSION["stdFName"] = $name = $row[$fname]; // Set the name in the session
+
+$_SESSION["pfp"] = $pfp = base64_encode($row["stdImage"]); // Set the profile picture in the session
 ?>
 
 <!DOCTYPE html>
@@ -58,36 +67,39 @@ $_SESSION["stdFName"] = $name = $row["stdFName"];
         </div>
       </div>
       <div class="sidebar">
-        <a href="#" class="profile-side">
+        <a href="#" class="profile-side" title="Account">
           <span class="material-icons-sharp"> account_circle </span>
           <h3>Account</h3>
         </a>
-        <a href="#" class="active">
+        <a href="#" class="active" title="Home">
           <span class="material-icons-sharp"> home </span>
           <h3>Home</h3>
         </a>
-        <a href="news.php">
+        <a href="news.php" title="News">
           <span class="material-icons-sharp"> feed </span>
           <h3>News</h3>
         </a>
-        <a href="grades.php">
+        <?php
+          $gradePath = ($userType == "student") ? "grades.php" : "gradestudents.php";
+        ?>
+        <a href=<?php echo $gradePath;?> title="Grades">
           <span class="material-icons-sharp"> grade </span>
           <h3>Grades</h3>
         </a>
-        <a href="schedule.php">
+        <a href="schedule.php" title="Schedules">
           <span class="material-icons-sharp"> schedule </span>
           <h3>Schedule</h3>
         </a>
         <?php
           if ($userType == "admin") {
             echo 
-            "<a href='admin/adminDashboard.php'>
+            "<a href='admin/adminDashboard.php' title='Admin'>
               <span class='material-icons-sharp'> admin_panel_settings </span>
               <h3>Admin</h3>
             </a>";
           }
         ?>
-        <a href="logout.html">
+        <a href="logout.php" title="Logout">
           <span class="material-icons-sharp"> logout </span>
           <h3>Logout</h3>
         </a>
@@ -171,10 +183,14 @@ $_SESSION["stdFName"] = $name = $row["stdFName"];
                 echo "<p>Good day 
                   <b>$name</b>
                 </p>"; ?>
-            <small class="text-muted">Student - BSIS201</small>
+            <small class="text-muted">
+              <?php
+                echo ucfirst($userType);
+              ?>
+            </small>
           </div>
           <div class="profile-photo">
-            <img src="images/KLD LOGO.png" />
+            <img src=<?php echo "data:image/jpeg;base64,$pfp";?> />
           </div>
         </div>
       </div>

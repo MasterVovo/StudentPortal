@@ -77,16 +77,16 @@ $pfp = $_SESSION["pfp"];
     <main>
       <div class="ann-container">
         <div class="announcement">
-          <h2>Grade Table</h2>
+          <h2>Grade Students</h2>
 
-          <form id="semesterForm"> <!-- Dropdown for selecting semester -->
-            <select name="semester" id="semesterSelect">
-              <option value="0" selected disabled>Pick Period</option>
+          <form id="sectionForm">
+            <select name="section" id="sectionSelect">
+              <option value="0" selected disabled>Pick Section</option>
               <?php
-                $sql = "SELECT semesterId, semesterPeriod FROM tblsemester";
+                $sql = "SELECT sectionName FROM tblsections WHERE sectionAdviserId = '" . $userId . "'";
                 $result = mysqli_query($conn, $sql);
                 while ($row = mysqli_fetch_assoc($result)) {
-                  echo "<option value=\"" . $row["semesterId"] . "\">" . $row["semesterPeriod"] . "</option>";
+                  echo "<option value=\"" . $row["sectionName"] . "\">" . $row["sectionName"] . "</option>";
                 }
               ?>
             </select>
@@ -94,6 +94,8 @@ $pfp = $_SESSION["pfp"];
 
           <table id="gradesTable">
           </table>
+
+          <button id="saveButton">Save</button>
         </div>
       </div>
     </main><!-- End of main content -->
@@ -136,14 +138,25 @@ $pfp = $_SESSION["pfp"];
       <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script> <!-- AJAX -->
       <script>
         $(document).ready(function(){
-          $("#semesterSelect").change(function(){
+          $("#sectionSelect").change(function(){
             $.ajax({
-              url: 'includes/getGrades.php',
+              url: 'includes/getStudents.php',
               type: 'post',
-              data: $('#semesterForm').serialize(),
+              data: $('#sectionForm').serialize(),
               success: function(data){
                 // Replace the grades table with the response
                 $('#gradesTable').html(data);
+              }
+            });
+          });
+
+          $("#saveButton").click(function(){
+            $ajax({
+              url: 'saveGrades.php',
+              type: 'post',
+              data: $('#gradesTable').serialize(),
+              success: function(response){
+                  // Handle response here
               }
             });
           });
