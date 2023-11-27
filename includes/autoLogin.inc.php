@@ -24,7 +24,6 @@ if (isset($_COOKIE["rememberUser"])) {
             if (password_verify($validator, $row["sessionValidator"])) {
                 
                 $_SESSION['stdID'] = $row["userId"]; //Sets the session
-                $_SESSION["userType"] = $row["userType"]; 
                 
                 list($selector, $validator, $session) = generateSession(); //Generate session
                 $hashedValidator = password_hash($validator, PASSWORD_DEFAULT); //Hash the validator
