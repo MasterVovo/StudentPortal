@@ -1,7 +1,7 @@
 <?php
 require "../../sqlConnection/db_connect.php";
 
-$sql = "SELECT * FROM stdInfo;";
+$sql = "SELECT * FROM stdinfo;";
 $result = mysqli_query($conn, $sql);
 $resultCheck = mysqli_num_rows($result);
 
