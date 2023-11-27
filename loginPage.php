@@ -18,6 +18,15 @@ require_once "includes/autoLogin.inc.php"; //Checks for session for auto login ?
         z-index: 999;
         background: white;
       }
+
+      .accounts{
+        position: fixed;
+        right: 10px;
+        bottom: 10px;
+        padding: 10px;
+        z-index: 999;
+        background: white;
+      }
     </style>
   </head>
 
@@ -68,6 +77,20 @@ require_once "includes/autoLogin.inc.php"; //Checks for session for auto login ?
 
     <div class="dbImages">
       <a href="dbImages.html">DB Images</a>
+    </div>
+
+    <div class ="accounts">
+      <h3>Admin Account</h3> <br>
+      <p>
+        ID: KLD-22-000001 <br>
+        Pass: 12345
+      </p> <br>
+
+      <h3>Student Account</h3> <br>
+      <p>
+        ID: KLD-22-000002 <br>
+        Pass: 11111
+      </p>
     </div>
   </body>
 </html>
