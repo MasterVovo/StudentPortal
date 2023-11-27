@@ -47,7 +47,7 @@ function createAgeChart(ageData) {
 // Fetches the gender data and call the method to create a gender chart
 $.ajax({
     url: 'includes/fetch-chart-data.inc.php',
-    type: 'GET',
+    type: 'POST',
     data: {functionName: 'getGenderData'},
     success: function(data) {
         console.log(data);
@@ -62,7 +62,7 @@ $.ajax({
 // Fetches the age data and call the method to create an age chart
 $.ajax({
     url: 'includes/fetch-chart-data.inc.php',
-    type: 'GET',
+    type: 'POST',
     data: {functionName: 'getAgeData'},
     success: function(data) {
         console.log("age data is " + data);

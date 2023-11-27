@@ -1,8 +1,8 @@
 <?php
 require "../../sqlConnection/db_connect.php";
 
-if (isset($_GET['functionName'])) {
-    $function = $_GET['functionName'];
+if (isset($_POST['functionName'])) {
+    $function = $_POST['functionName'];
     
     switch($function) {
         case 'getGenderData':
