@@ -59,6 +59,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     ", $_POST["otp"]);
 
     $_SESSION["otp"] = $_POST["otp"];
+    $_SESSION["userId"] = $_POST["userId"];
 
     $mail = new PHPMailer(true);
 

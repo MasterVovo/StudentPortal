@@ -28,7 +28,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if ($result->num_rows === 1) { //Checks if there is a result
         $row = $result->fetch_assoc(); //Fetches the row
 
-        if ($stdPass == $row["userPass"]) { //Checks if password is correct
+        if (password_verify($stdPass, $row["userPass"])) { //Checks if password is correct
             //Sets the session variables
             $_SESSION["stdID"] = $row["schoolID"]; 
             $_SESSION["userType"] = $row["userType"]; 

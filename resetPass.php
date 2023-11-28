@@ -1,3 +1,4 @@
+<?php session_start();?>
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -102,7 +103,48 @@
           }
         });
 
-        //TODO: Reset the password
+        $("form").on("submit", function(e) {
+          e.preventDefault();
+
+          var newPass = $("#newPass").val();
+          var repeatPass = $("#repeatPass").val();
+
+          var passLen = newPass.length >= 8 && newPass.length <= 20;
+          var hasUpper = /[A-Z]/.test(newPass);
+          var hasLower = /[a-z]/.test(newPass);
+          var hasNum = /\d/.test(newPass);
+          var hasSym = /\W/.test(newPass);
+
+          if (!passLen || !hasUpper || !hasLower || !hasNum || !hasSym) {
+            alert("Password field doesn't meet the requirements");
+            return;
+          }
+
+            if (newPass !== repeatPass) {
+              alert("Passwords do not match");
+              return;
+            }
+
+            $.ajax({
+              url: 'includes/resetPass.inc.php',
+              type: 'POST',
+              data: { 
+                newPass: newPass,
+                repeatPass: repeatPass
+              },
+              success: function(response) {
+                if (response.trim() === "success") {
+                  alert("Password changed successfully");
+                  window.location.href = "loginPage.php";
+                } else if (response.trim() === "error") {
+                  alert("Error changing password, make sure that all requirements are met");
+                }
+              },
+              error: function(xhr, status, error) {
+                alert("Error: " + error);
+              }
+            });
+        });
       });
     </script>
   </body>
