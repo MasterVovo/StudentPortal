@@ -17,6 +17,13 @@ if ($resultCheck > 0) {
         $fctData->appendThrLName($row['thrLName']);
         $fctData->appendThrDept($row['thrDept']);
 
+        $sqlSection = "SELECT (sectionName) FROM tblsection WHERE (sectionAdviserId = " . $row['thrId'] . ")";
+        $resultSection = mysqli_query($conn, $sql);
+
+        while ($rowSection = mysqli_fetch_assoc($resultSection)) {
+            $fctData->appendSectionName($row['sectionName']);
+        }
+
         array_push($arrayOfFctData, $fctData);
     }
     echo json_encode($arrayOfFctData);
@@ -29,6 +36,7 @@ class fctData {
     public $thrMName;
     public $thrLName;
     public $thrDept;
+    public $sectionName = array();
 
     function appendThrId($data) {
         $this->thrId = $data;
@@ -48,5 +56,9 @@ class fctData {
 
     function appendThrDept($data) {
         $this->thrDept = $data;
+    }
+
+    function appendSectionName($data) {
+        $this->sectionName[] = $data;
     }
 }
