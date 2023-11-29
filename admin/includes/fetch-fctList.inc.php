@@ -17,11 +17,12 @@ if ($resultCheck > 0) {
         $fctData->appendThrLName($row['thrLName']);
         $fctData->appendThrDept($row['thrDept']);
 
-        $sqlSection = "SELECT (sectionName) FROM tblsection WHERE (sectionAdviserId = " . $row['thrId'] . ")";
-        $resultSection = mysqli_query($conn, $sql);
+        // Fetches the section of the teacher
+        $sqlSection = "SELECT `sectionName` FROM tblsections WHERE (sectionAdviserId = '" . $row['thrId'] . "')";
+        $resultSection = mysqli_query($conn, $sqlSection);
 
         while ($rowSection = mysqli_fetch_assoc($resultSection)) {
-            $fctData->appendSectionName($row['sectionName']);
+            $fctData->appendSectionName($rowSection['sectionName']);
         }
 
         array_push($arrayOfFctData, $fctData);
@@ -36,7 +37,7 @@ class fctData {
     public $thrMName;
     public $thrLName;
     public $thrDept;
-    public $sectionName = array();
+    public $sectionName;
 
     function appendThrId($data) {
         $this->thrId = $data;
@@ -59,6 +60,6 @@ class fctData {
     }
 
     function appendSectionName($data) {
-        $this->sectionName[] = $data;
+        $this->sectionName = $data;
     }
 }

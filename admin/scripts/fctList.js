@@ -65,7 +65,15 @@ let grid = $('#grid-table').jsGrid({
             name: "sectionName",
             title: "Section",
             type: "select",
-            items: ["BSIS 201", "BSIS202", "BSIS203", "BSIS204", "BSIS205"]
+            items: [
+                { value: "CIS201", text: "BSIS 201" }, 
+                { value: "CIS202", text: "BSIS 202" },
+                { value: "CIS203", text: "BSIS 203" },
+                { value: "CIS204", text: "BSIS 204" },
+                { value: "CIS205", text: "BSIS 205" }
+            ],
+            valueField: "value",
+            textField: "text"
         }
     ]
 }).data("JSGrid");
