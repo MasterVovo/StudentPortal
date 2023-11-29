@@ -4,7 +4,7 @@ let grid = $('#grid-table').jsGrid({
 
     filtering: true,
     // inserting: true,
-    editing: false,
+    editing: true,
     sorting: true,
     paging: true,
     autoload: true,
@@ -74,6 +74,9 @@ let grid = $('#grid-table').jsGrid({
             ],
             valueField: "value",
             textField: "text"
+        },
+        {
+            type: "control"
         }
     ]
 }).data("JSGrid");
