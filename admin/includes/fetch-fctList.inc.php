@@ -20,6 +20,7 @@ function fetchThrData() {
         public $thrFName;
         public $thrMName;
         public $thrLName;
+        public $thrEmail;
         public $thrDept;
         public $sectionName;
     
@@ -37,6 +38,10 @@ function fetchThrData() {
     
         function appendThrLName($data) {
             $this->thrLName = $data;
+        }
+
+        function appendThrEmail($data) {
+            $this->thrEmail = $data;
         }
     
         function appendThrDept($data) {
@@ -63,6 +68,7 @@ function fetchThrData() {
             $fctData->appendThrFName($row['thrFName']);
             $fctData->appendThrMName($row['thrMName']);
             $fctData->appendThrLName($row['thrLName']);
+            $fctData->appendThrEmail($row['thrEmail']);
             $fctData->appendThrDept($row['thrDept']);
     
             // Fetches the section of the teacher

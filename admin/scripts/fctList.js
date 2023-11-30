@@ -49,27 +49,72 @@ function createGridChart(sections) {
                     success: function(response) {
                         switch (response) {
                             case 'adviser already exist':
-                                Toast.fire({
-                                    icon: 'warning',
-                                    title: 'Adviser already exist.'
+                                return swal.fire({
+                                    title: "An adviser already exist on that section!",
+                                    text: "Do you want to replace the adviser?",
+                                    icon: "warning",
+                                    showConfirmButton: true,
+                                    showCancelButton: true
+                                }).then((result) => {
+                                    if (result.isConfirmed) {
+                                        return $.ajax({
+                                            url: "includes/update-data.inc.php",
+                                            type: "POST",
+                                            data: { 
+                                                functionName: 'updateSectionOverride',
+                                                fctData: item
+                                            },
+                                            success: function (response) {
+                                                switch (response) {
+                                                    case 'Something went wrong in replacing adviser':
+                                                        Toast.fire({
+                                                            icon: 'warning',
+                                                            title: response
+                                                        });
+                                                        break;
+                                                    case 'Something\'s wrong in updating teacher information':
+                                                        Toast.fire({
+                                                            icon: 'warning',
+                                                            title: response
+                                                        });
+                                                        break;
+                                                    case 'Teachers info is successfully updated':
+                                                        Toast.fire({
+                                                            icon: 'success',
+                                                            title: response
+                                                        });
+                                                        break;
+                                                }
+                                            },
+                                            error: function(error) {
+                                                console.error('Error updating data ' + error);
+                                            }
+                                        });
+                                    }
                                 });
                                 break;
-                            case 'something went wrong':
+                            case 'Something\'s wrong in updating teacher information':
                                 Toast.fire({
-                                    icon: 'warning',
-                                    title: 'Something went wrong.'
+                                    icon: 'error',
+                                    title: response
                                 });
                                 break;
-                            case 'success':
+                            case 'Error in updating section':
+                                Toast.fire({
+                                    icon: 'error',
+                                    title: response
+                                });
+                                break;
+                            case 'Teachers info is successfully updated':
                                 Toast.fire({
                                     icon: 'success',
-                                    title: 'Section successfully updated.'
+                                    title: response
                                 });
                                 break;
                             case 'section not found':
                                 Toast.fire({
                                     icon: 'info',
-                                    title: 'section not found.'
+                                    title: response
                                 });
                                 break;
                         }
@@ -94,10 +139,7 @@ function createGridChart(sections) {
                 name: "thrId",
                 title: "Teacher ID",
                 type: "text",
-                validate: "required",
-                editTemplate: function(value) {
-                    return $("<span>").text(value);
-                }
+                validate: "required"
             },
             {
                 name: "thrFName",
@@ -113,6 +155,12 @@ function createGridChart(sections) {
             {
                 name: "thrLName",
                 title: "Last Name",
+                type: "text",
+                validate: "required"
+            },
+            {
+                name: "thrEmail",
+                title: "Email",
                 type: "text",
                 validate: "required"
             },
