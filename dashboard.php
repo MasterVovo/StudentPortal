@@ -38,7 +38,11 @@ $result = $stmt->get_result();
 $row = $result->fetch_assoc();
 $_SESSION["stdFName"] = $name = $row[$fname]; // Set the name in the session
 
-$_SESSION["pfp"] = $pfp = base64_encode($row["stdImage"]); // Set the profile picture in the session
+$_SESSION["pfp"] = $pfp = "";
+
+if ($row["stdImage"] != "") {
+  $_SESSION["pfp"] = $pfp = base64_encode($row["stdImage"]); // Set the profile picture in the session
+}
 ?>
 
 <!DOCTYPE html>
@@ -190,7 +194,15 @@ $_SESSION["pfp"] = $pfp = base64_encode($row["stdImage"]); // Set the profile pi
             </small>
           </div>
           <div class="profile-photo">
-            <img src=<?php echo "data:image/jpeg;base64,$pfp";?> />
+            <img src=
+            <?php 
+              if ($pfp == "") {
+                echo "images/profile.png";
+              } else {
+                echo "data:image/jpeg;base64,$pfp";
+              }
+              ?> 
+            />
           </div>
         </div>
       </div>
