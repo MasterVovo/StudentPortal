@@ -1,9 +1,3 @@
-<?php
-  if(isset($_GET['tab'])) {
-    $tab = $_GET['tab'];
-  }
-?>
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -140,7 +134,7 @@
                 </div>
                 <div class="annImage">
                     <h2>Announcement Image*</h2>
-                    <input type="file" accept="images/jpeg, image/png, image/jpg" id="image-input" name ="image">
+                    <input type="file" accept=".jpeg, .png, .jpg" id="image-input" name ="image">
                 </div>
                 <div class="annPreview">
                     <img src="../images/Placeholder.jpg" id="preview">

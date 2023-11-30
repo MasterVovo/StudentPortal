@@ -27,6 +27,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     //Compare entered data to correct cred
     if ($result->num_rows === 1) { //Checks if there is a result
         $row = $result->fetch_assoc(); //Fetches the row
+        $status = $row["userStatus"];
 
         if (password_verify($stdPass, $row["userPass"])) { //Checks if password is correct
             //Sets the session variables
@@ -73,7 +74,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 $result = $stmt->get_result(); //Gets the result
                 $row = $result->fetch_assoc(); //Fetches the row
 
-                if ($row["stdGender"] == ""){
+                if ($status == "new"){
                     header("Location: ../registrationForm.php");
                     exit;
                 }

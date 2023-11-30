@@ -2,44 +2,74 @@ const gender = document.getElementById('gender').getContext('2d');
 const age = document.getElementById('age').getContext('2d');
 const visitors = document.getElementById('chart-visitors').getContext('2d');
 
+function createGenderChart(genderData) {
+    const genderChart = new Chart(gender, {
+        type: 'doughnut',
+        data: {
+            labels: ['Male', 'Female'],
+            datasets: [
+                {
+                    data: genderData
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false
+        }
+        
+    });
+}
 
-const genderChart = new Chart(gender, {
-    type: 'doughnut',
-    data: {
-        labels: ['Male', 'Female'],
-        datasets: [
-            {
-                data: [60, 40]
-            }
-        ]
+function createAgeChart(ageData) {
+    const ageChart = new Chart(age, {
+        type: 'bar',
+        data: {
+            labels: ageData[0],
+            datasets: [
+                {
+                    label: 'Male',
+                    data: ageData[1]
+                },
+                {
+                    label: 'Female',
+                    data: ageData[2]
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false
+        }
+    });
+}
+
+// Fetches the gender data and call the method to create a gender chart
+$.ajax({
+    url: 'includes/fetch-chart-data.inc.php',
+    type: 'POST',
+    data: {functionName: 'getGenderData'},
+    success: function(data) {
+        console.log(data);
+        const genderData = JSON.parse(data);
+        createGenderChart(genderData);
     },
-    options: {
-        responsive: true,
-        maintainAspectRatio: false
+    error: function(data) {
+        console.log('Gender data couldn\'t be retrieved');
     }
-    
 });
 
-const ageChart = new Chart(age, {
-    type: 'bar',
-    data: {
-        labels: [18, 19, 20, 21, 22, 23, 24, 25],
-        datasets: [
-            {
-                label: 'Male',
-                data: [100, 120, 300, 90, 80, 150, 200, 130]
-            },
-            {
-                label: 'Female',
-                data: [90, 150, 100, 80, 70, 200, 250, 300]
-            }
-        ]
-    },
-    options: {
-        responsive: true,
-        maintainAspectRatio: false
+// Fetches the age data and call the method to create an age chart
+$.ajax({
+    url: 'includes/fetch-chart-data.inc.php',
+    type: 'POST',
+    data: {functionName: 'getAgeData'},
+    success: function(data) {
+        console.log("age data is " + data);
+        const ageData = JSON.parse(data);
+        createAgeChart(ageData);
     }
-});
+})
 
 const vistorsChart = new Chart(visitors, {
     type: 'line',
