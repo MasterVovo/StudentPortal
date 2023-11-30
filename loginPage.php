@@ -49,7 +49,7 @@ require_once "includes/autoLogin.inc.php"; //Checks for session for auto login ?
         
         <div class="remember-forgot">
           <label><input type="checkbox" name="rememberUser" id="remeberUser" /> Remember me</label>
-          <a href="resetPass.html">Forgot password?</a>
+          <a href="verifyUser.php">Forgot password?</a>
         </div>
         <button type="submit" class="btn" onclick="showToast()">Login</button>
         

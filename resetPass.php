@@ -1,3 +1,4 @@
+<?php session_start();?>
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -14,31 +15,6 @@
     <section class="container">
       <h2>Change your password</h2>
       <form class="form" autocomplete="off">
-        <div class="input-box">
-          <span class="details">Email</span>
-          <input
-            type="email"
-            name="stdEmail"
-            id="stdEmail"
-            placeholder="example@email.com"
-            autocomplete="false"
-            readonly
-            onfocus="this.removeAttribute('readonly');"
-          />
-          <button id="sendOTP">Send OTP</button>
-          <small id="countdown"></small>
-        </div>
-        <div class="input-box">
-          <span class="details">OTP</span>
-          <input
-            type="text"
-            name="otp"
-            id="otp"
-            placeholder="Enter OTP"
-          />
-        </div>
-
-        <div class="column">
           <div class="input-box">
             <span class="details">New Password</span>
             <input
@@ -50,6 +26,12 @@
           </div>
 
           <div class="input-box">
+            <small><span id="length">>= 8 characters</span> &emsp;&emsp;&emsp;&emsp; <span id="lowercase">>= 1 Lowercase</span><br>
+            <span id="uppercase">>= 1 Uppercase</span> &emsp;&emsp;&emsp;&emsp; <span id="special">>= 1 Special character</span><br>
+            <span id="number">>= 1 Number</span></small>
+          </div>
+
+          <div class="input-box">
             <span class="details">Repeat Password</span>
             <input
               type="password"
@@ -57,8 +39,8 @@
               id="repeatPass"
               placeholder="Repeat password"
             />
+            <small><span id="checkPass">&nbsp;</span></small>
           </div>
-        </div>
 
         <!-- SEND BUTTON-->
         <button type="submit">Reset Password</button>
@@ -67,42 +49,101 @@
 
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <script>
-      $(document).ready(function() {
-        $("#sendOTP").on("click", function(e) {
+      $(document).ready(function () {
+        $("#newPass").on("input", function () {
+          var pass = $(this).val();
+
+          var passLen = pass.length >= 8 && pass.length <= 20;
+          var hasUpper = /[A-Z]/.test(pass);
+          var hasLower = /[a-z]/.test(pass);
+          var hasNum = /\d/.test(pass);
+          var hasSym = /\W/.test(pass);
+          
+          if (passLen) {
+            document.getElementById("length").style.color = "green";
+          } else {
+            document.getElementById("length").style.color = "red";
+          }
+
+          if (hasUpper) {
+            document.getElementById("uppercase").style.color = "green";
+          } else {
+            document.getElementById("uppercase").style.color = "red";
+          }
+
+          if (hasLower) {
+            document.getElementById("lowercase").style.color = "green";
+          } else {
+            document.getElementById("lowercase").style.color = "red";
+          }
+
+          if (hasSym) {
+            document.getElementById("special").style.color = "green";
+          } else {
+            document.getElementById("special").style.color = "red";
+          }
+
+          if (hasNum) {
+            document.getElementById("number").style.color = "green";
+          } else {
+            document.getElementById("number").style.color = "red";
+          }
+        });
+
+        $("#repeatPass").on("input", function () {
+          var newPass = $("#newPass").val();
+          var repeatPass = $("#repeatPass").val();
+
+          if (newPass !== repeatPass) {
+            document.getElementById("checkPass").style.color = "red";
+            document.getElementById("checkPass").innerHTML = "Passwords do not match";
+          } else {
+            document.getElementById("checkPass").style.color = "green";
+            document.getElementById("checkPass").innerHTML = "Passwords match";
+          }
+        });
+
+        $("form").on("submit", function(e) {
           e.preventDefault();
 
-          var otp = Math.floor(100000 + Math.random() * 900000);
+          var newPass = $("#newPass").val();
+          var repeatPass = $("#repeatPass").val();
 
-          var email = $("#stdEmail").val();
+          var passLen = newPass.length >= 8 && newPass.length <= 20;
+          var hasUpper = /[A-Z]/.test(newPass);
+          var hasLower = /[a-z]/.test(newPass);
+          var hasNum = /\d/.test(newPass);
+          var hasSym = /\W/.test(newPass);
 
-          // Send the OTP
-        $.ajax({
-            url: 'includes/sendOTP.inc.php',
-            type: 'POST',
-            data: {
-              email: email,
-              otp: otp
-            },
-            success: function(response) {
-              // Start the timer
-              var timer = 60;
-              var interval = setInterval(function() {
-                timer--;
-                document.getElementById("countdown").innerHTML = timer + " seconds remaining";
-                if(timer === 0) {
-                  clearInterval(interval);
-                  document.getElementById("sendOTP").disabled = false;
-                  document.getElementById("countdown").innerHTML = "";
-                }
-              }, 1000);
+          if (!passLen || !hasUpper || !hasLower || !hasNum || !hasSym) {
+            alert("Password field doesn't meet the requirements");
+            return;
+          }
 
-              // Disable the button
-              document.getElementById("sendOTP").disabled = true;
-            },
-            error: function(jqXHR, textStatus, errorThrown) {
-              console.log(textStatus, errorThrown);
+            if (newPass !== repeatPass) {
+              alert("Passwords do not match");
+              return;
             }
-          });
+
+            $.ajax({
+              url: 'includes/resetPass.inc.php',
+              type: 'POST',
+              data: { 
+                newPass: newPass,
+                repeatPass: repeatPass
+              },
+              success: function(response) {
+                if (response.trim() === "success") {
+                  alert("Password changed successfully");
+                  window.location.href = "loginPage.php";
+                } else if (response.trim() === "error") {
+                  alert("Error changing password, make sure that all requirements are met");
+                }
+              },
+              error: function(xhr, status, error) {
+                alert("Error: " + error);
+              }
+            });
         });
       });
     </script>
