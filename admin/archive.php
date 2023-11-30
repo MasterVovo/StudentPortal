@@ -70,10 +70,9 @@
         </div>
 
         <!-- Nav -->
-        <div class="db-nav">
-            <!-- <a href="database.php?tab=stdAdd">Add Student</a> -->
+        <div class="ann-container">
             <a href="archive.php?tab=stdList">Student List</a>
-            <!-- <a href="database.php?tab=fctList">Faculty List</a> -->
+            <a href="archive.php?tab=fctList">Faculty List</a>
         </div>
 
         <!-- Table -->
