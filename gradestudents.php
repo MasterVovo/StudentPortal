@@ -75,6 +75,7 @@ $pfp = $_SESSION["pfp"];
    
     <!-- Main content -->
     <main>
+    <h1>STUDENT TABLE GRADES</h1>
       <div class="ann-container">
         <div class="announcement">
           <h2>Grade Students</h2>
