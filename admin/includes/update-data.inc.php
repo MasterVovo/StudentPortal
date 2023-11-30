@@ -31,7 +31,7 @@ function updateFctSection($fctData) {
         $sqlQuery->execute();
 
         if ($sqlQuery->affected_rows == 1) {
-            return 'success';
+            return 'Teachers info is successfully updated';
         } else {
             return 'Something\'s wrong in updating teacher information';
         }
