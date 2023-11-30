@@ -399,6 +399,11 @@ main .ann-container .announcement small {
   gap: 0.5rem;
 }
 
+.grades .grades-header h4 {
+  margin-left: 15rem;
+}
+
+
 .right-section .grades .grades-header h4{
   text-decoration: underline; 
   cursor: pointer; 

@@ -75,6 +75,7 @@ $pfp = $_SESSION["pfp"];
       </aside>
       <!-- End of sidebar -->
 
+     
       <!-- Main content -->
       <main>
         <div class="ann-header">
@@ -94,6 +95,10 @@ $pfp = $_SESSION["pfp"];
             $content = $row["announcementText"]; // Get the content
             $imageData = $row["announcementImage"]; // Get the image data
             $uploadTime = strtotime($row["announcementTime"]); // Get the upload time
+            $announcementId = $row["announcementId"]; // Unique identifier for each announcement
+            $shortContent = substr($content, 0, 300); // Limit content to 100 characters
+            $fullContent = nl2br(htmlspecialchars($content)); // Store full content with HTML line breaks and special character encoding
+
 
             $image = base64_encode($imageData); // Encode the image
 
@@ -103,15 +108,16 @@ $pfp = $_SESSION["pfp"];
             $elapsedTime = formatTimeElapsed($timeDifference); // Format the time
 
             echo "<div class='ann-container'>
-            <div class='announcement'>
-            <img src='data:image/jpeg;base64,$image'/>
-            <center><h2>$title</h2></center>
-            <p>$elapsedTime ago</p>
-            <h3>$content</h3><small>Read More</small>
+            <div class='announcement' id='announcement-$announcementId'>
+                <img src='data:image/jpeg;base64,$image'/>
+                <center><h2>$title</h2></center>
+                <p>$elapsedTime ago</p>
+                <div class='content-short'>$shortContent...</div>
+                <div class='content-full' style='display: none;'>$fullContent</div>
+                <medium class='read-more' onclick='toggleContent($announcementId)'>Read More</medium>
             </div>
-            </div>";
+        </div>";
           }
-
           mysqli_close($conn);
 
           function formatTimeElapsed($time) //Formats the given time elapsed into a human-readable format.
@@ -177,6 +183,22 @@ $pfp = $_SESSION["pfp"];
       <!-- End of right section -->
     </div>
       <script src="scripts/dashboard.js"></script>
+
+      <!-- SCRIPT FOR SEE MORE PAGE -->
+  <script>
+    function toggleContent(announcementId) {
+        var shortContent = document.getElementById(`announcement-${announcementId}`).getElementsByClassName('content-short')[0];
+        var fullContent = document.getElementById(`announcement-${announcementId}`).getElementsByClassName('content-full')[0];
+
+        if (shortContent.style.display === 'none') {
+            shortContent.style.display = 'block';
+            fullContent.style.display = 'none';
+        } else {
+            shortContent.style.display = 'none';
+            fullContent.style.display = 'block';
+        }
+    }
+</script>
   </body>
 
 </html>
