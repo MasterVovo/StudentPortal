@@ -1,21 +1,27 @@
 <?php
 session_start();
-$stdId = $_SESSION['stdID'] ?? '';
+$stdId = $_SESSION["stdID"] ?? '';
 
 include "sqlConnection/db_connect.php";
+
+//Notification
+$notif1 = "";
+$notif2 = "";
+$notif3 = "";
 
 $sql = "SELECT stdFName, stdMName, stdLName, stdEmail FROM stdinfo WHERE stdId = '" . $stdId . "'";
 $result = mysqli_query($conn, $sql);
 $row = mysqli_fetch_assoc($result);
 
-$fname = $row['stdFName'];
-$mname = $row['stdMName'];
-$lname = $row['stdLName'];
-$email = $row['stdEmail'];
+$fname = $row["stdFName"];
+$mname = $row["stdMName"];
+$lname = $row["stdLName"];
+$email = $row["stdEmail"];
 
+//Check if the user click the submit button
 if (isset($_POST["btnSubmit"])) {
+  //Check if all fields have been filled up
     if (
-        !empty($_POST["stdId"]) &&
         !empty($_POST["Firstname"]) &&
         !empty($_POST["Lastname"]) &&
         !empty($_POST["gender"]) &&
@@ -35,65 +41,91 @@ if (isset($_POST["btnSubmit"])) {
         !empty($_POST["parentAdd"]) &&
         !empty($_POST["EmerName"]) &&
         !empty($_POST["EmerRel"]) &&
-        !empty($_POST["EmergencyNum"])
-        )
-     {
-      if (preg_match("/^\d{11}$/", $_POST["phonenum"]) &&
-      preg_match("/^\d{11}$/", $_POST["fatherNum"]) &&
-      preg_match("/^\d{11}$/", $_POST["motherNum"]) &&
-      preg_match("/^\d{11}$/", $_POST["EmergencyNum"]))
+        !empty($_POST["EmergencyNum"]))
+        {
+          //Check for special characters
+        if (!preg_match("/[\^$&{}<>;=!+%#?]/", $_POST["Firstname"]) &&
+        !preg_match("/[\^$&{}<>;=!+%#?]/", $_POST["Middlename"]) &&
+        !preg_match("/[\^$&{}<>;=!+%#?]/", $_POST["Lastname"]) &&
+        !preg_match("/[\^$&{}<>;=!+%#?]/", $_POST["address"]) &&
+        !preg_match("/[\^$&{}<>;=!+%#?]/", $_POST["city"]) &&
+        !preg_match("/[\^$&{}<>;=!+%#?]/", $_POST["region"]) &&
+        !preg_match("/[\^$&{}<>;=!+%#?]/", $_POST["barangay"]) &&
+        !preg_match("/[\^$&{}<>;=!+%#?]/", $_POST["father_name"]) &&
+        !preg_match("/[\^$&{}<>;=!+%#?]/", $_POST["mother_name"]) &&
+        !preg_match("/[\^$&{}<>;=!+%#?]/", $_POST["fatherJob"]) &&
+        !preg_match("/[\^$&{}<>;=!+%#?]/", $_POST["motherJob"]) &&
+        !preg_match("/[\^$&{}<>;=!+%#?]/", $_POST["parentAdd"]) &&
+        !preg_match("/[\^$&{}<>;=!+%#?]/", $_POST["EmerName"]))
+        {
+          //Check for phone numbers length
+           if (preg_match("/^\d{11}$/", $_POST["phonenum"]) &&
+            preg_match("/^\d{11}$/", $_POST["fatherNum"]) &&
+            preg_match("/^\d{11}$/", $_POST["motherNum"]) &&
+            preg_match("/^\d{11}$/", $_POST["EmergencyNum"]))
+            {
+              $inputId = mysqli_real_escape_string($conn, $_POST["stdId"]);
+              $checkId = mysqli_query(
+                  $conn,
+                  "SELECT stdID FROM stdinfo WHERE stdID = '$inputId'"
+              );
+              $numberOfUser = mysqli_num_rows($checkId);
+  
+              $saveRecord = $conn->prepare("INSERT INTO stdinfo (stdID, stdFName, stdMName, stdLName, 
+          stdBirth, stdGender, stdImage, stdEmail, stdPhoneNum, stdStreet, stdCity, stdProvince, stdBrgy,
+          stdFatherName, stdFatherPhone, stdFatherJob, stdMotherName, stdMotherPhone, stdMotherJob, 
+          stdParentAddr, stdEmerName, stdEmerRel, stdEmerPhone, stdEmerBlood) 
+          VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+  
+              $saveRecord->bind_param(
+                  "ssssssssssssssssssssssss",
+                  $inputId,
+                  $inputFirstname,
+                  $inputMiddlename,
+                  $inputLastname,
+                  $inputBirthdate,
+                  $inputGender,
+                  $inputImage,
+                  $inputEmail,
+                  $inputPhonenumber,
+                  $inputAddress,
+                  $inputCity,
+                  $inputRegion,
+                  $inputBarangay,
+                  $inputFathername,
+                  $inputFathernumber,
+                  $inputFatherJob,
+                  $inputMothername,
+                  $inputMothernumber,
+                  $inputMotherJob,
+                  $inputParentsnumber,
+                  $inputFullname,
+                  $inputRelationship,
+                  $inputEmergencynumber,
+                  $inputBloodType
+              );
+  
+              $saveRecord->execute();
+              $saveRecord->close();
+              $conn->close();
+  
+              header("Location: dashboard.php");
 
-            $inputId = mysqli_real_escape_string($conn, $_POST["stdId"]);
-            $checkId = mysqli_query(
-                $conn,
-                "SELECT stdID FROM stdinfo WHERE stdID = '$inputId'"
-            );
-            $numberOfUser = mysqli_num_rows($checkId);
+            }
+            else{
+              $notif3 = "Please make sure that the phone numbers are exactly 11 digits long.";
+            }
+          }
 
-            $saveRecord = $conn->prepare("INSERT INTO stdinfo (stdID, stdFName, stdMName, stdLName, 
-        stdBirth, stdGender, stdImage, stdEmail, stdPhoneNum, stdStreet, stdCity, stdProvince, stdBrgy,
-        stdFatherName, stdFatherPhone, stdFatherJob, stdMotherName, stdMotherPhone, stdMotherJob, 
-        stdParentAddr, stdEmerName, stdEmerRel, stdEmerPhone, stdEmerBlood) 
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
-
-            $saveRecord->bind_param(
-                "ssssssssssssssssssssssss",
-                $inputId,
-                $inputFirstname,
-                $inputMiddlename,
-                $inputLastname,
-                $inputBirthdate,
-                $inputGender,
-                $inputImage,
-                $inputEmail,
-                $inputPhonenumber,
-                $inputAddress,
-                $inputCity,
-                $inputRegion,
-                $inputBarangay,
-                $inputFathername,
-                $inputFathernumber,
-                $inputFatherJob,
-                $inputMothername,
-                $inputMothernumber,
-                $inputMotherJob,
-                $inputParentsnumber,
-                $inputFullname,
-                $inputRelationship,
-                $inputEmergencynumber,
-                $inputBloodType
-            );
-
-            $saveRecord->execute();
-            $saveRecord->close();
-            $conn->close();
-
-            header("Location: dashboard.php");
+        else{
+          $notif2 = "No special characters allowed. Please try again";
         }
-        else {
-          $notif = "Please make sure that phone numbers are exactly 11 digits long.";
+        }
+
+      else{
+        $notif1 = "Please fill out the required fields.";
       }
-    }
+    }     
 ?>
 
 <!DOCTYPE html>
@@ -112,8 +144,13 @@ if (isset($_POST["btnSubmit"])) {
   <div class="container">
     <form action="registrationForm.php" class = "form" method = "POST"> 
       <header>REGISTRATION FORM</header>
+      <center style = "color: red">
+      <?php echo $notif3?>
+      <?php echo $notif2?>
+      <?php echo $notif1?></center>
       <span class = "primary"></span>
       <h2>Personal Information</h2>
+      <p style = "color : red">Please fill out all required fields marked with *</p>
 
       <div class="input-box">
         <span class="details">ID Number</span>
@@ -180,7 +217,7 @@ if (isset($_POST["btnSubmit"])) {
       <div class="column">
         <div class="input-box">
           <label>Phone Number<span class = "required">*</span></label>
-          <input type="number" name=phonenum placeholder="Enter phone number" required/>
+          <input type="text" name=phonenum placeholder="Enter phone number" required/>
         </div>
         <div class="input-box">
           <label>Birth Date<span class = "required">*</span></label>
