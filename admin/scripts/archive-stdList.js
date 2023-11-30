@@ -75,6 +75,19 @@ let grid = $('#grid-table').jsGrid({
             title: "Email",
             type: "text",
             validate: "required"
+        },
+        {
+            type: 'control',
+            editButton: false,
+            deleteButton: false,
+            itemTemplate: function (value, item) {
+                var $result = jsGrid.fields.control.prototype.itemTemplate.apply(this, arguments);
+                var $customButton = $('<button>').attr({class: 'customButton material-icons-sharp restore text-success'}).text('restore');
+                $customButton.on('click', function() {
+                    console.log('Custom button clicked for item: ', item);
+                });
+                return $result.add($customButton);
+            }
         }
     ]
 }).data("JSGrid");

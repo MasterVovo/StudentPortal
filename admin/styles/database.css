@@ -58,6 +58,11 @@ input#file-upload-button {
     gap: .5rem;
 }
 
+/* Table Button */
+.restore {
+    background: transparent;
+}
+
 @media screen and (min-width: 772px) {
     .right-section {
         display: none;
