@@ -1,16 +1,28 @@
+var Toast = Swal.mixin({
+    toast: true,
+    position: 'top-end',
+    showConfirmButton: false,
+    timer: 3000,
+    timerProgressBar: true,
+    didOpen: (toast) => {
+        toast.onmouseenter = Swal.stopTimer;
+        toast.onmouseleave = Swal.resumeTimer;
+    }
+});
+
 let grid = $('#grid-table').jsGrid({
     width: "100%",
     height: "auto",
 
-    filtering: true,
-    // inserting: true,
+    filtering: false,
+    inserting: false,
     editing: false,
     sorting: true,
     paging: true,
     autoload: true,
     pageSize: 15,
     pageButtonCount: 5,
-    // deleteConfirm: "Do you really want to delete data?",
+    confirmDeleting: false,
 
     controller: {
         loadData: function(filter) {
@@ -22,11 +34,30 @@ let grid = $('#grid-table').jsGrid({
             });
         },
         deleteItem: function(item) {
-            return $.ajax({
-                type: "POST",
-                url: "includes/delete-stdList.inc.php",
-                data: item
-            })
+            swal.fire({
+                title: "Archive this data?",
+                text: "It will be permanently deleted after 3 months!",
+                icon: "warning",
+                showConfirmButton: true,
+                showCancelButton: true
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    return $.ajax({
+                        type: "POST",
+                        url: "includes/delete-stdList.inc.php",
+                        data: {
+                            functionName: 'archiveStd',
+                            stdData: item
+                        },
+                        success: function(response) {
+                            console.log(response);
+                        },
+                        error: function(error) {
+                            console.log(error);
+                        }
+                    })
+                }
+            });
         }
     },
 

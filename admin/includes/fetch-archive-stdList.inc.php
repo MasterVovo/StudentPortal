@@ -26,6 +26,7 @@ if ($resultCheck > 0) {
         $stdData->appendStdImage($dataUrl);
 
         $stdData->appendStdEmail($row['stdEmail']);
+        $stdData->appendExpiration($row['expiration']);
 
         array_push($arrayOfStdData, $stdData);
     }
@@ -43,6 +44,7 @@ class stdData {
     public $stdCourse;
     public $stdImage;
     public $stdEmail;
+    public $expiration;
 
     function appendStdID($data) {
         $this->stdID = $data;
@@ -78,5 +80,9 @@ class stdData {
     
     function appendStdEmail($data) {
         $this->stdEmail = $data;
+    }
+
+    function appendExpiration($data) {
+        $this->expiration = $data;
     }
 }

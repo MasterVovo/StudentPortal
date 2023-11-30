@@ -77,6 +77,11 @@ let grid = $('#grid-table').jsGrid({
             validate: "required"
         },
         {
+            name: "expiration",
+            title: "Expiration",
+            type: "text"
+        },
+        {
             type: 'control',
             editButton: false,
             deleteButton: false,
@@ -85,6 +90,20 @@ let grid = $('#grid-table').jsGrid({
                 var $customButton = $('<button>').attr({class: 'customButton material-icons-sharp restore text-success'}).text('restore');
                 $customButton.on('click', function() {
                     console.log('Custom button clicked for item: ', item);
+                    $.ajax({
+                        type: "POST",
+                        url: "includes/delete-stdList.inc.php",
+                        data: {
+                            functionName: 'restoreStd',
+                            stdData: item
+                        },
+                        success: function(response) {
+                            console.log(response);
+                        },
+                        error: function(error) {
+                            console.log(response);
+                        }
+                    })
                 });
                 return $result.add($customButton);
             }
