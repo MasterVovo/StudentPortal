@@ -12,7 +12,7 @@ require "../sqlConnection/db_connect.php";
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $semesterId = $_POST["semester"];
     $userId = $_SESSION["stdID"];
-    $sql = "SELECT tblsubjects.subjectName,tblgrades.subjectCode, tblgrades.gradePrelims, tblgrades.gradeMidterms, tblgrades.gradeFinals 
+    $sql = "SELECT tblsubjects.subjectName, tblgrades.subjectCode, tblgrades.gradePrelims, tblgrades.gradeMidterms, tblgrades.gradeFinals 
         FROM tblgrades JOIN tblsubjects ON tblgrades.subjectCode = tblsubjects.subjectCode 
         WHERE tblgrades.studentId = ? AND tblgrades.semesterId = ?";
     $stmt = $conn->prepare($sql);

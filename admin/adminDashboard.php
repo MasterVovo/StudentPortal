@@ -54,6 +54,10 @@ $pfp = $_SESSION["pfp"];
             <span class="material-icons-sharp"> storage </span>
             <h3>Database</h3>
           </a>
+          <a href="announcement.php">
+            <span class="material-icons-sharp"> feed </span>
+            <h3>News</h3>
+          </a>
           <a href="archive.php">
             <span class="material-icons-sharp"> auto_delete </span>
             <h3>Archive</h3>

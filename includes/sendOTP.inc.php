@@ -24,7 +24,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     $row = $result->fetch_assoc();
 
-    if($row["userType"] != "student"){ //! Debugging
+    if($row["userType"] == "student"){ //! Debugging
         $sql = "SELECT stdEmail FROM stdinfo WHERE stdID = ?";
         $emailType = "stdEmail";
     } else {
