@@ -72,16 +72,20 @@
         <!-- Nav -->
         <div class="db-nav">
             <!-- <a href="database.php?tab=stdAdd">Add Student</a> -->
-            <a href="database.php?tab=stdList">Student List</a>
+            <a href="archive.php?tab=stdList">Student List</a>
             <!-- <a href="database.php?tab=fctList">Faculty List</a> -->
         </div>
 
         <!-- Table -->
-        <div class="ann-container">
-        <div class="grid-table-container">
-            <div id="grid-table"></div>
-        </div>
-        </div>
+        <?php 
+          if (isset($_GET['tab'])) {
+            switch($tab) {
+              case 'stdList':
+                echo file_get_contents('html-pieces/archive-stdList');
+                break;
+            }
+          }
+        ?>
         
       </main>
       <!-- End of main content -->
@@ -120,164 +124,15 @@
       <!-- AdminLTE for table widget card -->
       <script src="https://cdn.jsdelivr.net/npm/admin-lte@3.1/dist/js/adminlte.min.js"></script>
 
-      <script>
-        let grid = $('#grid-table').jsGrid({
-            width: "100%",
-            height: "auto",
-
-            // filtering: true,
-            // inserting: true,
-            // editing: false,
-            sorting: true,
-            paging: true,
-            autoload: true,
-            pageSize: 10,
-            pageButtonCount: 5,
-            // deleteConfirm: "Do you really want to delete data?",
-
-            controller: {
-                loadData: function(filter) {
-                    return $.ajax({
-                        type: "POST",
-                        url: "includes/fetch-archive-stdList.inc.php",
-                        data: filter,
-                        dataType: "json"
-                    });
-                }
-            },
-
-            fields: [
-                {
-                    name: "stdID",
-                    title: "Student ID",
-                    type: "text",
-                    validate: "required"
-                },
-                {
-                    name: "stdFName",
-                    title: "First Name",
-                    type: "text",
-                    validate: "required"
-                },
-                {
-                    name: "stdMName",
-                    title: "Middle Name",
-                    type: "text"
-                },
-                {
-                    name: "stdLName",
-                    title: "Last Name",
-                    type: "text",
-                    validate: "required"
-                },
-                {
-                    name: "stdBirth",
-                    title: "Birthday",
-                    type: "text",
-                    validate: "required"
-                },
-                {
-                    name: "stdGender",
-                    title: "Gender",
-                    type: "text",
-                    validate: "required"
-                },
-                {
-                    name: "stdCourse",
-                    title: "Course",
-                    type: "text",
-                    validate: "required"
-                },
-                {
-                    name: "stdImage",
-                    title: "Image",
-                    type: "text"
-                },
-                {
-                    name: "stdEmail",
-                    title: "Email",
-                    type: "text",
-                    validate: "required"
-                }
-            ]
-        }).data("JSGrid");
-
-        // The minimum width of the table for responsiveness
-        $('.jsgrid-table').css('min-width', '1800px');
-        
-
-        
-        $(document).ready(function () {
-
-          // $(".db-nav a").click(function(e) {
-          //   e.preventDefault();
-
-          //   var newTab = $(this).data('tab');
-
-          //   $.ajax({
-          //       url: 'includes/dbpage_tab_content.inc.php',
-          //       method: 'POST',
-          //       data: { newTab: newTab },
-          //       success: function (response) {
-          //           console.log(response);
-          //           //location.reload();
-          //       },
-          //       error: function (error) {
-          //           console.error('Error:', error);
-          //       }
-          //   });
-          // });
-
-
-          // This will run if the upload button is clicked
-          $("#uploadBtn").click(function (e) {
-            e.preventDefault();
-
-            grid.loadData();
-          });
-
-
-          $('#uploadToDB').click(function(e) {
-                e.preventDefault();
-
-                let allData = grid.data;
-                let jsonData = JSON.stringify(allData);
-                
-                // var formData = new FormData();
-                // formData.append('excelFile', $('#excelFile')[0].files[0]);
-
-                // $.ajax({
-                //     url: 'includes/uploadStdToDB.inc.php',
-                //     type: 'POST',
-                //     data: formData,
-                //     processData: false,  // tell jQuery not to process the data
-                //     contentType: false,  // tell jQuery not to set contentType
-                //     success: function(data) {
-                //         // Hide the loader
-                //         document.getElementById('loaderContainer').style.display = 'none';
-
-                //         // Show a success message
-                //         alert('Data inserted successfully!');
-                //     }
-                // });
-
-                $.ajax({
-                    url: "includes/add_std.inc.php",
-                    type: "POST",
-                    data: { jsonData: jsonData, },
-                    dataType: "json",
-                    success: function (response) {
-                        console.log("Data inserted successfully:", response);
-                    },
-                    error: function (error) {
-                        console.error("Error inserting data:", error);
-                    }
-                });
-            });
-
-            
-        });
-      </script>
+      <?php
+        if(isset($_GET['tab'])) {
+          switch($tab) {
+            case 'stdList':
+              echo '<script src="scripts/archive-stdList.js"></script>';
+              break;
+          }
+        }
+      ?>
   </body>
 
 </html>
