@@ -81,7 +81,7 @@ $pfp = $_SESSION["pfp"];
               </a>";
             }
           ?>
-          <a href="logout.logout">
+          <a href="logout.php">
             <span class="material-icons-sharp"> logout </span>
             <h3>Logout</h3>
           </a>

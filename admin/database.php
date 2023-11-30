@@ -73,6 +73,7 @@
           <h1>Database</h1>
         </div>
 
+        <!-- Show the content depending on the tab opened -->
         <?php
           if(isset($_GET['tab'])) {
             switch($tab) {
@@ -82,19 +83,12 @@
               case 'stdList':
                 echo file_get_contents('html-pieces/stdList');
                 break;
+              case 'fctList':
+                echo file_get_contents('html-pieces/fctList');
+                break;
             }
           } else {
             echo file_get_contents('html-pieces/no-tab');
-          }
-        ?>
-
-        <?php
-          if(isset($_GET['tab'])) {
-            switch($tab) {
-              case 'stdAdd':
-                echo file_get_contents('html-pieces/stdAdd-right-nav');
-                break;
-            }
           }
         ?>
         
@@ -147,6 +141,8 @@
               case 'stdList':
                 echo '<script src="scripts/stdList.js"></script>';
                 break;
+              case 'fctList':
+                echo '<script src="scripts/fctList.js"></script>';
             }
           }
          
