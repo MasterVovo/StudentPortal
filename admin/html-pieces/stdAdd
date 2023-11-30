@@ -1,0 +1,13 @@
+<!-- Nav -->
+<div class="ann-container">
+    <a href="database.php?tab=stdAdd">Add Student</a>
+    <a href="database.php?tab=stdList">Student List</a>
+    <a href="database.php?tab=fctList">Faculty List</a>
+</div>
+
+<!-- Table -->
+<div class="ann-container">
+<div class="grid-table-container">
+    <div id="grid-table"></div>
+</div>
+</div>

@@ -1,0 +1,70 @@
+
+/* Table */
+.grid-table-container {
+    overflow-x: auto;
+}
+
+.jsgrid-cell {
+    word-wrap: break-word;
+    
+}
+
+.jsgrid-filter-row .jsgrid-cell {
+    background: var(--color-background);
+}
+
+.jsgrid-cell input[type="text"] {
+    background: var(--color-white);
+    color: var(--color-black);
+}
+
+.jsgrid-row td.jsgrid-cell {
+    background: var(--color-white);
+}
+
+.jsgrid-alt-row td.jsgrid-cell {
+    background: var(--color-background);
+}
+
+.jsgrid-selected-row > .jsgrid-cell {
+    background: #c4e2ff !important;
+    border-color: #c4e2ff !important;
+}
+
+th.jsgrid-header-cell {
+    background: var(--color-background) !important;
+}
+
+.jsgrid-nodata-row .jsgrid-cell {
+    background: var(--color-white);
+}
+
+/* Input Button */
+div.flex {
+    margin-top: 1rem;
+    justify-content: center;
+}
+
+input#file-upload-button {
+    background: var(--color-white);
+}
+
+.btn-block {
+    max-width: 15rem;
+    margin-top: 0 !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: .5rem;
+}
+
+@media screen and (min-width: 772px) {
+    .right-section {
+        display: none;
+    }
+
+    /* Table */
+    .orig-container {
+        grid-template-columns: 12rem 1fr;
+    }
+}

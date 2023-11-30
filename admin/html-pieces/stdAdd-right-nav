@@ -1,0 +1,22 @@
+<form id="uploadForm" method="POST" enctype="multipart/form-data">
+    <center>
+    <input type="file" name="excelFile" id="excelFile" accept=".xls,.xlsx" />
+    </center>
+    <div class="flex gap wrap">
+        <button class="btn btn-outline-primary btn-block" type="button" id="uploadBtn" disabled>
+            <span class="material-icons-sharp">
+                tv
+            </span>
+            Show Data
+        </button>
+        <button class="btn btn-outline-success btn-block" id='uploadToDB' disabled>
+        
+            <span class="material-icons-sharp">
+                file_upload
+            </span>
+            Upload Data
+        </button>
+    </div>
+    
+</form>
+
