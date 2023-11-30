@@ -1,4 +1,17 @@
 function createGridChart(sections) {
+    // Configuration for alerts
+    var Toast = Swal.mixin({
+        toast: true,
+        position: 'top-end',
+        showConfirmButton: false,
+        timer: 3000,
+        timerProgressBar: true,
+        didOpen: (toast) => {
+            toast.onmouseenter = Swal.stopTimer;
+            toast.onmouseleave = Swal.resumeTimer;
+        }
+    });
+
     let grid = $('#grid-table').jsGrid({
         width: "100%",
         height: "auto",
@@ -11,6 +24,9 @@ function createGridChart(sections) {
         autoload: true,
         pageSize: 15,
         pageButtonCount: 5,
+        onItemUpdated: function() {
+            $("#grid-table").jsGrid("loadData");
+        },
         // deleteConfirm: "Do you really want to delete data?",
     
         controller: {
@@ -20,6 +36,47 @@ function createGridChart(sections) {
                     url: "includes/fetch-fctList.inc.php",
                     data: { functionName: 'fetchThrData' },
                     dataType: "json"
+                });
+            },
+            updateItem: function(item) {
+                return $.ajax({
+                    type: "POST",
+                    url: "includes/update-data.inc.php",
+                    data: {
+                        functionName: 'updateFctSection',
+                        fctData: item
+                    },
+                    success: function(response) {
+                        switch (response) {
+                            case 'adviser already exist':
+                                Toast.fire({
+                                    icon: 'warning',
+                                    title: 'Adviser already exist.'
+                                });
+                                break;
+                            case 'something went wrong':
+                                Toast.fire({
+                                    icon: 'warning',
+                                    title: 'Something went wrong.'
+                                });
+                                break;
+                            case 'success':
+                                Toast.fire({
+                                    icon: 'success',
+                                    title: 'Section successfully updated.'
+                                });
+                                break;
+                            case 'section not found':
+                                Toast.fire({
+                                    icon: 'info',
+                                    title: 'section not found.'
+                                });
+                                break;
+                        }
+                    },
+                    error: function(error) {
+                        console.error('Error updating section ' + error);
+                    }
                 });
             }
             // ,
@@ -37,7 +94,10 @@ function createGridChart(sections) {
                 name: "thrId",
                 title: "Teacher ID",
                 type: "text",
-                validate: "required"
+                validate: "required",
+                editTemplate: function(value) {
+                    return $("<span>").text(value);
+                }
             },
             {
                 name: "thrFName",
