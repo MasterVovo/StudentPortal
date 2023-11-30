@@ -8,6 +8,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $gradeMidterms = $_POST["gradeMidterms"];
     $gradeFinals = $_POST["gradeFinals"];
     $subjectCode = $_POST["subjectCode"];
+    $semesterId = $_POST["semesterId"];
 
     foreach ($gradePrelims as $stdID => $prelimGrade) {
         // Check if the student already has a record in tblgrades
@@ -26,10 +27,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $stmtUpdate->execute();
         } else {
             // Insert a new record
-            $sqlInsert = "INSERT INTO tblgrades (studentId, subjectCode, gradePrelims, gradeMidterms, gradeFinals) 
-                          VALUES (?, ?, ?, ?, ?)";
+            $sqlInsert = "INSERT INTO tblgrades (studentId, subjectCode, semesterId, gradePrelims, gradeMidterms, gradeFinals) 
+                          VALUES (?, ?, ?, ?, ?, ?)";
             $stmtInsert = $conn->prepare($sqlInsert);
-            $stmtInsert->bind_param("sssss", $stdID, $subjectCode[$stdID], $prelimGrade, $gradeMidterms[$stdID], $gradeFinals[$stdID]);
+            $stmtInsert->bind_param("ssssss", $stdID, $subjectCode[$stdID], $semesterId[$stdID], $prelimGrade, $gradeMidterms[$stdID], $gradeFinals[$stdID]);
             $stmtInsert->execute();
         }
     }
