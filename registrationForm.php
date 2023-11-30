@@ -5,9 +5,7 @@ $stdId = $_SESSION["stdID"] ?? '';
 include "sqlConnection/db_connect.php";
 
 //Notification
-$notif1 = "";
-$notif2 = "";
-$notif3 = "";
+$notif = "";
 
 $sql = "SELECT stdFName, stdMName, stdLName, stdEmail FROM stdinfo WHERE stdId = '" . $stdId . "'";
 $result = mysqli_query($conn, $sql);
@@ -70,60 +68,68 @@ if (isset($_POST["btnSubmit"])) {
                   "SELECT stdID FROM stdinfo WHERE stdID = '$inputId'"
               );
               $numberOfUser = mysqli_num_rows($checkId);
+
+              if(isset($_FILES['image']) && $_FILES['image']['error'] == 0){
+                $imageData = file_get_contents($_FILES['image']['tmp_name']);
+              }
   
-              $saveRecord = $conn->prepare("INSERT INTO stdinfo (stdID, stdFName, stdMName, stdLName, 
-          stdBirth, stdGender, stdImage, stdEmail, stdPhoneNum, stdStreet, stdCity, stdProvince, stdBrgy,
-          stdFatherName, stdFatherPhone, stdFatherJob, stdMotherName, stdMotherPhone, stdMotherJob, 
-          stdParentAddr, stdEmerName, stdEmerRel, stdEmerPhone, stdEmerBlood) 
-          VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+              $saveRecord = $conn->prepare("UPDATE stdinfo SET stdFName = ?, stdMName = ?, stdLName = ?, 
+          stdBirth = ?, stdGender = ?, stdImage = ?, stdEmail = ?, stdPhoneNum = ?, stdStreet = ?, stdCity = ?, stdProvince = ?, stdBrgy = ?,
+          stdFatherName = ?, stdFatherPhone = ?, stdFatherJob = ?, stdMotherName = ?, stdMotherPhone = ?, stdMotherJob = ?, 
+          stdParentAddr = ?, stdEmerName = ?, stdEmerRel = ?, stdEmerPhone = ?, stdEmerBlood = ? WHERE stdID = ?");
   
               $saveRecord->bind_param(
                   "ssssssssssssssssssssssss",
-                  $inputId,
-                  $inputFirstname,
-                  $inputMiddlename,
-                  $inputLastname,
-                  $inputBirthdate,
-                  $inputGender,
-                  $inputImage,
-                  $inputEmail,
-                  $inputPhonenumber,
-                  $inputAddress,
-                  $inputCity,
-                  $inputRegion,
-                  $inputBarangay,
-                  $inputFathername,
-                  $inputFathernumber,
-                  $inputFatherJob,
-                  $inputMothername,
-                  $inputMothernumber,
-                  $inputMotherJob,
-                  $inputParentsnumber,
-                  $inputFullname,
-                  $inputRelationship,
-                  $inputEmergencynumber,
-                  $inputBloodType
+                  $_POST["Firstname"],
+                  $_POST["Middlename"],
+                  $_POST["Lastname"],
+                  $_POST["birthdate"],
+                  $_POST["gender"],
+                  $imageData, 
+                  $_POST["emailadd"],
+                  $_POST["phonenum"],
+                  $_POST["address"],
+                  $_POST["city"],
+                  $_POST["region"],
+                  $_POST["barangay"],
+                  $_POST["father_name"],
+                  $_POST["fatherNum"],
+                  $_POST["fatherJob"],
+                  $_POST["mother_name"],
+                  $_POST["motherNum"],
+                  $_POST["motherJob"],
+                  $_POST["parentAdd"],
+                  $_POST["EmerName"],
+                  $_POST["EmerRel"],
+                  $_POST["EmergencyNum"],
+                  $_POST["Bloodtype"],
+                  $stdId
               );
   
               $saveRecord->execute();
               $saveRecord->close();
+
+              $stmt = $conn->prepare("UPDATE userinfo SET userStatus = 'active' WHERE schoolID = ?");
+              $stmt->bind_param("s", $stdId);
+              $stmt->execute();
+              $stmt->close();
               $conn->close();
   
               header("Location: dashboard.php");
 
             }
             else{
-              $notif3 = "Please make sure that the phone numbers are exactly 11 digits long.";
+              $notif = "Please make sure that the phone numbers are exactly 11 digits long.";
             }
           }
 
         else{
-          $notif2 = "No special characters allowed. Please try again";
+          $notif = "No special characters allowed. Please try again";
         }
         }
 
       else{
-        $notif1 = "Please fill out the required fields.";
+        $notif = "Please fill out the required fields.";
       }
     }     
 ?>
@@ -142,12 +148,10 @@ if (isset($_POST["btnSubmit"])) {
 <body>
   <!-- REGISTRATION PAGE  -->
   <div class="container">
-    <form action="registrationForm.php" class = "form" method = "POST"> 
+    <form action="registrationForm.php" class = "form" id="registrationForm" method = "POST" enctype="multipart/form-data"> 
       <header>REGISTRATION FORM</header>
       <center style = "color: red">
-      <?php echo $notif3?>
-      <?php echo $notif2?>
-      <?php echo $notif1?></center>
+      <?php echo $notif?></center>
       <span class = "primary"></span>
       <h2>Personal Information</h2>
       <p style = "color : red">Please fill out all required fields marked with *</p>
@@ -201,7 +205,7 @@ if (isset($_POST["btnSubmit"])) {
           <p>Attach Image</p>
           <img src="images/profile.png" id="profile-pic">
           <label for="input-file">Update Image</label>
-          <input type="file" accept="images/jpeg, image/png, image/jpg" id="input-file" name = "image">
+          <input type="file" accept=".jpeg, .png, .jpg" id="input-file" name = "image">
         </div>
       </div>
 
@@ -217,7 +221,7 @@ if (isset($_POST["btnSubmit"])) {
       <div class="column">
         <div class="input-box">
           <label>Phone Number<span class = "required">*</span></label>
-          <input type="text" name=phonenum placeholder="Enter phone number" required/>
+          <input type="text" name=phonenum id="phoneNum"placeholder="Enter phone number" required/>
         </div>
         <div class="input-box">
           <label>Birth Date<span class = "required">*</span></label>
@@ -255,12 +259,12 @@ if (isset($_POST["btnSubmit"])) {
         <div class="column">
           <div class="input-box">
             <label>Contact Number<span class = "required">*</span></label>
-            <input type="text" name=fatherNum placeholder="Emergency contact" required/>
+            <input type="text" name=fatherNum id="fatherNum" placeholder="Emergency contact" required/>
           </div>
 
           <div class="input-box">
             <label>Contact Number<span class = "required">*</span></label>
-            <input type="text" name=motherNum placeholder="Emergency contact"  required/>
+            <input type="text" name=motherNum id="motherNum" placeholder="Emergency contact"  required/>
           </div>
         </div>
 
@@ -307,7 +311,7 @@ if (isset($_POST["btnSubmit"])) {
         </div>
         <div class="input-box">
           <label>Contact Number<span class = "required">*</span></label>
-          <input type="text" name="EmergencyNum" placeholder="Emergency contact"  required/>
+          <input type="text" name="EmergencyNum" id="emerNum" placeholder="Emergency contact"  required/>
         </div>
         <div class="input-box">
           <label>Blood Type</label>
@@ -336,6 +340,8 @@ if (isset($_POST["btnSubmit"])) {
     </form>
     </section>
 
+
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <!-- FOR UPDATE IMAGE -->
     <script>
       let profilePic = document.getElementById("profile-pic");

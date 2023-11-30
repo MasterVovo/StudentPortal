@@ -164,7 +164,15 @@ $pfp = $_SESSION["pfp"];
               </small>
             </div>
             <div class="profile-photo">
-              <img src=<?php echo "data:image/jpeg;base64,$pfp";?> />
+              <img src=
+              <?php 
+                if ($pfp == "") {
+                  echo "images/profile.png";
+                } else {
+                  echo "data:image/jpeg;base64,$pfp";
+                }
+                ?> 
+              />
             </div>
           </div>
         </div>
