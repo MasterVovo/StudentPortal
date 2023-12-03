@@ -125,7 +125,7 @@ $pfp = $_SESSION["pfp"];
             </small>
           </div>
           <div class="profile-photo">
-            <img src=<?php echo "data:image/jpeg;base64,$pfp";?> />
+            <img src="images/KLD LOGO.png" />
           </div>
         </div>
       </div>
@@ -159,6 +159,7 @@ $pfp = $_SESSION["pfp"];
               data: $('#sectionForm').serialize() + '&' + $('#gradesTable :input').serialize(),
               success: function(response){
                 alert(response);
+                location.reload(true);
               }
             });
           });

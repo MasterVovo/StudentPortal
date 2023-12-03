@@ -170,9 +170,11 @@ $pfp = $_SESSION["pfp"];
               <img src=
               <?php 
                 if ($pfp == "") {
-                  echo "images/profile.png";
+                  echo "'images/profile.png'";
+                } else if ($pfp == "teacher") {
+                  echo "'images/KLD LOGO.png'";
                 } else {
-                  echo "data:image/jpeg;base64,$pfp";
+                  echo "'data:image/jpeg;base64,$pfp'";
                 }
                 ?> 
               />

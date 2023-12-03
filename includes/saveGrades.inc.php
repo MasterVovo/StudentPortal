@@ -35,12 +35,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
     }
 
-    // Close the database connection
-    $stmtCheck->close();
-    $stmtUpdate->close();
-    $stmtInsert->close();
-    $conn->close();
-
     echo "Grades saved successfully";
 } else {
     echo "Invalid request";

@@ -25,7 +25,7 @@ $userType = $_SESSION["userType"];
 $sql = "SELECT * FROM stdinfo WHERE stdId = ?";
 $fname = "stdFName";
 
-if($userType != "student" && $userType != "admin") {
+if($userType != "student") {
   $sql = "SELECT * FROM thrinfo WHERE thrId = ?";
   $fname = "thrFName";
 }
@@ -40,8 +40,10 @@ $_SESSION["stdFName"] = $name = $row[$fname]; // Set the name in the session
 
 $_SESSION["pfp"] = $pfp = "";
 
-if ($row["stdImage"] != "") {
+if ($userType == "student" && $row["stdImage"] != "") {
   $_SESSION["pfp"] = $pfp = base64_encode($row["stdImage"]); // Set the profile picture in the session
+} else {
+  $_SESSION["pfp"] = $pfp = "teacher";
 }
 ?>
 
@@ -194,15 +196,19 @@ if ($row["stdImage"] != "") {
             </small>
           </div>
           <div class="profile-photo">
+            <a href="profile.php">
             <img src=
             <?php 
               if ($pfp == "") {
-                echo "images/profile.png";
+                echo "'images/profile.png'";
+              } else if ($pfp == "teacher") {
+                echo "'images/KLD LOGO.png'";
               } else {
-                echo "data:image/jpeg;base64,$pfp";
+                echo "'data:image/jpeg;base64,$pfp'";
               }
               ?> 
             />
+            </a>
           </div>
         </div>
       </div>
