@@ -1,3 +1,16 @@
+// Configuration for alerts
+var Toast = Swal.mixin({
+    toast: true,
+    position: 'top-end',
+    showConfirmButton: false,
+    timer: 3000,
+    timerProgressBar: true,
+    didOpen: (toast) => {
+        toast.onmouseenter = Swal.stopTimer;
+        toast.onmouseleave = Swal.resumeTimer;
+    }
+});
+
 let grid = $('#grid-table').jsGrid({
     width: "100%",
     height: "auto",
@@ -10,7 +23,6 @@ let grid = $('#grid-table').jsGrid({
     autoload: true,
     pageSize: 10,
     pageButtonCount: 5,
-    // deleteConfirm: "Do you really want to delete data?",
 
     controller: {
         loadData: function(filter) {
@@ -89,21 +101,31 @@ let grid = $('#grid-table').jsGrid({
                 var $result = jsGrid.fields.control.prototype.itemTemplate.apply(this, arguments);
                 var $customButton = $('<button>').attr({class: 'customButton material-icons-sharp restore text-success'}).text('restore');
                 $customButton.on('click', function() {
-                    console.log('Custom button clicked for item: ', item);
-                    $.ajax({
-                        type: "POST",
-                        url: "includes/delete-stdList.inc.php",
-                        data: {
-                            functionName: 'restoreStd',
-                            stdData: item
-                        },
-                        success: function(response) {
-                            console.log(response);
-                        },
-                        error: function(error) {
-                            console.log(response);
+                    swal.fire({
+                        title: "Restore this data?",
+                        text: "This data will be recovered from archived",
+                        icon: "warning",
+                        showConfirmButton: true,
+                        showCancelButton: true
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            return $.ajax({
+                                type: "POST",
+                                url: "includes/delete-stdList.inc.php",
+                                data: {
+                                    functionName: 'restoreStd',
+                                    stdData: item
+                                },
+                                success: function(response) {
+                                    console.log(response);
+                                    $("#grid-table").jsGrid("loadData");
+                                },
+                                error: function(error) {
+                                    console.log(error);
+                                }
+                            });
                         }
-                    })
+                    });
                 });
                 return $result.add($customButton);
             }

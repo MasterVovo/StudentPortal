@@ -2,10 +2,15 @@
 require "../../vendor/autoload.php";
 require "../../sqlConnection/db_connect.php";
 
-$sql = "SELECT COUNT(*) as row_count FROM stdinfo";
+$sql = " SELECT * FROM stdinfo ORDER BY dateEnrolled DESC LIMIT 1";
 $result = $conn->query($sql);
 $result->num_rows;
 $row = $result->fetch_assoc();
+
+$sql = " SELECT * FROM archived_stdinfo ORDER BY dateEnrolled DESC LIMIT 1";
+$result = $conn->query($sql);
+$result->num_rows;
+$rowArchived = $result->fetch_assoc();
 
 // Close the database connection
 $conn->close();
@@ -31,7 +36,16 @@ $worksheet = $spreadsheet->getActiveSheet(); // Select the first worksheet in th
 //                     <th>Email</th>
 //                 </tr>";
 
-$counter = $row["row_count"] + 1;
+// Determine which have the highest stdId number
+preg_match('/\d+$/', $row['stdID'], $matches);
+$value = intval($matches[0]);
+preg_match('/\d+$/', $rowArchived['stdID'], $matches);
+$archivedValue = intval($matches[0]);
+
+$counter = ($value > $archivedValue) ? $value : $archivedValue;
+$counter += 1;
+
+// $counter = $row["row_count"] + 1;
 
 class stdData {
     public $stdId;

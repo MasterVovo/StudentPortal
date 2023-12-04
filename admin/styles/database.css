@@ -58,6 +58,22 @@ input#file-upload-button {
     gap: .5rem;
 }
 
+/* Help */
+.card {
+    background: var(--color-white);
+    margin: 3rem auto; 
+    width: 50%
+}
+
+blockquote {
+    background: var(--color-white);
+}
+
+blockquote p,
+blockquote small {
+    color: var(--color-black);
+}
+
 /* Table Button */
 .restore {
     background: transparent;

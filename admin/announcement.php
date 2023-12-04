@@ -111,7 +111,7 @@
             <span class="material-icons-sharp"> auto_delete </span>
             <h3>Archive</h3>
           </a>
-          <a href="../logout.html">
+          <a href="../logout.php">
             <span class="material-icons-sharp"> logout </span>
             <h3>Logout</h3>
           </a>

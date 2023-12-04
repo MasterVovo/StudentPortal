@@ -22,7 +22,7 @@ if ($resultCheck > 0) {
         $stdData->appendStdCourse($row['stdCourse']);
         
         $base64 = base64_encode($row['stdImage']);
-        $dataUrl = 'data:image/jpeg;base64,' . $base64;
+        $dataUrl = "<img src='data:image/jpeg;base64," . $base64 . "'/>";
         $stdData->appendStdImage($dataUrl);
 
         $stdData->appendStdEmail($row['stdEmail']);

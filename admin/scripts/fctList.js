@@ -24,10 +24,10 @@ function createGridChart(sections) {
         autoload: true,
         pageSize: 15,
         pageButtonCount: 5,
+        confirmDeleting: false,
         onItemUpdated: function() {
             $("#grid-table").jsGrid("loadData");
         },
-        // deleteConfirm: "Do you really want to delete data?",
     
         controller: {
             loadData: function() {
@@ -123,15 +123,33 @@ function createGridChart(sections) {
                         console.error('Error updating section ' + error);
                     }
                 });
+            },
+            deleteItem: function(item) {
+                swal.fire({
+                    title: "Archive this data?",
+                    text: "It will be permanently deleted after 2 years!",
+                    icon: "warning",
+                    showConfirmButton: true,
+                    showCancelButton: true
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        return $.ajax({
+                            type: "POST",
+                            url: "includes/delete-stdList.inc.php",
+                            data: {
+                                functionName: 'archiveFct',
+                                fctData: item
+                            },
+                            success: function(response) {
+                                console.log(response);
+                            },
+                            error: function(error) {
+                                console.log(error);
+                            }
+                        })
+                    }
+                });
             }
-            // ,
-            // deleteItem: function(item) {
-            //     return $.ajax({
-            //         type: "POST",
-            //         url: "includes/delete-stdList.inc.php",
-            //         data: item
-            //     })
-            // }
         },
     
         fields: [
@@ -193,7 +211,6 @@ $.ajax({
     type: 'POST',
     data: {functionName: 'fetchSections'},
     success: function(data) {
-        console.log(data);
         const sections = JSON.parse(data);
         createGridChart(sections);
     },

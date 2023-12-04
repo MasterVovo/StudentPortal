@@ -8,7 +8,7 @@ require '../../vendor/PHPMailer-master/src/PHPMailer.php';
 require '../../vendor/PHPMailer-master/src/SMTP.php';
 
 function sendEmail($email, $id, $password, $name) {
-    $URL = "kldstudentportal.rf.gd";
+    $URL = "kldstudentportal201.000webhostapp.com";
     $supportEmail = "recordingsandrew@gmail.com";
     $contactInfo = "09123456789";
     
@@ -60,5 +60,9 @@ function sendEmail($email, $id, $password, $name) {
     $mail->Subject = 'Welcome to KLD Student Portal';
     $mail->Body = $emailText;
 
-    $mail->send();
+    if ($mail->send()) {
+        return true;
+    } else {
+        return false;
+    }
 }

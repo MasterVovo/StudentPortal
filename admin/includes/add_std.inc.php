@@ -48,14 +48,18 @@ foreach ($dataArray as $item) {
 
     // Check if the insert to stdinfo was successful
     if ($stmt->affected_rows > 0) {
-        $stmt = $conn->prepare("INSERT INTO userinfo (schoolID, userPass, userType) VALUES (?, ?, ?)");
+        $stmt = $conn->prepare("INSERT INTO userinfo (schoolID, userPass, userType, userStatus) VALUES (?, ?, ?, 'new')");
         $stmt->bind_param("sss", $stdID, $hashedPass, $userType);
         $stmt->execute();
         
         // Check if the insert to userinfo was successful
         if ($stmt->affected_rows > 0) {
-            sendEmail($stdEmail, $stdID, $userPass, $stdFName);
-            $uploadStatus[] = array('success' => true, 'message' => $stdFName . '\'s Data inserted successfully.');
+            if (sendEmail($stdEmail, $stdID, $userPass, $stdFName)) {
+                $uploadStatus[] = array('success' => true, 'message' => $stdFName . '\'s Data inserted successfully.');
+            } else {
+                $uploadStatus[] = array('success' => false, 'message' => $stdFName . '\'s Data inserted successfully. But couldn\'t send email.');
+            }
+            
         } else {
             $uploadStatus[] = array('success' => false, 'message' => $stdFName . '\'s Data cannot be inserted to userinfo.');
         }

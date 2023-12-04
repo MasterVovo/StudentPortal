@@ -83,13 +83,13 @@ require_once "includes/autoLogin.inc.php"; //Checks for session for auto login ?
       <h3>Admin Account</h3> <br>
       <p>
         ID: KLD-22-000001 <br>
-        Pass: 12345
+        Pass: @Andong123
       </p> <br>
 
       <h3>Student Account</h3> <br>
       <p>
         ID: KLD-22-000002 <br>
-        Pass: 11111
+        Pass: @Andong123
       </p>
     </div>
   </body>

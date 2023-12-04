@@ -31,5 +31,13 @@
             Upload Data
         </button>
     </div>
+
+    <div class="card">
+        <blockquote>
+            <p>Example excel file is here: <a href="files/student-info.xlsx" class="text-info" download>Download</a>. This will register all the student in the excel. Change the email column on the excel to receive the KLD number and password.</p>
+            <small>Help/Guides in using the <cite title="Source Title">KLD Student Portal</cite></small>
+            </blockquote>
+    </div>
+    
     
 </form>

@@ -1,6 +1,5 @@
 const gender = document.getElementById('gender').getContext('2d');
 const age = document.getElementById('age').getContext('2d');
-const visitors = document.getElementById('chart-visitors').getContext('2d');
 
 function createGenderChart(genderData) {
     const genderChart = new Chart(gender, {
@@ -68,43 +67,64 @@ $.ajax({
         console.log("age data is " + data);
         const ageData = JSON.parse(data);
         createAgeChart(ageData);
-    }
-})
-
-const vistorsChart = new Chart(visitors, {
-    type: 'line',
-    data: {
-        labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
-        datasets: [{
-            label: 'Visits',
-            backgroundColor: 'rgb(0, 128, 0, 0.5',
-            borderColor: 'green',
-            data: [10, 10, 5, 25, 20, 30, 45],
-            borderWidth: 2,
-            tension: 0.4,
-            pointRadius: 0,
-            fill: true
-        }]
     },
-    options: {
-        responsive: true,
-        maintainAspectRatio: false,
-        scales: {
-            x: {
-                display: false
-            },
-            y: {
-                beginAtZero: true,
-                display: false
-            }
-        },
-        plugins: {
-            legend: {
-                display: false
-            },
-            tooltips: {
-                display: false
-            }
-        }
+    error: function(error) {
+        console.log('error');
     }
 });
+
+// Get the number of teachers
+$.ajax({
+    url: 'includes/fetch-chart-data.inc.php',
+    type: 'POST',
+    data: {
+        functionName: 'getRowNum',
+        tableName: 'thrinfo'
+    },
+    success: function(data) {
+        $('#thrCount').text(data);
+    },
+    error: function(error) {
+        console.log(error);
+    }
+});
+
+// Get the number of students
+$.ajax({
+    url: 'includes/fetch-chart-data.inc.php',
+    type: 'POST',
+    data: {
+        functionName: 'getRowNum',
+        tableName: 'stdinfo'
+    },
+    success: function(data) {
+        $('#stdCount').text(data);
+    },
+    error: function(error) {
+        console.log(error);
+    }
+});
+
+// Calculate the ratio of teacher to students
+let thrCount = parseInt($('#thrCount').text(), 10);
+let stdCount = parseInt($('#stdCount').text(), 10);
+$('#ratio').text('1 | ' + stdCount / thrCount);
+
+// Get the student retention
+$.ajax({
+    url: 'includes/fetch-chart-data.inc.php',
+    type: 'POST',
+    data: {
+        functionName: 'getStudentRetention'
+    },
+    success: function(data) {
+        console.log(data);
+        const retentionData = JSON.parse(data);
+        $('.retention-desc').text(retentionData[1] + "% Increase From Last Year");
+        $('.drop-count').text(retentionData[0]);
+        $('.progress-bar.retention').css('width', retentionData[1] + "%");
+    },
+    error: function(error) {
+        console.log(error);
+    }
+})

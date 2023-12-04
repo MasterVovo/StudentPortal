@@ -36,7 +36,7 @@ let grid = $('#grid-table').jsGrid({
         deleteItem: function(item) {
             swal.fire({
                 title: "Archive this data?",
-                text: "It will be permanently deleted after 3 months!",
+                text: "It will be permanently deleted after 2 years!",
                 icon: "warning",
                 showConfirmButton: true,
                 showCancelButton: true
@@ -115,7 +115,8 @@ let grid = $('#grid-table').jsGrid({
             validate: "required"
         },
         {
-            type: "control"
+            type: "control",
+            editButton: false
         }
     ]
 }).data("JSGrid");

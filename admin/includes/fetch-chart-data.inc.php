@@ -11,6 +11,12 @@ if (isset($_POST['functionName'])) {
         case 'getAgeData':
             echo getAgeData();
             break;
+        case 'getRowNum':
+            echo getRowNum($_POST['tableName']);
+            break;
+        case 'getStudentRetention':
+            echo getStudentRetention();
+            break;
     }
 }
 
@@ -62,34 +68,16 @@ function getAgeData() {
     $femaleMinAge = $femaleRow['min_age'];
 
     // Find the highest and lowest age, and the range
-    $absoluteMax;
-    $absoluteMin;
-    $range = 0;
-    if ($maleMaxAge >= $femaleMaxAge) {
-        $absoluteMax = $maleMaxAge;
-        if ($maleMinAge <= $femaleMinAge) {
-            $absoluteMin = $maleMinAge;
-            $range = $maleMaxAge - $maleMinAge;
-        } else if ($femaleMinAge < $maleMinAge) {
-            $absoluteMin = $femaleMinAge;
-            $range = $maleMaxAge - $maleMinAge;
-        }
-    } else if ($femaleMaxAge > $maleMaxAge) {
-        $absoluteMax = $femaleMaxAge;
-        if ($maleMinAge <= $femaleMinAge) {
-            $absoluteMin = $maleMinAge;
-            $range = $femaleMaxAge - $maleMinAge;
-        } else if ($femaleMinAge < $maleMinAge) {
-            $absoluteMin = $femaleMinAge;
-            $range = $femaleMaxAge - $femaleMinAge;
-        }
-    }
+    $absoluteMax = ($maleMaxAge >= $femaleMaxAge) ? $maleMaxAge : $femaleMaxAge;
+    $absoluteMin = ($maleMinAge <= $femaleMinAge) ? $maleMinAge : $femaleMinAge;
+    $range = $absoluteMax - $absoluteMin;
 
     // Calculate the max value of each 8 column
-    $interval = $range / 8;
+    $interval = round($range / 8);
     $column = array();
-    for ($i = 0; $i < 8; $i++) {
-        $column[$i] = $absoluteMin + ($interval * $i);
+    for ($i = 1; $i <= 8; $i++) {
+        if ($i == 1) $column[$i - 1] = $absoluteMin + ($interval * $i);
+        else $column[$i - 1] = $column[$i - 2] + $interval + 1;
     }
 
     // Get all the ages of male and female
@@ -115,8 +103,12 @@ function getAgeData() {
     $maleColumnCount = array(0, 0, 0, 0, 0, 0, 0, 0);
     while ($row = mysqli_fetch_assoc($maleResult)) {
         for ($i = 0; $i < 8; $i++) {
-            if ($row['age'] > ($column[$i] - $range) && $row['age'] < $column[$i]) {
+            if ($row['age'] >= ($column[$i] - $interval) && $row['age'] <= $column[$i]) {
                 $maleColumnCount[$i]++;
+                break;
+            } 
+            else if ($i == 7) {
+                $maleColumnCount[1]++;
                 break;
             }
         }
@@ -125,7 +117,7 @@ function getAgeData() {
     $femaleColumnCount = array(0, 0, 0, 0, 0, 0, 0, 0);
     while ($row = mysqli_fetch_assoc($femaleResult)) {
         for ($i = 0; $i < 8; $i++) {
-            if ($row['age'] > ($column[$i] - $range) && $row['age'] < $column[$i]) {
+            if ($row['age'] >= ($column[$i] - $interval) && $row['age'] <= $column[$i]) {
                 $femaleColumnCount[$i]++;
                 break;
             }
@@ -148,3 +140,39 @@ function getAgeData() {
     return json_encode($ageChartData);
 }
 
+function getRowNum($tableName) {
+    global $conn;
+
+    $sql = $conn->prepare("SELECT * FROM " . $tableName);
+    $sql->execute();
+    $sql->store_result();
+    return $sql->num_rows;
+}
+
+function getStudentRetention() {
+    global $conn;
+
+    // Determine if the student is dropped between 1 to 2 year or today to 1 year
+    $today = date('Y-m-d');
+    $oneYearFromNow = date('Y-m-d', strtotime('+1 year'));
+    $twoYearFromNow = date('Y-m-d', strtotime('+2 year'));
+
+    $stmtDroppedRecently = $conn->prepare("SELECT schoolID FROM archived_userinfo WHERE userStatus = 'dropped' AND expiration BETWEEN ? AND ?");
+    $stmtDroppedRecently->bind_param('ss', $today, $oneYearFromNow);
+    $stmtDroppedRecently->execute();
+    $stmtDroppedRecently->store_result();
+    $droppedRecently = $stmtDroppedRecently->num_rows;
+
+    $stmtDroppedOld = $conn->prepare("SELECT schoolID FROM archived_userinfo WHERE userStatus = 'dropped' AND expiration BETWEEN ? AND ?");
+    $stmtDroppedOld->bind_param('ss', $today, $twoYearFromNow);
+    $stmtDroppedOld->execute();
+    $stmtDroppedOld->store_result();
+    $droppedOld = $stmtDroppedRecently->num_rows;
+    
+    // Determine how much the retention improved
+    if ($droppedRecently == 0) $retentionRate = 100;
+    else if ($droppedOld == 0) $retentionRate = 0;
+    else $retentionRate = 100 - (($droppedRecently / $droppedOld) * 100);
+
+    return json_encode(array($droppedRecently, $retentionRate));
+}

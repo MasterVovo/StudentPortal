@@ -62,7 +62,7 @@ $pfp = $_SESSION["pfp"];
             <span class="material-icons-sharp"> auto_delete </span>
             <h3>Archive</h3>
           </a>
-          <a href="../logout.html">
+          <a href="../logout.php">
             <span class="material-icons-sharp"> logout </span>
             <h3>Logout</h3>
           </a>
@@ -74,7 +74,6 @@ $pfp = $_SESSION["pfp"];
       <main>
         <div class="ann-header">
           <h1>Dashboard</h1>
-          <span class="material-icons-sharp"> filter_alt </span>
         </div>
 
         <!-- Gender and Age Chart -->
@@ -94,7 +93,7 @@ $pfp = $_SESSION["pfp"];
           <div class="faculty-student-container flex gap">
             <div class="small-box bg-success">
               <div class="inner">
-                <h3>150</h3>
+                <h3 id="thrCount">150</h3>
                 <p>Teachers</p>
               </div>
               <div class="icon">
@@ -103,7 +102,7 @@ $pfp = $_SESSION["pfp"];
             </div>
             <div class="small-box bg-success">
               <div class="inner">
-                <h3>150</h3>
+                <h3 id="stdCount">150</h3>
                 <p>Students</p>
               </div>
               <div class="icon">
@@ -112,7 +111,7 @@ $pfp = $_SESSION["pfp"];
             </div>
             <div class="small-box bg-orange">
               <div class="inner">
-                <h3>1 | 50</h3>
+                <h3 id="ratio">1 | 50</h3>
                 <p>Teacher to Student <br>Ratio</p>
               </div>
               <div class="icon">
@@ -147,11 +146,11 @@ $pfp = $_SESSION["pfp"];
                 <span class="info-box-icon"><i class="material-icons-sharp">loop</i></span>
                 <div class="info-box-content">
                   <span class="info-box-text">Student Retention</span>
-                  <span class="info-box-number">4,500</span>
+                  <span class="info-box-number drop-count">4,500</span>
                   <div class="progress">
-                    <div class="progress-bar" style="width: 80%"></div>
+                    <div class="progress-bar retention" style="width: 80%"></div>
                   </div>
-                  <span class="progress-description">
+                  <span class="progress-description retention-desc">
                   80% Increase From Last Year
                   </span>
                 </div>
@@ -165,12 +164,12 @@ $pfp = $_SESSION["pfp"];
                 <span class="info-box-icon"><i class="material-icons-sharp">school</i></span>
                 <div class="info-box-content">
                   <span class="info-box-text">Graduated</span>
-                  <span class="info-box-number">4,350</span>
+                  <span class="info-box-number">None</span>
                   <div class="progress">
-                    <div class="progress-bar" style="width: 10%"></div>
+                    <div class="progress-bar" style="width: 0%"></div>
                   </div>
                   <span class="progress-description">
-                  10% Increase From Last Year
+                  0% Increase From Last Year
                   </span>
                 </div>
               
@@ -182,7 +181,48 @@ $pfp = $_SESSION["pfp"];
         </div>
 
         <!-- Average Grades -->
-        <div class="ann-container">
+      </main>
+      <!-- End of main content -->
+      
+      <!-- Right section -->
+      <div class="right-section">
+        <!-- Navbar -->
+        <div class="nav">
+          <button id="menu-btn">
+            <span class="material-icons-sharp"> menu </span>
+          </button>
+          <div class="dark-mode">
+            <span class="material-icons-sharp active"> light_mode </span>
+            <span class="material-icons-sharp"> dark_mode </span>
+          </div>
+
+          <div class="profile">
+            <div class="info">
+              <?php
+                echo "<p>Good day 
+                  <b>$name</b>
+                </p>"; ?>
+              <small class="text-muted">
+                <?php
+                  echo ucfirst($userType);
+                ?>
+              </small>
+            </div>
+            <div class="profile-photo">
+              <img src=<?php echo "data:image/jpeg;base64,$pfp";?> />
+            </div>
+          </div>
+        </div>
+        <!-- End of navbar -->
+
+        <!-- Schedule list -->
+        <div class="schedule">
+          <div class="schedule-header">
+            <h2>Status</h2>
+          </div>
+
+          <div class="ann-container">
+          
           <div class="select-container">
             <select>
               <option selected disabled>Course</options>
@@ -207,8 +247,8 @@ $pfp = $_SESSION["pfp"];
               <option value="2nd year">Second</option>
             </select>
           </div>
-          
-          
+
+          </div>
           <div class="card" style="width: 100%">
             <div class="card-header">
               <h3 class="card-title">Average Grades Per Subject</h3>
@@ -281,56 +321,6 @@ $pfp = $_SESSION["pfp"];
                   </tr>
                 </tbody>
               </table>
-            </div>
-          </div>
-        </div>
-      </main>
-      <!-- End of main content -->
-      
-      <!-- Right section -->
-      <div class="right-section">
-        <!-- Navbar -->
-        <div class="nav">
-          <button id="menu-btn">
-            <span class="material-icons-sharp"> menu </span>
-          </button>
-          <div class="dark-mode">
-            <span class="material-icons-sharp active"> light_mode </span>
-            <span class="material-icons-sharp"> dark_mode </span>
-          </div>
-
-          <div class="profile">
-            <div class="info">
-              <?php
-                echo "<p>Good day 
-                  <b>$name</b>
-                </p>"; ?>
-              <small class="text-muted">
-                <?php
-                  echo ucfirst($userType);
-                ?>
-              </small>
-            </div>
-            <div class="profile-photo">
-              <img src=<?php echo "data:image/jpeg;base64,$pfp";?> />
-            </div>
-          </div>
-        </div>
-        <!-- End of navbar -->
-
-        <!-- Schedule list -->
-        <div class="schedule">
-          <div class="schedule-header">
-            <h2>Status</h2>
-          </div>
-
-          <div class="schedule-list">
-            <div class="right-chart-container"><canvas id="chart-visitors"></div>
-            <div class="sched-title">
-              <div class="info">
-                <h3>No. of Visitors</h3>
-                <small class="text_muted"> 34 </small>
-              </div>
             </div>
           </div>
         <!-- End of schedule list -->
