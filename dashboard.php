@@ -73,7 +73,7 @@ if ($userType == "student" && $row["stdImage"] != "") {
         </div>
       </div>
       <div class="sidebar">
-        <a href="#" class="profile-side" title="Account">
+        <a href="profile.php" class="profile-side" title="Account">
           <span class="material-icons-sharp"> account_circle </span>
           <h3>Account</h3>
         </a>
@@ -202,7 +202,11 @@ if ($userType == "student" && $row["stdImage"] != "") {
               if ($pfp == "") {
                 echo "'images/profile.png'";
               } else if ($pfp == "teacher") {
-                echo "'images/KLD LOGO.png'";
+                if(isset($_SESSION["imagePath"])) {
+                  echo "'images/" . $_SESSION["imagePath"] . "'";
+                } else {
+                  echo "'images/KLD LOGO.png'";
+                }
               } else {
                 echo "'data:image/jpeg;base64,$pfp'";
               }
@@ -262,42 +266,46 @@ if ($userType == "student" && $row["stdImage"] != "") {
       <!-- End of schedule list -->
 
       <!-- Grades list -->
-      <div class="grades">
-        <div class="grades-header">
-          <h2>Latest Grades</h2>
-          <a href="grades.php">
-            <h4>View all</h4>
-          </a>
-        </div>
-
-        <div class="grades-list">
-          <div class="icon">
-            <span class="material-icons-sharp"> code </span>
+      <?php
+        if ($userType == "student") {
+          echo "<div class='grades'>
+          <div class='grades-header'>
+            <h2>Latest Grades</h2>
+            <a href='grades.php'>
+              <h4>View all</h4>
+            </a>
           </div>
-          <div class="subject-title">
-            <div class="info">
-              <h3>GEC1000 - Web Development</h3>
+  
+          <div class='grades-list'>
+            <div class='icon'>
+              <span class='material-icons-sharp'> code </span>
             </div>
-            <div class="info">
-              <h2>1.25</h2>
-            </div>
-          </div>
-        </div>
-
-        <div class="grades-list">
-          <div class="icon">
-            <span class="material-icons-sharp"> edit </span>
-          </div>
-          <div class="subject-title">
-            <div class="info">
-              <h3>GEC1000 - IT Infrastructure</h3>
-            </div>
-            <div class="info">
-              <h2>1.25</h2>
+            <div class='subject-title'>
+              <div class='info'>
+                <h3>GEC1000 - Web Development</h3>
+              </div>
+              <div class='info'>
+                <h2>1.25</h2>
+              </div>
             </div>
           </div>
-        </div>
-      </div>
+  
+          <div class='grades-list'>
+            <div class='icon'>
+              <span class='material-icons-sharp'> edit </span>
+            </div>
+            <div class='subject-title'>
+              <div class='info'>
+                <h3>GEC1000 - IT Infrastructure</h3>
+              </div>
+              <div class='info'>
+                <h2>1.25</h2>
+              </div>
+            </div>
+          </div>
+        </div>";
+        }
+      ?>
       <!-- End of grades list -->
     </div>
     <!-- End of right section -->

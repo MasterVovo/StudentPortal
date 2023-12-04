@@ -24,6 +24,8 @@ $userType = $_SESSION["userType"];
 // Get the name of user in the database and store it in a variable
 $sql = "SELECT * FROM stdinfo WHERE stdId = ?";
 $fname = "stdFName";
+$mname = "stdMName";
+$lname = "stdLName";
 
 if ($userType != "student") {
     $sql = "SELECT * FROM thrinfo WHERE thrId = ?";
@@ -82,7 +84,7 @@ if ($userType == "student" && $row["stdImage"] != "") {
     }
 
     main .pfp {
-      width: 100%;
+      max-width: 300px;
     }
 
     main .ann-container {
@@ -165,11 +167,31 @@ if ($userType == "student" && $row["stdImage"] != "") {
       </div>
       <div class="ann-container">
       <?php
-        echo "<form id='profilePictureForm' action='includes/uploadProfilePicture.php' method='post' enctype='multipart/form-data'>";
+        if ($userType == "student") {
+          $fileForUpload = "uploadpfpstd.inc.php";
+        } else {
+          $fileForUpload = "uploadpfpthr.inc.php";
+        }
+
+        echo "<form id='profilePictureForm' action='includes/$fileForUpload' method='post' enctype='multipart/form-data'>";
         if ($pfp == "") {
             echo "<img class='pfp' src='images/profile.png'>";
         } elseif ($pfp == "teacher") {
-            echo "<img class='pfp' src='images/KLD LOGO.png'>";
+            $sql = "SELECT thrImage FROM thrinfo WHERE thrId = ?";
+            $stmt = $conn->prepare($sql);
+            $stmt->bind_param("s", $userId);
+            $stmt->execute();
+            
+            if ($result = $stmt->get_result()) {
+                $row = $result->fetch_assoc();
+                $imagePath = $row["thrImage"];
+
+                echo "<img class='pfp' src='images/$imagePath'>";
+
+                $_SESSION["imagePath"] = $imagePath;
+            } else {
+              echo "<img class='pfp' src='images/KLD LOGO.png'>";
+            }
         } else {
             echo "<img class='pfp' src='data:image/jpeg;base64,$pfp'>";
         }
@@ -181,6 +203,17 @@ if ($userType == "student" && $row["stdImage"] != "") {
         echo "<h2>Name: $fullname</h2>";
 
         if ($userType == "student") {
+          $sql = "SELECT * FROM stdinfo JOIN tblcourses on stdinfo.stdCourse = tblcourses.courseID WHERE stdId = ?";
+          $stmt = $conn->prepare($sql);
+          $stmt->bind_param("s", $userId);
+          $stmt->execute();
+
+          $result = $stmt->get_result();
+          $row = $result->fetch_assoc();
+
+          echo "<h2>Course: " . $row["courseName"] . "</h2>";
+          echo "<h2>Section: " . $row["stdSection"] . "</h2>";
+          echo "<h2>Email: " . $row["stdEmail"] . "</h2>";
         } else {
             $sql =
                 "SELECT * FROM thrinfo JOIN tbldept ON thrinfo.thrDept = tbldept.deptId WHERE thrId = ?";
@@ -225,7 +258,19 @@ if ($userType == "student" && $row["stdImage"] != "") {
             <?php if ($pfp == "") {
                 echo "'images/profile.png'";
             } elseif ($pfp == "teacher") {
-                echo "'images/KLD LOGO.png'";
+                $sql = "SELECT thrImage FROM thrinfo WHERE thrId = ?";
+                $stmt = $conn->prepare($sql);
+                $stmt->bind_param("s", $userId);
+                $stmt->execute();
+                
+                if ($result = $stmt->get_result()) {
+                    $row = $result->fetch_assoc();
+                    $imagePath = $row["thrImage"];
+
+                    echo "'images/$imagePath'";
+                } else {
+                  echo "'images/KLD LOGO.png'";
+                }
             } else {
                 echo "'data:image/jpeg;base64,$pfp'";
             } ?> 
@@ -265,7 +310,22 @@ if ($userType == "student" && $row["stdImage"] != "") {
         $("#upload:hidden").trigger('click');
       });
     });
+
+    $(function(){
+      $("#upload").on('change', function(){
+        $("#profilePictureForm").submit();
+      });
+    });
+
   </script>
 </body>
 
 </html>
+
+<?php
+if (isset($_SESSION['message'])) {
+    $message = $_SESSION['message'];
+    echo "<script type='text/javascript'>alert('$message');</script>";
+    unset($_SESSION['message']);
+}
+?>

@@ -1,12 +1,26 @@
-<?php //TODO: NOT YET WORKING POTAENA
+<?php
 session_start();
-require "sqlConnection/db_connect.php";
+require "../sqlConnection/db_connect.php";
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $userId = $_SESSION["stdID"];
 
     // Specify the target directory where the file will be stored
     $targetDir = "../images/";
+
+    // Get the old profile picture
+    $sql = "SELECT thrImage FROM thrinfo WHERE thrId = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("s", $userId);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $row = $result->fetch_assoc();
+    $oldProfilePic = $targetDir . $row['thrImage'];
+
+    // Delete the old profile picture if it exists
+    if (file_exists($oldProfilePic)) {
+        unlink($oldProfilePic);
+    }
 
     // Specify a unique name for the uploaded file (e.g., user ID + random string + timestamp)
     $fileExtension = pathinfo($_FILES["profilePicture"]["name"], PATHINFO_EXTENSION);
@@ -28,17 +42,21 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             // Close statement
             $stmt->close();
 
-            echo "Profile picture uploaded successfully!";
+            $message = "Profile picture uploaded successfully!";
         } else {
-            echo "Error uploading file.";
+            $message = "Error uploading file.";
         }
     } else {
-        echo "Invalid file type. Only valid images are allowed.";
+        $message = "Invalid file type. Only valid images are allowed.";
     }
 } else {
-    echo "Invalid request.";
+    $message = "Invalid request.";
 }
 
 // Close the database connection
 $conn->close();
+
+$_SESSION["message"] = $message;
+header("Location: ../profile.php");
+exit();
 ?>
