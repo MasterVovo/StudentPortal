@@ -91,7 +91,7 @@ $pfp = $_SESSION["pfp"];
         <!-- Faculty and Student Count -->
         <div class="ann-container">
           <div class="faculty-student-container flex gap">
-            <div class="small-box bg-success">
+            <div class="small-box bg-success thrCountContainer">
               <div class="inner">
                 <h3 id="thrCount">150</h3>
                 <p>Teachers</p>
@@ -100,7 +100,7 @@ $pfp = $_SESSION["pfp"];
                 <i class="material-icons-sharp"> person </i>
               </div>
             </div>
-            <div class="small-box bg-success">
+            <div class="small-box bg-success stdCountContainer">
               <div class="inner">
                 <h3 id="stdCount">150</h3>
                 <p>Students</p>
@@ -123,7 +123,6 @@ $pfp = $_SESSION["pfp"];
 
          <!-- Student Enrollment -->
         <div class="ann-container">
-          
           <div class="row">
             <div class="col-md-4 col-sm-6 col-12">
               <div class="info-box bg-lime">

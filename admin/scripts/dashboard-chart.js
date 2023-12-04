@@ -127,4 +127,13 @@ $.ajax({
     error: function(error) {
         console.log(error);
     }
-})
+});
+
+// Redirects when teacher count is clicked
+$('.thrCountContainer').click(function() {
+    window.open('database.php?tab=fctList');
+});
+
+$('.stdCountContainer').click(function() {
+    window.open('database.php?tab=stdList');
+});
