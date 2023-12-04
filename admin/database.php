@@ -1,6 +1,8 @@
 <?php
   if(isset($_GET['tab'])) {
     $tab = $_GET['tab'];
+  } else {
+    $tab = null;
   }
 ?>
 
@@ -75,9 +77,9 @@
 
         <!-- Nav -->
         <div class="ann-container">
-            <a href="database.php?tab=stdAdd">Add Student</a>
-            <a href="database.php?tab=stdList">Student List</a>
-            <a href="database.php?tab=fctList">Faculty List</a>
+            <a href="database.php?tab=stdAdd" <?php if ($tab == 'stdAdd') echo 'class="selected"' ?>>Add Student</a>
+            <a href="database.php?tab=stdList" <?php if ($tab == 'stdList') echo 'class="selected"' ?>>Student List</a>
+            <a href="database.php?tab=fctList" <?php if ($tab == 'fctList') echo 'class="selected"'?>>Faculty List</a>
           </div>
 
         

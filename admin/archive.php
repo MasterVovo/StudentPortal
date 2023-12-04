@@ -4,6 +4,8 @@
   
   if(isset($_GET['tab'])) {
     $tab = $_GET['tab'];
+  } else {
+    $tab = null;
   }
 ?>
 
@@ -78,16 +80,26 @@
 
         <!-- Nav -->
         <div class="ann-container">
-            <a href="archive.php?tab=stdList">Student List</a>
-            <a href="archive.php?tab=fctList">Faculty List</a>
+            <a href="archive.php?tab=stdList" <?php if ($tab == 'stdList') echo 'class="selected"' ?> >Student List</a>
+            <a href="archive.php?tab=fctList" <?php if ($tab == 'fctList') echo 'class="selected"' ?> >Faculty List</a>
         </div>
 
-        <!-- Table -->
-        <div class="ann-container">
-        <div class="grid-table-container">
-            <div id="grid-table"></div>
-        </div>
-        </div>
+        <?php
+          if(isset($_GET['tab'])) {
+            echo '
+            <!-- Table -->
+            <div class="ann-container">
+            <div class="grid-table-container">
+                <div id="grid-table"></div>
+            </div>
+            </div>
+            ';
+
+            if ($_GET['tab'] == 'stdAdd') echo file_get_contents('html-pieces/stdAdd');
+          } else {
+            echo file_get_contents('html-pieces/no-tab');
+          }
+        ?>
         
       </main>
       <!-- End of main content -->
