@@ -8,6 +8,10 @@
 }
 
 /* Table */
+.orig-container {
+    grid-template-columns: 12rem 1fr;
+}
+
 .grid-table-container {
     overflow-x: auto;
 }
@@ -93,7 +97,11 @@ blockquote small {
     }
 
     /* Table */
+    
+}
+
+@media screen and (max-width: 1230px) {
     .orig-container {
-        grid-template-columns: 12rem 1fr;
+        grid-template-columns: 5rem 1fr;
     }
 }
