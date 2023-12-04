@@ -2,15 +2,26 @@
 require "../../vendor/autoload.php";
 require "../../sqlConnection/db_connect.php";
 
-$sql = " SELECT * FROM stdinfo ORDER BY dateEnrolled DESC LIMIT 1";
+$sql = "SELECT * FROM stdinfo WHERE dateEnrolled = (SELECT MAX(dateEnrolled) FROM stdinfo)";
 $result = $conn->query($sql);
 $result->num_rows;
-$row = $result->fetch_assoc();
+$maxID = 0;
+while ($row = $result->fetch_assoc()) {
+    preg_match('/\d+$/', $row['stdID'], $matches);
+    $value = intval($matches[0]);
+    $maxID = ($maxID < $value) ? $value : $maxID;
+}
 
-$sql = " SELECT * FROM archived_stdinfo ORDER BY dateEnrolled DESC LIMIT 1";
+$sql = "SELECT * FROM archived_stdinfo WHERE dateEnrolled = (SELECT MAX(dateEnrolled) FROM archived_stdinfo)";
 $result = $conn->query($sql);
 $result->num_rows;
-$rowArchived = $result->fetch_assoc();
+$archivedMaxID = 0;
+while ($rowArchived = $result->fetch_assoc()) {
+    preg_match('/\d+$/', $rowArchived['stdID'], $matches);
+    $archivedValue = intval($matches[0]);
+    $archivedMaxID = ($archivedMaxID < $archivedValue) ? $archivedValue : $archivedMaxID;
+}
+
 
 // Close the database connection
 $conn->close();
@@ -37,12 +48,7 @@ $worksheet = $spreadsheet->getActiveSheet(); // Select the first worksheet in th
 //                 </tr>";
 
 // Determine which have the highest stdId number
-preg_match('/\d+$/', $row['stdID'], $matches);
-$value = intval($matches[0]);
-preg_match('/\d+$/', $rowArchived['stdID'], $matches);
-$archivedValue = intval($matches[0]);
-
-$counter = ($value > $archivedValue) ? $value : $archivedValue;
+$counter = ($maxID > $archivedMaxID) ? $maxID : $archivedMaxID;
 $counter += 1;
 
 // $counter = $row["row_count"] + 1;
