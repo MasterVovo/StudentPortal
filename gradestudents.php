@@ -84,10 +84,10 @@ $pfp = $_SESSION["pfp"];
             <select name="section" id="sectionSelect">
               <option value="0" selected disabled>Pick Section</option>
               <?php
-                $sql = "SELECT sectionName FROM tblsections WHERE sectionAdviserId = '" . $userId . "'";
+                $sql = "SELECT sectionName, subjectCode FROM thrassign WHERE thrId = '" . $userId . "'";
                 $result = mysqli_query($conn, $sql);
                 while ($row = mysqli_fetch_assoc($result)) {
-                  echo "<option value=\"" . $row["sectionName"] . "\">" . $row["sectionName"] . "</option>";
+                  echo "<option value=\"" . $row["sectionName"] . "," . $row["subjectCode"] . "\">" . $row["sectionName"] . "</option>";
                 }
               ?>
             </select>
@@ -151,13 +151,14 @@ $pfp = $_SESSION["pfp"];
             });
           });
 
-          $("#saveButton").click(function(){
-            $ajax({
-              url: 'saveGrades.php',
+          $("#saveButton").click(function(e){
+            e.preventDefault();
+            $.ajax({
+              url: 'includes/saveGrades.inc.php',
               type: 'post',
-              data: $('#gradesTable').serialize(),
+              data: $('#sectionForm').serialize() + '&' + $('#gradesTable :input').serialize(),
               success: function(response){
-                  // Handle response here
+                alert(response);
               }
             });
           });
