@@ -1,3 +1,3 @@
 <center style="display: flex; flex-direction: column;">
-<span style="font-size: 2rem; font-weight: 700; margin-top: 3rem; color: lightgray;">Select A Table</span>
-<div class="material-icons-sharp" style="font-size: 30rem; color: lightgray">storage</div></center>
+<span style="font-size: 2rem; font-weight: 700; margin-top: 3rem; color: var(--color-dark-gray);">Select A Table</span>
+<div class="material-icons-sharp" style="font-size: 30rem; color: var(--color-dark-gray)">view_list</div></center>
