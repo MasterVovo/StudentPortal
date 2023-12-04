@@ -28,6 +28,7 @@ main .ann-header h1 {
 
 main .ann-container {
   /* margin: auto; */
+  display: grid;
   height: fit-content;
 }
 
@@ -46,8 +47,34 @@ aside .sidebar a.active {
   border-radius: 0;
 }
 
-@media (max-width: 1230px) {
-  .container {
-    grid-template-columns: 5rem 1fr 1fr;
+.main .announcement {
+  width: 100%; /* Set the width to 100% for responsiveness */
+}
+
+/* Add a media query for smaller screens */
+@media (max-width: 768px) {
+  .main .ann-container {
+    grid-template-columns: 5fr; 
   }
 }
+
+@media (max-width: 1230px) {
+  .container {
+    width: 95%;
+    gap: 1rem;
+    grid-template-columns: 5rem 1.7fr 1fr;
+  }
+}
+
+
+@media (max-width: 771px) {
+  .container {
+    width: 100%;
+    grid-template-columns: 2fr;
+    padding: 0 1.2rem;
+  }
+}
+
+
+
+
