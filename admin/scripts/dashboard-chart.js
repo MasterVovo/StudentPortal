@@ -129,11 +129,17 @@ $.ajax({
     }
 });
 
+// Redirects when gender chart is clicked
+$('.gender-container').parent().click(function() {
+    window.open('detailed-chart/gender-chart.php');
+});
+
 // Redirects when teacher count is clicked
 $('.thrCountContainer').click(function() {
     window.open('database.php?tab=fctList');
 });
 
+// Redirects when student count is clicked
 $('.stdCountContainer').click(function() {
     window.open('database.php?tab=stdList');
 });

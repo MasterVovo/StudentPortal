@@ -17,6 +17,9 @@ if (isset($_POST['functionName'])) {
         case 'getStudentRetention':
             echo getStudentRetention();
             break;
+        case 'getDetailedGenderData':
+            echo getDetailedGenderData();
+            break;
     }
 }
 
@@ -32,6 +35,27 @@ function getGenderData() {
     
     $data = array($maleCount, $femaleCount);
     return json_encode($data);
+}
+
+function getDetailedGenderData() {
+    global $conn;
+    $sqlMale = "SELECT stdID, stdFName, stdMName, stdLName, stdCourse FROM stdinfo WHERE (stdGender = 'Male')";
+    $maleResult = mysqli_query($conn, $sqlMale);
+    
+    $sqlFemale = "SELECT stdID, stdFName, stdMName, stdLName, stdCourse FROM stdinfo WHERE (stdGender = 'Female')";
+    $femaleResult = mysqli_query($conn, $sqlFemale);
+
+    $maleArray = $femaleArray = array();
+    while ($row = mysqli_fetch_assoc($maleResult)) {
+        $maleArray[] = array('stdID' => $row['stdID'], 'stdFName' => $row['stdFName'], 'stdMName' => $row['stdMName'], 'stdLName' => $row['stdLName'], 'stdCourse' => $row['stdCourse']);
+    }
+    // while ($row = mysqli_fetch_assoc($femaleResult)) {
+    //     $femaleArray[] = array('stdID' => $row['stdID'], 'stdFName' => $row['stdFName'], 'stdMName' => $row['stdMName'], 'stdLName' => $row['stdLName'], 'stdCourse' => $row['stdCourse']);
+    // }
+
+    // return json_encode(array('Male' => $maleArray, 'Female' => $femaleArray));
+
+    return json_encode($maleArray);
 }
 
 function getAgeData() {
