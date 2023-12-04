@@ -39,7 +39,7 @@ $pfp = $_SESSION["pfp"];
           </div>
         </div>
         <div class="sidebar">
-          <a href="#" class="profile-side">
+          <a href="profile.php" class="profile-side">
             <span class="material-icons-sharp"> account_circle </span>
             <h3>Account</h3>
           </a>
@@ -125,7 +125,23 @@ $pfp = $_SESSION["pfp"];
             </small>
           </div>
           <div class="profile-photo">
-            <img src=<?php echo "data:image/jpeg;base64,$pfp";?> />
+            <a href="profile.php">
+              <img src=
+              <?php 
+                if ($pfp == "") {
+                  echo "'images/profile.png'";
+                } else if ($pfp == "teacher") {
+                  if(isset($_SESSION["imagePath"])) {
+                    echo "'images/" . $_SESSION["imagePath"] . "'";
+                  } else {
+                    echo "'images/KLD LOGO.png'";
+                  }
+                } else {
+                  echo "'data:image/jpeg;base64,$pfp'";
+                }
+                ?> 
+              />
+            </a>
           </div>
         </div>
       </div>
@@ -159,6 +175,7 @@ $pfp = $_SESSION["pfp"];
               data: $('#sectionForm').serialize() + '&' + $('#gradesTable :input').serialize(),
               success: function(response){
                 alert(response);
+                location.reload(true);
               }
             });
           });
