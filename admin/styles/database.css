@@ -91,16 +91,19 @@ blockquote small {
     background: transparent;
 }
 
+@media screen and (max-width: 771px) {
+    .orig-container {
+        grid-template-columns: 100%;
+    }
+}
+
 @media screen and (min-width: 772px) {
     .right-section {
         display: none;
     }
-
-    /* Table */
-    
 }
 
-@media screen and (max-width: 1230px) {
+@media screen and (min-width: 772px) and (max-width: 1230px) {
     .orig-container {
         grid-template-columns: 5rem 1fr;
     }
