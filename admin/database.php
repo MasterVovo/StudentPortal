@@ -73,20 +73,28 @@
           <h1>Database</h1>
         </div>
 
+        <!-- Nav -->
+        <div class="ann-container">
+            <a href="database.php?tab=stdAdd">Add Student</a>
+            <a href="database.php?tab=stdList">Student List</a>
+            <a href="database.php?tab=fctList">Faculty List</a>
+          </div>
+
+        
+
         <!-- Show the content depending on the tab opened -->
         <?php
           if(isset($_GET['tab'])) {
-            switch($tab) {
-              case 'stdAdd':
-                echo file_get_contents('html-pieces/stdAdd');
-                break;
-              case 'stdList':
-                echo file_get_contents('html-pieces/stdList');
-                break;
-              case 'fctList':
-                echo file_get_contents('html-pieces/fctList');
-                break;
-            }
+            echo '
+            <!-- Table -->
+            <div class="ann-container">
+            <div class="grid-table-container">
+                <div id="grid-table"></div>
+            </div>
+            </div>
+            ';
+
+            if ($_GET['tab'] == 'stdAdd') echo file_get_contents('html-pieces/stdAdd');
           } else {
             echo file_get_contents('html-pieces/no-tab');
           }
