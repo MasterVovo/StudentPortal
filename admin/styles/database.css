@@ -7,6 +7,11 @@
     border-left: 5px solid var(--color-green);
 }
 
+/* No tab */
+center div {
+    font-size: 30rem !important;
+}
+
 /* Table */
 .orig-container {
     grid-template-columns: 12rem 1fr;
@@ -106,5 +111,12 @@ blockquote small {
 @media screen and (min-width: 772px) and (max-width: 1230px) {
     .orig-container {
         grid-template-columns: 5rem 1fr;
+    }
+}
+
+@media screen and (max-width: 444px) {
+    /* Makes the icon in the center responsive */
+    center div {
+        font-size: 20rem !important;
     }
 }
